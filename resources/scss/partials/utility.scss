@@ -1,0 +1,26 @@
+.bg-blue-main{
+    background-color: $blue-main;
+}
+
+.btn-register{
+    background-color: $blue-main;
+    border-radius: 50px;
+    &:hover{
+        background-color: black;
+    }
+}
+
+.text-blue{
+    color: $blue-main;
+}
+
+.h-80px{
+    height: 80px;
+}
+
+.navbar-nav{
+    margin-left: auto;
+    .nav-link.active{
+        font-weight: bold;
+    }
+}

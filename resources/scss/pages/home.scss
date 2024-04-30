@@ -1,0 +1,30 @@
+.hero-image{
+    max-height: auto;
+    max-width: 100%;
+}
+
+.btn-hero-first{
+    background-color: $blue-main;
+    border-radius: 50px;
+    color: white;
+    &:hover{
+        background-color: black;
+        color: white;
+    }
+}
+
+.btn-hero-second{
+    background-color: white;
+    border: 1px solid $blue-main;
+    border-radius: 50px;
+    transition: background-color 0.3s, color 0.3s;
+    color: $blue-main;
+    &:hover{
+        background-color: $blue-main;
+        color: white;
+    }
+}
+
+.text-blue-main{
+    color: $blue-main;
+}
