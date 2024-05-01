@@ -11,10 +11,11 @@
          <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
          <!-- Font Awesome icons (free version)-->
          <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+         <link rel="stylesheet" href="fonts/icomoon/style.css">
     </head>
     <body class="antialiased">
       {{-- NAVBAR --}}
-        <nav class="navbar navbar-expand-lg bg-light">
+        <nav class="navbar navbar-expand-lg bg-white">
             <div class="container flex justify-content-between">
               <a class="navbar-link" href="{{ route('home') }}">
                 <img class="h-80px" src="{{ url('assets/img/logo.png') }}" alt="Logo Code Quorum">
@@ -283,9 +284,58 @@
           </section>                
         </main>
         {{-- FOOTER --}}
-        <footer>
-          <div class="bg-blue-main">
-            Ka
+        <footer class="footer-20192 mt-5">
+          <div class="site-section">
+            <div class="container">
+              <div class="cta d-block d-md-flex align-items-center px-5">
+                <div>
+                  <h2 class="mb-0">Siap untuk berkontribusi?</h2>
+                  <h3 class="text-dark">Let's get started!</h3>
+                </div>
+                <div class="ml-auto">
+                  <a href="#" class="btn btn-dark rounded-0 py-3 px-5">Join Forum</a>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm">
+                  <a href="#" class="footer-logo">Code Quorum</a>
+                  <p class="copyright">
+                    <small>&copy; 2024</small>
+                  </p>
+                </div>
+                <div class="col-sm">
+                  <h3>Perusahaan</h3>
+                  <ul class="list-unstyled links">
+                    <li><a href="#">About us</a></li>
+                    <li><a href="#">Contact us</a></li>
+                  </ul>
+                </div>
+                <div class="col-sm">
+                  <h3>Informasi Lebih Lanjut</h3>
+                  <ul class="list-unstyled links">
+                    <li><a href="#">Terms &amp; Conditions</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                  </ul>
+                </div>
+                <div class="col-sm">
+                  <h3>Alamat</h3>
+                  <ul class="list-unstyled links">
+                    <li><p>Jl. Ketintang Baru XVII no. 22B, Kec. Gayungan, Kel. Ketintang, Kota Surabaya, Jawa Timur.</p></li>
+                  </ul>
+                </div>
+                <div class="col-md-3">
+                  <h3>Follow us</h3>
+                  <ul class="list-unstyled social">
+                    <li><a href="#"><span class="icon-facebook"></span></a></li>
+                    <li><a href="#"><span class="icon-twitter"></span></a></li>
+                    <li><a href="#"><span class="icon-linkedin"></span></a></li>
+                    <li><a href="#"><span class="icon-medium"></span></a></li>
+                    <li><a href="#"><span class="icon-paper-plane"></span></a></li>
+                  </ul>
+                </div>
+                
+              </div>
+            </div>
           </div>
         </footer>
         {{-- SCRIPT --}}
