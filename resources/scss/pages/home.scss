@@ -28,3 +28,11 @@
 .text-blue-main{
     color: $blue-main;
 }
+
+.img-small {
+    width: 50px; /* Atur lebar gambar */
+    position: absolute; /* Atur posisi absolut */
+    top: 10px; /* Atur jarak dari atas */
+    left: 10px; /* Atur jarak dari kiri */
+}
+  
