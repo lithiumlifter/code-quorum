@@ -20,4 +20,3 @@ Route::get('/', function () {
 Route::get('/forum', function () {
     return view('forum');
 })->name('forum');
-

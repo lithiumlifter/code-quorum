@@ -1,0 +1,32 @@
+.navbar-nav .nav-link {
+    color: $blue-main; /* Mengatur warna teks menjadi biru */
+}
+
+/* Custom CSS untuk layout */
+#main-forum {
+    float: right; /* Mendorong konten utama ke kanan */
+    width: calc(100% - 250px); /* Lebar konten utama dihitung dari lebar layar dikurangi lebar aside */
+}
+
+#sidebar-forum{
+    list-style: none;
+    // padding-left: 150px;
+    padding-top: 25px;
+}
+
+#sidebar-forum .nav-link {
+    font-size: 15px; /* Ubah ukuran teks menjadi 14px */
+}
+
+
+.h-60px{
+    height: 60px;
+}
+
+.fs-12px{
+    font-size: 12px;
+}
+
+.avatar-sm{
+    height: 25px;
+}
