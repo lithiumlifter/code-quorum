@@ -1,23 +1,24 @@
-.navbar-nav .nav-link {
-    color: $blue-main; /* Mengatur warna teks menjadi biru */
+body{
+    overflow-x: hidden;
 }
 
-/* Custom CSS untuk layout */
+.navbar-nav .nav-link {
+    color: $blue-main;
+}
+
 #main-forum {
-    float: right; /* Mendorong konten utama ke kanan */
-    width: calc(100% - 250px); /* Lebar konten utama dihitung dari lebar layar dikurangi lebar aside */
+    float: right;
+    width: calc(100% - 250px);
 }
 
 #sidebar-forum{
     list-style: none;
-    // padding-left: 150px;
     padding-top: 25px;
 }
 
 #sidebar-forum .nav-link {
-    font-size: 15px; /* Ubah ukuran teks menjadi 14px */
+    font-size: 15px;
 }
-
 
 .h-60px{
     height: 60px;
@@ -29,4 +30,8 @@
 
 .avatar-sm{
     height: 25px;
+}
+
+.text-grey{
+    color: grey;
 }

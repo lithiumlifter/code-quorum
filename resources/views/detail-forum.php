@@ -9,7 +9,8 @@
     <meta name="author" content="">
 
     <title>Forum</title>
-    
+
+    <!-- Main css -->
     @vite(['resources/scss/app.scss', 'resources/js/app.js'])
 
     <!-- Custom fonts for this template-->

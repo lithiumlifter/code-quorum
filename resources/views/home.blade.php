@@ -41,7 +41,7 @@
                 </form>
                 <ul  class="navbar-nav ms-auto my-2 my-lg-0">
                   <li class="nav-item my-auto">
-                    <a class="nav-link text-nowrap text-blue" href="">Log In</a>
+                    <a class="nav-link text-nowrap text-blue" href="{{ route('login') }}">Log In</a>
                   </li>
                   <li class="nav-item ps-1 pe-0">
                     <a class="btn btn-register text-white" href="">Register</a>

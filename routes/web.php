@@ -20,3 +20,11 @@ Route::get('/', function () {
 Route::get('/forum', function () {
     return view('forum');
 })->name('forum');
+
+Route::get('/detail-forum', function () {
+    return view('detail-forum');
+})->name('detail-forum');
+
+Route::get('/login', function () {
+    return view('login');
+})->name('login');
