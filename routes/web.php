@@ -28,3 +28,8 @@ Route::get('/detail-forum', function () {
 Route::get('/login', function () {
     return view('login');
 })->name('login');
+
+
+Route::get('/create-discuss', function () {
+    return view('create-discuss');
+})->name('create-discuss');
