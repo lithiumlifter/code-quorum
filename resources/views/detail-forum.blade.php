@@ -295,8 +295,8 @@
                 {{-- Top --}}
                 <div class="container mb-2">
                     <div class="row justify-content-between">
-                        <div class="col-6 col-md-aut0">
-                            <h2>All Discussion</h2>
+                        <div class="col-6 col-md-auto">
+                            <h4>All Discussion > Gimana cara masang webpack di laravel?</h4>
                         </div>
                         <div class="col-6 col-md-auto d-flex justify-content-end">
                             <a href="#" class="btn btn-dark">Create Discussion</a>
@@ -307,27 +307,41 @@
                 <div class="card card-discussions p-3">
                     <div class="row">
                         {{-- column 1 --}}
-                        <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
-                            <div class="me-2 me-lg-0 mb-1">
-                                3 Suka
+                        <div class="col-12 col-lg-1 mb-1 mb-lg-0 d-flex flex-row flex-lg-column">
+                            <div class="me-2 me-lg-0 mb-2">
+                                <i class="fa-regular fa-heart"></i>
+                                <span>Like</span></a>
                             </div>
                             <div class="mb-1">
-                                9 Jawaban
-                            </div>
-                            <div class="mb-1">
-                                10 Dilihat
+                                <i class="fa-regular fa-bookmark"></i>
+                                <span>Save</span></a>
                             </div>
                         </div>
                         {{-- column 2 --}}
                         <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
-                            <a href="{{ route('detail-forum') }}" class="text-decoration-none">
+                            {{-- <a href="{{ route('detail-forum') }}" class="text-decoration-none">
                                 <h5>Gimana caranya masang webpack di laravel?</h5>
-                            </a>
-                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? </p>
+                            </a> --}}
+                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquam eveniet adipisci culpa quam quos! Facilis commodi magni laboriosam recusandae voluptatem expedita iste? Soluta illo ut, nesciunt mollitia suscipit reiciendis dolores! Lorem ipsum dolor sit amet consectetur adipisicing elit. Nemo accusantium eveniet est neque, assumenda explicabo ratione eius facere, excepturi at id. Ipsam praesentium odio in voluptatum, quam non ad facere. Lorem ipsum dolor, sit amet consectetur adipisicing elit. Reprehenderit, minima. Enim delectus labore, obcaecati temporibus vel quod quaerat earum, similique eum ullam minima eius debitis quos consequuntur, fugit ratione dolore. Lorem ipsum, dolor sit amet consectetur adipisicing elit. At adipisci molestiae illo! Harum quae maxime labore minima dolor, molestias numquam quasi quidem nobis at quo repellendus explicabo sint recusandae tempora. Lorem ipsum dolor sit amet consectetur adipisicing elit. Odio facere quasi corporis sint modi, alias iusto suscipit ex fugit eveniet quibusdam dolore voluptatum architecto praesentium saepe officiis unde officia perspiciatis! </p>
+                            {{-- row 1 --}}
                             <div class="row g-0 align-items-center">
                                 <div class="col me-1 me-lg-2 mb-0">
                                     <a href="#">
                                         <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                                    </a>
+                                </div>
+                            </div>
+                            {{-- row 2 --}}
+                            <div class="row g-0 align-items-center mt-3">
+                                <div class="col me-1 me-lg-2 mb-0 d-flex">
+                                    <a href="#" class="me-2">
+                                        <div>Share</div>
+                                    </a>
+                                    <a href="#" class="me-2">
+                                        <div>Edit</div>
+                                    </a>
+                                    <a href="#">
+                                        <div>Delete</div>
                                     </a>
                                 </div>
                                 <div class="col-5 col-lg-4 mb-0">
@@ -344,7 +358,55 @@
                                     </span>
                                 </div>
                             </div>
-                            
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="mt-3 mb-3">Answer</h3>
+
+                {{-- Answer Card --}}
+                <div class="card card-discussions p-3">
+                    <div class="row">
+                        {{-- column 1 --}}
+                        <div class="col-12 col-lg-1 mb-1 mb-lg-0 d-flex flex-row flex-lg-column">
+                            <div class="me-2 me-lg-0 mb-2">
+                                <i class="fa-regular fa-heart"></i>
+                                <span>Like</span></a>
+                            </div>
+                        </div>
+                        {{-- column 2 --}}
+                        <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
+                            {{-- <a href="{{ route('detail-forum') }}" class="text-decoration-none">
+                                <h5>Gimana caranya masang webpack di laravel?</h5>
+                            </a> --}}
+                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? Lorem ipsum dolor sit amet consectetur, adipisicing elit. </p>
+                            {{-- row 2 --}}
+                            <div class="row g-0 align-items-center mt-3">
+                                <div class="col me-1 me-lg-2 mb-0 d-flex">
+                                    <a href="#" class="me-2">
+                                        <div>Share</div>
+                                    </a>
+                                    <a href="#" class="me-2">
+                                        <div>Edit</div>
+                                    </a>
+                                    <a href="#">
+                                        <div>Delete</div>
+                                    </a>
+                                </div>
+                                <div class="col-5 col-lg-4 mb-0">
+                                    <div class="avatar-sm-wrapper d-inline-block">
+                                        <a href="#" class="me-1">
+                                            <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                        </a>
+                                    </div>
+                                    <span class="fs-12px">
+                                        <a href="#" class="me-1 fw-bold">
+                                            Cavendio
+                                        </a>
+                                        <span class="text-gre">6 Jam yang lalu</span>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
