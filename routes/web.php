@@ -33,3 +33,8 @@ Route::get('/login', function () {
 Route::get('/create-discuss', function () {
     return view('create-discuss');
 })->name('create-discuss');
+
+
+Route::get('/edit-answer', function () {
+    return view('edit-answer');
+})->name('edit-answer');
