@@ -260,7 +260,7 @@
             <aside id="aside-forum" class="col-md-3 mb-3">
                 <!-- Aside menu -->
                 <div class="container-fluid">
-                    <nav class="card mt-3" style="height: 100vh">
+                    <nav id="aside-nav" class="card mt-3">
                         <ul id="sidebar-forum">
                             <li class="nav-item active">
                                 <a class="nav-link" href="index.html">
@@ -279,7 +279,7 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="index.html">
-                                    <i class="fa-solid fa-tag"></i>
+                                    <i class="fa-solid fa-tags"></i>
                                     <span>Tags</span></a>
                             </li>
                             <li class="nav-item">
@@ -296,7 +296,7 @@
                 {{-- Top --}}
                 <div id="top-section" class="container mb-2">
                     <div class="row justify-content-between">
-                        <div class="col-6 col-md-aut0">
+                        <div class="col-6 col-md-auto">
                             <h2>All Discussion</h2>
                         </div>
                         <div class="col-6 col-md-auto d-flex justify-content-end">
@@ -309,13 +309,13 @@
                     <div class="row">
                         {{-- column 1 --}}
                         <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
-                            <div class="me-2 me-lg-0 mb-1">
+                            <div id="suka" class="me-2 me-lg-0 mb-1">
                                 3 Suka
                             </div>
-                            <div class="mb-1">
+                            <div id="jawaban" class="mb-1">
                                 9 Jawaban
                             </div>
-                            <div class="mb-1">
+                            <div id="dilihat" class="mb-1">
                                 10 Dilihat
                             </div>
                         </div>
