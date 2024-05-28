@@ -38,3 +38,7 @@ Route::get('/create-discuss', function () {
 Route::get('/edit-answer', function () {
     return view('edit-answer');
 })->name('edit-answer');
+
+Route::get('/profile', function () {
+    return view('profile');
+})->name('profile');
