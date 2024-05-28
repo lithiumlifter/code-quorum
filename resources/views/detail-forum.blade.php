@@ -28,6 +28,9 @@
     <!-- Custom styles for this template-->
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
 
+    {{-- Summer Note LINK CDN --}}
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+
 </head>
 
 <body>
@@ -362,7 +365,7 @@
                     </div>
                 </div>
 
-                <h3 class="mt-3 mb-3">Answer</h3>
+                <h3 class="mt-3 mb-3">1 Answer</h3>
 
                 {{-- Answer Card --}}
                 <div class="card card-discussions p-3">
@@ -405,6 +408,37 @@
                                         </a>
                                         <span class="text-gre">6 Jam yang lalu</span>
                                     </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {{-- summernote answer --}}
+                <div class="mb-3 mt-3">
+                    <div class="d-flex align-item-center">
+                        <div class="d-flex">
+                            <div class="fs-2 fw-bold me-2 mb-0">
+                                 Answer a Question
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 col-lg8 mb-5 mb-lg-0">
+                        <div class="card card-discussion mb-5 p-3">
+                            <div class="row">
+                                <div class="col-12">
+                                    <form action="" method="POST">
+                                        <div class="mb-3">
+                                            <label for="answer" class="form-label">Quetions</label>
+                                            <textarea class="form-control" id="answer" name="answer"></textarea>
+                                        </div>
+                                        <div>
+                                            <button class="btn btn-secondary me-4" type="submit">Submit</button>
+                                            <a href="#">Cancel</a>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
@@ -459,6 +493,9 @@
     <!-- Custom scripts for all pages-->
     <script src="assets/js/sb-admin-2.min.js"></script>
 
+    {{-- Summer note CDN JS --}}
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
     <script>
         $(document).ready(function () {
             $("#sidebarToggleTop").click(function () {
@@ -475,6 +512,27 @@
             });
         });
     </script>
+
+<script>
+    $(document).ready(function(){
+        $('#answer').summernote({
+            placeholder: 'Your solution...',
+            tabSize: 2,
+            height: 320,
+            toolbar: [
+                ['style' ,['style']],
+                ['font' ,['bold', 'underline', 'clear']],
+                ['color' ,['color']],
+                ['para' ,['ul', 'ol', 'paragraph']],
+                ['table' ,['table']],
+                ['insert' ,['link']],
+                ['view' ,['codeview', 'help']],
+            ]
+        });
+
+        $('span.note-icon-caret').remove();
+     })
+</script>
 </body>
 
 </html>
