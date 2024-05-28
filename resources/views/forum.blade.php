@@ -30,12 +30,12 @@
 </head>
 
 <body>
-    <header>
+    <header id="header-forum">
             <!-- NAVBAR -->
             <nav class="navbar navbar-expand bg-white topbar static-top shadow">
                 <div class="container d-flex justify-content-between">
                     <!-- Sidebar Toggle (Topbar) -->
-                    <button class="btn btn-link d-md-none rounded-circle mr-3 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    <button class="btn btn-link d-lg-none rounded-circle mr-3 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                         <i class="fa fa-bars"></i>
                     </button>
                     <ul class="dropdown-menu">
@@ -255,44 +255,46 @@
             </nav>
     </header>
 
-    <div class="container-fluid p-0">
+    <div id="main-content" class="container-fluid">
         <div class="row">
-            <aside class="col-md-3 card d-none d-md-block" style="border-radius: 0; border-bottom:none; border-right:none;">
+            <aside id="aside-forum" class="col-md-3 mb-3">
                 <!-- Aside menu -->
-                <nav>
-                    <ul id="sidebar-forum">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="index.html">
-                                <i class="fa-solid fa-comments"></i>
-                                <span>All Disscussion</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">
-                                <i class="fa-solid fa-comment"></i>
-                                <span>My Disscussion</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">
-                                <i class="fa-solid fa-comment-dots"></i>
-                                <span>My Answer</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">
-                                <i class="fa-solid fa-tag"></i>
-                                <span>Tags</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="index.html">
-                                <i class="fa-solid fa-user"></i>
-                                <span>Profile</span></a>
-                        </li>
-                    </ul>
-                </nav>
+                <div class="container-fluid">
+                    <nav class="card mt-3" style="height: 100vh">
+                        <ul id="sidebar-forum">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fa-solid fa-comments"></i>
+                                    <span>All Disscussion</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fa-solid fa-comment"></i>
+                                    <span>My Disscussion</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fa-solid fa-comment-dots"></i>
+                                    <span>My Answer</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fa-solid fa-tag"></i>
+                                    <span>Tags</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="index.html">
+                                    <i class="fa-solid fa-user"></i>
+                                    <span>Profile</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
             </aside>
 
-            <main class="col-md-9 card p-3" style="border-radius: 0; height: 100vw;">
+            <main id="main-forum" class="col-md-6 mt-3">
                 {{-- Top --}}
-                <div class="container mb-2">
+                <div id="top-section" class="container mb-2">
                     <div class="row justify-content-between">
                         <div class="col-6 col-md-aut0">
                             <h2>All Discussion</h2>
@@ -303,7 +305,59 @@
                     </div>
                 </div>                
                 <!-- Main content -->
-                <div class="card card-discussions p-3">
+                <div class="card card-discussions p-3 mb-3">
+                    <div class="row">
+                        {{-- column 1 --}}
+                        <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
+                            <div class="me-2 me-lg-0 mb-1">
+                                3 Suka
+                            </div>
+                            <div class="mb-1">
+                                9 Jawaban
+                            </div>
+                            <div class="mb-1">
+                                10 Dilihat
+                            </div>
+                        </div>
+                        {{-- column 2 --}}
+                        <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
+                            <a href="{{ route('detail-forum') }}" class="text-decoration-none">
+                                <h5>Gimana caranya masang webpack di laravel?</h5>
+                            </a>
+                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? </p>
+                            <div class="row g-0 align-items-center">
+                                <div class="col me-1 me-lg-2 mb-0">
+                                    <a href="#">
+                                        <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-5 col-lg-4 mb-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-3 col-md-2">
+                                            <div class="avatar-sm-wrapper d-inline-block">
+                                                <a href="#" class="me-1">
+                                                    <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-9 col-md-10">
+                                            <span class="fs-12px">
+                                                <a href="#" class="me-1 fw-bold d-block">
+                                                    Cavendio
+                                                </a>
+                                                <span class="text-grey d-block">6 Jam yang lalu</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- Main content -->
+                <div class="card card-discussions p-3 mb-3">
                     <div class="row">
                         {{-- column 1 --}}
                         <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
@@ -348,6 +402,58 @@
                     </div>
                 </div>
             </main>
+
+            <aside id="aside-right" class="col-md-3">
+                <div class="container-fluid">
+                    <div class="card mt-3">
+                        <div class="card-body text-center">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp" alt="avatar"
+                                class="rounded-circle img-fluid" style="width: 50px;">
+                            <p>Welcome back,</p>
+                            <h5 class="my-3">Rizky Cavendio</h5>
+                            {{-- <p class="text-muted mb-1">Full Stack Developer</p>
+                            <p class="text-muted mb-4">Bay Area, San Francisco, CA</p> --}}
+                            <div class="d-flex justify-content-center mb-2">
+                                <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Edit</button>
+                                <button  type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary ms-1">Message</button>
+                            </div>
+                        </div> 
+                    </div>
+
+                    <div class="card mt-3">
+                        <div class="card-body text-center">
+                            <h4>All Tags</h4>
+                            <a href="#">
+                                <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                            </a>
+                            <a href="#">
+                                <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                            </a>
+                            <a href="#">
+                                <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                            </a>
+                            <a href="#">
+                                <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                            </a>
+                            <a href="#">
+                                <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                            </a>
+                            <a href="#">
+                                <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                            </a>
+                            <a href="#">
+                                <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                            </a>
+                            <a href="#">
+                                <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                            </a>
+                            <a href="#">
+                                <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                            </a>
+                        </div> 
+                    </div>
+                </div>
+            </aside>
         </div>
     </div>
 
