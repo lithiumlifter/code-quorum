@@ -14,15 +14,15 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('frontend.home');
 })->name('home');
 
-Route::get('/forum', function () {
-    return view('forum');
+Route::get('/questions', function () {
+    return view('frontend.pages.discussion.index');
 })->name('forum');
 
 Route::get('/detail-forum', function () {
-    return view('detail-forum');
+    return view('frontend.pages.discussion.show');
 })->name('detail-forum');
 
 Route::get('/login', function () {
@@ -31,7 +31,7 @@ Route::get('/login', function () {
 
 
 Route::get('/create-discuss', function () {
-    return view('create-discuss');
+    return view('frontend.pages.discussion.form');
 })->name('create-discuss');
 
 
@@ -40,5 +40,5 @@ Route::get('/edit-answer', function () {
 })->name('edit-answer');
 
 Route::get('/profile', function () {
-    return view('profile');
+    return view('frontend.pages.profile.index');
 })->name('profile');
