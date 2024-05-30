@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -42,3 +43,7 @@ Route::get('/edit-answer', function () {
 Route::get('/profile', function () {
     return view('frontend.pages.profile.index');
 })->name('profile');
+
+Auth::routes();
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

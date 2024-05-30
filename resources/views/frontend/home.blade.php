@@ -15,7 +15,7 @@
     </head>
     <body class="antialiased">
       {{-- NAVBAR --}}
-        <nav class="navbar navbar-expand-lg bg-white">
+        <nav id="navbar-home" class="navbar navbar-expand-lg bg-white">
             <div class="container flex justify-content-between">
               <a class="navbar-link" href="{{ route('home') }}">
                 <img class="h-80px" src="{{ url('assets/img/logo.png') }}" alt="Logo Code Quorum">
@@ -39,14 +39,35 @@
                   <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                   {{-- <button class="btn btn-light" type="submit">Search</button> --}}
                 </form>
-                <ul  class="navbar-nav ms-auto my-2 my-lg-0">
-                  <li class="nav-item my-auto">
-                    <a class="nav-link text-nowrap text-blue" href="{{ route('login') }}">Log In</a>
-                  </li>
-                  <li class="nav-item ps-1 pe-0">
-                    <a class="btn btn-register text-white" href="">Register</a>
-                  </li>
-                </ul>
+                <ul class="navbar-nav ms-auto my-2 my-lg-0">
+                  @if (Auth::check())
+                      <div class="dropdown no-arrow text-end">
+                        <a href="#" class="d-block link-dark text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="{{ Auth::user()->profile_image ?? 'https://github.com/mdo.png' }}" alt="mdo" width="32" height="32" class="rounded-circle">
+                        </a>
+                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    Logout
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
+                        </ul>
+                    </div>
+                  @else
+                      <li class="nav-item my-auto">
+                          <a class="nav-link text-nowrap text-blue" href="{{ route('login') }}">Log In</a>
+                      </li>
+                      <li class="nav-item ps-1 pe-0">
+                          <a class="btn btn-register text-white" href="{{ route('register') }}">Register</a>
+                      </li>
+                  @endif
+              </ul>
               </div>
             </div>
         </nav>

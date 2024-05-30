@@ -27,6 +27,16 @@
     <!-- Custom styles for this template-->
     <link href="assets/css/sb-admin-2.min.css" rel="stylesheet">
 
+    <style>
+        html, body{
+            overflow-x: hidden;
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            /* overflow: hidden; */
+        }
+    </style>
+
 </head>
 
 <body>
@@ -248,7 +258,6 @@
                                 </a>
                             </div>
                         </li>
-
                     </ul>
                 </div>
 
@@ -356,6 +365,423 @@
                         </div>
                     </div>
                 </div>
+                <!-- Main content -->
+                <div class="card card-discussions p-3 mb-3">
+                    <div class="row">
+                        {{-- column 1 --}}
+                        <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
+                            <div id="suka" class="me-2 me-lg-0 mb-1">
+                                3 Suka
+                            </div>
+                            <div id="jawaban" class="mb-1">
+                                9 Jawaban
+                            </div>
+                            <div id="dilihat" class="mb-1">
+                                10 Dilihat
+                            </div>
+                        </div>
+                        {{-- column 2 --}}
+                        <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
+                            <a href="{{ route('detail-forum') }}" class="text-decoration-none">
+                                <h5>Gimana caranya masang webpack di laravel?</h5>
+                            </a>
+                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? </p>
+                            <div class="row g-0 align-items-center">
+                                <div class="col me-1 me-lg-2 mb-0">
+                                    <a href="#">
+                                        <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-5 col-lg-4 mb-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-3 col-md-2">
+                                            <div class="avatar-sm-wrapper d-inline-block">
+                                                <a href="#" class="me-1">
+                                                    <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-9 col-md-10">
+                                            <span class="fs-12px">
+                                                <a href="#" class="me-1 fw-bold d-block">
+                                                    Cavendio
+                                                </a>
+                                                <span class="text-grey d-block">6 Jam yang lalu</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- Main content -->
+                <div class="card card-discussions p-3 mb-3">
+                    <div class="row">
+                        {{-- column 1 --}}
+                        <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
+                            <div id="suka" class="me-2 me-lg-0 mb-1">
+                                3 Suka
+                            </div>
+                            <div id="jawaban" class="mb-1">
+                                9 Jawaban
+                            </div>
+                            <div id="dilihat" class="mb-1">
+                                10 Dilihat
+                            </div>
+                        </div>
+                        {{-- column 2 --}}
+                        <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
+                            <a href="{{ route('detail-forum') }}" class="text-decoration-none">
+                                <h5>Gimana caranya masang webpack di laravel?</h5>
+                            </a>
+                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? </p>
+                            <div class="row g-0 align-items-center">
+                                <div class="col me-1 me-lg-2 mb-0">
+                                    <a href="#">
+                                        <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-5 col-lg-4 mb-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-3 col-md-2">
+                                            <div class="avatar-sm-wrapper d-inline-block">
+                                                <a href="#" class="me-1">
+                                                    <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-9 col-md-10">
+                                            <span class="fs-12px">
+                                                <a href="#" class="me-1 fw-bold d-block">
+                                                    Cavendio
+                                                </a>
+                                                <span class="text-grey d-block">6 Jam yang lalu</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- Main content -->
+                <div class="card card-discussions p-3 mb-3">
+                    <div class="row">
+                        {{-- column 1 --}}
+                        <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
+                            <div id="suka" class="me-2 me-lg-0 mb-1">
+                                3 Suka
+                            </div>
+                            <div id="jawaban" class="mb-1">
+                                9 Jawaban
+                            </div>
+                            <div id="dilihat" class="mb-1">
+                                10 Dilihat
+                            </div>
+                        </div>
+                        {{-- column 2 --}}
+                        <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
+                            <a href="{{ route('detail-forum') }}" class="text-decoration-none">
+                                <h5>Gimana caranya masang webpack di laravel?</h5>
+                            </a>
+                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? </p>
+                            <div class="row g-0 align-items-center">
+                                <div class="col me-1 me-lg-2 mb-0">
+                                    <a href="#">
+                                        <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-5 col-lg-4 mb-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-3 col-md-2">
+                                            <div class="avatar-sm-wrapper d-inline-block">
+                                                <a href="#" class="me-1">
+                                                    <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-9 col-md-10">
+                                            <span class="fs-12px">
+                                                <a href="#" class="me-1 fw-bold d-block">
+                                                    Cavendio
+                                                </a>
+                                                <span class="text-grey d-block">6 Jam yang lalu</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- Main content -->
+                <div class="card card-discussions p-3 mb-3">
+                    <div class="row">
+                        {{-- column 1 --}}
+                        <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
+                            <div id="suka" class="me-2 me-lg-0 mb-1">
+                                3 Suka
+                            </div>
+                            <div id="jawaban" class="mb-1">
+                                9 Jawaban
+                            </div>
+                            <div id="dilihat" class="mb-1">
+                                10 Dilihat
+                            </div>
+                        </div>
+                        {{-- column 2 --}}
+                        <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
+                            <a href="{{ route('detail-forum') }}" class="text-decoration-none">
+                                <h5>Gimana caranya masang webpack di laravel?</h5>
+                            </a>
+                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? </p>
+                            <div class="row g-0 align-items-center">
+                                <div class="col me-1 me-lg-2 mb-0">
+                                    <a href="#">
+                                        <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-5 col-lg-4 mb-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-3 col-md-2">
+                                            <div class="avatar-sm-wrapper d-inline-block">
+                                                <a href="#" class="me-1">
+                                                    <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-9 col-md-10">
+                                            <span class="fs-12px">
+                                                <a href="#" class="me-1 fw-bold d-block">
+                                                    Cavendio
+                                                </a>
+                                                <span class="text-grey d-block">6 Jam yang lalu</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- Main content -->
+                <div class="card card-discussions p-3 mb-3">
+                    <div class="row">
+                        {{-- column 1 --}}
+                        <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
+                            <div id="suka" class="me-2 me-lg-0 mb-1">
+                                3 Suka
+                            </div>
+                            <div id="jawaban" class="mb-1">
+                                9 Jawaban
+                            </div>
+                            <div id="dilihat" class="mb-1">
+                                10 Dilihat
+                            </div>
+                        </div>
+                        {{-- column 2 --}}
+                        <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
+                            <a href="{{ route('detail-forum') }}" class="text-decoration-none">
+                                <h5>Gimana caranya masang webpack di laravel?</h5>
+                            </a>
+                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? </p>
+                            <div class="row g-0 align-items-center">
+                                <div class="col me-1 me-lg-2 mb-0">
+                                    <a href="#">
+                                        <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-5 col-lg-4 mb-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-3 col-md-2">
+                                            <div class="avatar-sm-wrapper d-inline-block">
+                                                <a href="#" class="me-1">
+                                                    <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-9 col-md-10">
+                                            <span class="fs-12px">
+                                                <a href="#" class="me-1 fw-bold d-block">
+                                                    Cavendio
+                                                </a>
+                                                <span class="text-grey d-block">6 Jam yang lalu</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- Main content -->
+                <div class="card card-discussions p-3 mb-3">
+                    <div class="row">
+                        {{-- column 1 --}}
+                        <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
+                            <div id="suka" class="me-2 me-lg-0 mb-1">
+                                3 Suka
+                            </div>
+                            <div id="jawaban" class="mb-1">
+                                9 Jawaban
+                            </div>
+                            <div id="dilihat" class="mb-1">
+                                10 Dilihat
+                            </div>
+                        </div>
+                        {{-- column 2 --}}
+                        <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
+                            <a href="{{ route('detail-forum') }}" class="text-decoration-none">
+                                <h5>Gimana caranya masang webpack di laravel?</h5>
+                            </a>
+                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? </p>
+                            <div class="row g-0 align-items-center">
+                                <div class="col me-1 me-lg-2 mb-0">
+                                    <a href="#">
+                                        <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-5 col-lg-4 mb-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-3 col-md-2">
+                                            <div class="avatar-sm-wrapper d-inline-block">
+                                                <a href="#" class="me-1">
+                                                    <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-9 col-md-10">
+                                            <span class="fs-12px">
+                                                <a href="#" class="me-1 fw-bold d-block">
+                                                    Cavendio
+                                                </a>
+                                                <span class="text-grey d-block">6 Jam yang lalu</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- Main content -->
+                <div class="card card-discussions p-3 mb-3">
+                    <div class="row">
+                        {{-- column 1 --}}
+                        <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
+                            <div id="suka" class="me-2 me-lg-0 mb-1">
+                                3 Suka
+                            </div>
+                            <div id="jawaban" class="mb-1">
+                                9 Jawaban
+                            </div>
+                            <div id="dilihat" class="mb-1">
+                                10 Dilihat
+                            </div>
+                        </div>
+                        {{-- column 2 --}}
+                        <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
+                            <a href="{{ route('detail-forum') }}" class="text-decoration-none">
+                                <h5>Gimana caranya masang webpack di laravel?</h5>
+                            </a>
+                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? </p>
+                            <div class="row g-0 align-items-center">
+                                <div class="col me-1 me-lg-2 mb-0">
+                                    <a href="#">
+                                        <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-5 col-lg-4 mb-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-3 col-md-2">
+                                            <div class="avatar-sm-wrapper d-inline-block">
+                                                <a href="#" class="me-1">
+                                                    <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-9 col-md-10">
+                                            <span class="fs-12px">
+                                                <a href="#" class="me-1 fw-bold d-block">
+                                                    Cavendio
+                                                </a>
+                                                <span class="text-grey d-block">6 Jam yang lalu</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                <!-- Main content -->
+                <div class="card card-discussions p-3 mb-3">
+                    <div class="row">
+                        {{-- column 1 --}}
+                        <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
+                            <div id="suka" class="me-2 me-lg-0 mb-1">
+                                3 Suka
+                            </div>
+                            <div id="jawaban" class="mb-1">
+                                9 Jawaban
+                            </div>
+                            <div id="dilihat" class="mb-1">
+                                10 Dilihat
+                            </div>
+                        </div>
+                        {{-- column 2 --}}
+                        <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
+                            <a href="{{ route('detail-forum') }}" class="text-decoration-none">
+                                <h5>Gimana caranya masang webpack di laravel?</h5>
+                            </a>
+                            <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? </p>
+                            <div class="row g-0 align-items-center">
+                                <div class="col me-1 me-lg-2 mb-0">
+                                    <a href="#">
+                                        <span class="badge rounded-pill text-bg-light">Eloquent</span>
+                                    </a>
+                                </div>
+                                <div class="col-md-5 col-lg-4 mb-0">
+                                    <div class="row align-items-center">
+                                        <div class="col-3 col-md-2">
+                                            <div class="avatar-sm-wrapper d-inline-block">
+                                                <a href="#" class="me-1">
+                                                    <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="col-9 col-md-10">
+                                            <span class="fs-12px">
+                                                <a href="#" class="me-1 fw-bold d-block">
+                                                    Cavendio
+                                                </a>
+                                                <span class="text-grey d-block">6 Jam yang lalu</span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
                 <!-- Main content -->
                 <div class="card card-discussions p-3 mb-3">
                     <div class="row">
