@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DiscussionController;
+use App\Models\Discussion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +20,12 @@ Route::get('/', function () {
     return view('frontend.home');
 })->name('home');
 
+Route::get('discussions', [DiscussionController::class, 'index'])->name('discussions.index');
+
+Route::middleware('auth')->group(function() {
+    Route::resource('discussions', DiscussionController::class)->only(['create','show', 'store', 'edit', 'update', 'destroy']);
+});
+
 Route::get('/questions', function () {
     return view('frontend.pages.discussion.index');
 })->name('forum');
@@ -29,12 +37,6 @@ Route::get('/detail-forum', function () {
 Route::get('/login', function () {
     return view('login');
 })->name('login');
-
-
-Route::get('/create-discuss', function () {
-    return view('frontend.pages.discussion.form');
-})->name('create-discuss');
-
 
 Route::get('/edit-answer', function () {
     return view('edit-answer');

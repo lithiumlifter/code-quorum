@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('discussions', function (Blueprint $table) {
-            $table->id();
+            $table->bigIncrements('id');
             $table->bigInteger('user_id')->unsigned();
-            $table->bigInteger('tag_id')->unsigned();
+            // $table->bigInteger('tag_id')->unsigned();
             $table->string('title');
             $table->string('slug');
             $table->string('content_preview');
