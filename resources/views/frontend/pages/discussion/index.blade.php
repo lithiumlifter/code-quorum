@@ -79,7 +79,7 @@
                     <p>Welcome back,</p>
                     <h5 class="my-3">{{ auth()->user()->username }}</h5>
                     <div class="d-flex justify-content-center mb-2">
-                        <a href="{{ route('profile') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Edit</a>
+                        <a href="{{ route('profile.index') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Edit</a>
                         <a type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary ms-1">Share</a>
                     </div>
                 </div> 

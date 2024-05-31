@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\DiscussionController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,9 +23,11 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('discussions', [DiscussionController::class, 'index'])->name('discussions.index');
+// Route::get('profile', [UserController::class, 'index'])->name('profile.index');
 
 Route::middleware('auth')->group(function() {
     Route::resource('discussions', DiscussionController::class)->only(['create','show', 'store', 'edit', 'update', 'destroy']);
+    Route::resource('profile', UserController::class);
 });
 
 // Rute untuk jawaban
@@ -50,9 +53,9 @@ Route::get('/edit-answer', function () {
     return view('edit-answer');
 })->name('edit-answer');
 
-Route::get('/profile', function () {
-    return view('frontend.pages.profile.index');
-})->name('profile');
+// Route::get('/profile', function () {
+//     return view('frontend.pages.profile.index');
+// })->name('profile');
 
 Auth::routes();
 
