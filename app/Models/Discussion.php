@@ -2,8 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Discussion extends Model
 {
@@ -23,5 +24,10 @@ class Discussion extends Model
     public function answers()
     {
         return $this->hasMany(Answer::class);
+    }
+
+    public function saves(): HasMany
+    {
+        return $this->hasMany(Save::class);
     }
 }

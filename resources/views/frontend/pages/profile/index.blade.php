@@ -132,7 +132,7 @@
                                 <div id="dilihat" class="mb-1">10 Dilihat</div>
                             </div>
                             <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
-                                <a href="{{ route('detail-forum') }}" class="text-decoration-none">
+                                <a href="{{ route('discussions.show', $discussion->slug) }}" class="text-decoration-none">
                                     <h5>{{ $discussion->title }}</h5>
                                 </a>
                                 <p>{!! $discussion->content_preview !!}</p>
@@ -182,8 +182,93 @@
                         </div>
                     @endforeach
                 </div>
-                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">...</div>
+                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                    @foreach ($savedDiscussions as $save)
+                    <div class="card card-discussions p-3 mb-3 mt-3">
+                        <div class="row">
+                            <div class="col-12 col-lg-1 mb-1 mb-lg-0 d-flex flex-row flex-lg-column">
+                                @if (Auth::check() && Auth::user()->saves->contains('discussion_id', $save->discussion->id))
+                                    <a href="#" class="text-decoration-none" onclick="unsaveDiscussion(this, {{ $save->discussion->id }})">
+                                        <i class="fa-solid fa-bookmark"></i>
+                                    </a>
+                                @else
+                                    <a href="#" class="text-decoration-none" onclick="saveDiscussion(this, {{ $save->discussion->id }})">
+                                        <i class="fa-regular fa-bookmark"></i>
+                                    </a>
+                                @endif
+                            </div>
+                            <div class="col-12 col-lg-11 mb-1 mb-lg-0 d-flex flex-column">
+                                <a href="{{ route('discussions.show', $save->discussion->slug) }}" class="text-decoration-none">
+                                    <h5>{{ $save->discussion->title }}</h5>
+                                </a>
+                                <p>{!! $save->discussion->content_preview !!}</p>
+                                <div class="row g-0 align-items-center">
+                                    <div class="col me-1 me-lg-2 mb-0">
+                                        @foreach ($save->discussion->tags as $tag)
+                                            <a href="#">
+                                                <span class="badge rounded-pill text-bg-light">{{ $tag->name }}</span>
+                                            </a>
+                                        @endforeach
+                                    </div>
+                                    <div class="col-md-5 col-lg-4 mb-0">
+                                        <div class="row align-items-center">
+                                            <div class="col-3 col-md-2">
+                                                <div class="avatar-sm-wrapper d-inline-block">
+                                                    <a href="#" class="me-1">
+                                                        <img src="{{ url('assets/img/icon/avatar-01.jpg') }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                                    </a>
+                                                </div>
+                                            </div>
+                                            <div class="col-9 col-md-10">
+                                                <span class="fs-12px">
+                                                    <a href="#" class="me-1 fw-bold d-block">{{ $save->discussion->user->username }}</a>
+                                                    <span class="text-grey d-block">{{ $save->discussion->created_at->diffForHumans() }}</span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
             </div>
         </div>
     </main>
 @endsection
+
+@push('scripts')
+    <script>
+        function saveDiscussion(element, discussionId) {
+            event.preventDefault();
+
+            axios.post(`/save/discussion/${discussionId}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        element.innerHTML = '<i class="fa-solid fa-bookmark"></i>';
+                        element.setAttribute('onclick', `unsaveDiscussion(this, ${discussionId})`);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error saving discussion:', error);
+                });
+        }
+
+        function unsaveDiscussion(element, discussionId) {
+            event.preventDefault();
+
+            axios.delete(`/unsave/discussion/${discussionId}`)
+                .then(response => {
+                    if (response.status === 200) {
+                        // Remove the discussion card from the profile
+                        element.closest('.card-discussions').remove();
+                    }
+                })
+                .catch(error => {
+                    console.error('Error unsaving discussion:', error);
+                });
+        }
+    </script>    
+@endpush
+

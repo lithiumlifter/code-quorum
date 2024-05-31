@@ -23,8 +23,15 @@
                         <span>Like</span></a>
                     </div>
                     <div class="mb-1">
-                        <i class="fa-regular fa-bookmark"></i>
-                        <span>Save</span></a>
+                        @if (Auth::check() && Auth::user()->saves->contains('discussion_id', $discussions->id))
+                            <a href="#" class="text-decoration-none" onclick="unsaveDiscussion(this, {{ $discussions->id }})">
+                                <i class="fa-solid fa-bookmark"></i>
+                            </a>
+                        @else
+                            <a href="#" class="text-decoration-none" onclick="saveDiscussion(this, {{ $discussions->id }})">
+                                <i class="fa-regular fa-bookmark"></i>
+                            </a>
+                        @endif
                     </div>
                 </div>
                 {{-- column 2 --}}
@@ -217,5 +224,37 @@
     
                 $('span.note-icon-caret').remove();
             })
+        </script>
+
+        <script>
+            function saveDiscussion(element, discussionId) {
+                event.preventDefault();
+
+                axios.post(`/save/discussion/${discussionId}`)
+                    .then(response => {
+                        if (response.status === 200) {
+                            element.innerHTML = '<i class="fa-solid fa-bookmark"></i>';
+                            element.setAttribute('onclick', `unsaveDiscussion(this, ${discussionId})`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error saving discussion:', error);
+                    });
+            }
+
+            function unsaveDiscussion(element, discussionId) {
+                event.preventDefault();
+
+                axios.delete(`/unsave/discussion/${discussionId}`)
+                    .then(response => {
+                        if (response.status === 200) {
+                            element.innerHTML = '<i class="fa-regular fa-bookmark"></i>';
+                            element.setAttribute('onclick', `saveDiscussion(this, ${discussionId})`);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error unsaving discussion:', error);
+                    });
+            }
         </script>
 @endpush
