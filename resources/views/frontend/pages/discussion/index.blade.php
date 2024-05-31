@@ -14,7 +14,6 @@
             </div>
         </div>                
         <!-- Main content -->
-        <!-- Main content -->
         @foreach ($discussions as $discussion)
             <div class="card card-discussions p-3 mb-3">
                 <div class="row">
@@ -35,7 +34,7 @@
                         <a href="{{ route('discussions.show', $discussion->slug) }}" class="text-decoration-none">
                             <h5>{{ $discussion->title }}</h5>
                         </a>
-                        <p>{{ $discussion->content_preview }}</p>
+                        <p>{!! $discussion->content_preview !!}</p>
                         <div class="row g-0 align-items-center">
                             <div class="col me-1 me-lg-2 mb-0">
                                 @foreach ($discussion->tags as $tag)
