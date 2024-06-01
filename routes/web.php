@@ -7,6 +7,7 @@ use App\Http\Controllers\SaveController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\DiscussionController;
+use App\Http\Controllers\LikeController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,6 +30,10 @@ Route::get('discussions', [DiscussionController::class, 'index'])->name('discuss
 Route::middleware('auth')->group(function() {
     Route::resource('discussions', DiscussionController::class)->only(['create','show', 'store', 'edit', 'update', 'destroy']);
     Route::resource('profile', UserController::class);
+    Route::post('discussions/{discussion}/like', [LikeController::class, 'discussionLike'])->name('discussion.like.like');
+    Route::post('discussions/{discussion}/unlike', [LikeController::class, 'discussionUnLike'])->name('discussion.like.unlike');
+    Route::post('answers/{answer}/like', [LikeController::class, 'answerLike'])->name('answer.like.like');
+    Route::post('answers/{answer}/unlike', [LikeController::class, 'answerUnLike'])->name('answer.like.unlike');
 });
 
 // Rute untuk jawaban

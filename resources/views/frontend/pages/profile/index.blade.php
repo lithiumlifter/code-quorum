@@ -99,12 +99,8 @@
                     <div class="fw-bold">{{ $answers->count() }}</div>
                 </div>
                 <div class="col-3 d-flex flex-column align-items-center">
-                    <div class="mb-2">Like</div>
-                    <div class="fw-bold">12</div>
-                </div>
-                <div class="col-3 d-flex flex-column align-items-center">
                     <div class="mb-2">Save</div>
-                    <div class="fw-bold">12</div>
+                    <div class="fw-bold">{{ $savedDiscussions->count() }}</div>
                 </div>
             </div>
         </div>

@@ -29,7 +29,7 @@
                     <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="{{ route('forum') }}">Forum</a>
+                    <a class="nav-link" aria-current="page" href="{{ route('discussions.index') }}">Forum</a>
                   </li>
                   <li class="nav-item">
                     <a class="nav-link" aria-current="page" href="#">About Us</a>
@@ -46,7 +46,7 @@
                             <img src="{{ Auth::user()->profile_image ?? 'https://github.com/mdo.png' }}" alt="mdo" width="32" height="32" class="rounded-circle">
                         </a>
                         <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="{{ route('profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a></li>
                             <li><a class="dropdown-item" href="#">Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>

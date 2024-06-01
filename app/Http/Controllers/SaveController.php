@@ -22,7 +22,7 @@ class SaveController extends Controller
 
     public function unsaveDiscussion(Request $request, $discussionId)
     {
-    $user = Auth::user();
+        $user = Auth::user();
 
         $save = Save::where('user_id', $user->id)->where('discussion_id', $discussionId)->first();
         if ($save) {

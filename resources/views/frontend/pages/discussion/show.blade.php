@@ -19,16 +19,34 @@
                 {{-- column 1 --}}
                 <div class="col-12 col-lg-1 mb-1 mb-lg-0 d-flex flex-row flex-lg-column">
                     <div class="me-2 me-lg-0 mb-2">
-                        <i class="fa-regular fa-heart"></i>
-                        <span>Like</span></a>
+                        @if (Auth::check())
+                                @if ($discussions->liked())
+                                    <a id="discussionUnlike" href="javascript:;" data-liked="true" data-slug="{{ $discussions->slug }}" onclick="unlikeDiscussion(this, '{{ $discussions->slug }}')">
+                                        <i class="fa-solid fa-heart"></i>
+                                        <span>{{ $discussions->likeCount }}</span>
+                                    </a>
+                                @else
+                                    <a id="discussionLike" href="javascript:;" data-liked="false" data-slug="{{ $discussions->slug }}" onclick="likeDiscussion(this, '{{ $discussions->slug }}')">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span>{{ $discussions->likeCount }}</span>
+                                    </a>
+                                @endif
+                        @else
+                            <a href="{{ route('login') }}">
+                                <i class="fa-regular fa-heart"></i>
+                                <span>Like</span>
+                            </a>
+                        @endif
+                    
                     </div>
+                    
                     <div class="mb-1">
                         @if (Auth::check() && Auth::user()->saves->contains('discussion_id', $discussions->id))
-                            <a href="#" class="text-decoration-none" onclick="unsaveDiscussion(this, {{ $discussions->id }})">
+                            <a href="javascript:;" class="text-decoration-none" onclick="unsaveDiscussion(this, {{ $discussions->id }})">
                                 <i class="fa-solid fa-bookmark"></i>
                             </a>
                         @else
-                            <a href="#" class="text-decoration-none" onclick="saveDiscussion(this, {{ $discussions->id }})">
+                            <a href="javascript:;" class="text-decoration-none" onclick="saveDiscussion(this, {{ $discussions->id }})">
                                 <i class="fa-regular fa-bookmark"></i>
                             </a>
                         @endif
@@ -110,8 +128,24 @@
                     {{-- column 1 --}}
                     <div class="col-12 col-lg-1 mb-1 mb-lg-0 d-flex flex-row flex-lg-column">
                         <div class="me-2 me-lg-0 mb-2">
-                            <i class="fa-regular fa-heart"></i>
-                            <span>Like</span></a>
+                            @if (Auth::check())
+                                @if ($answer->liked())
+                                    <a id="answerUnlike" href="javascript:;" data-liked="true" data-id="{{ $answer->id }}" onclick="unlikeAnswer(this, '{{ $answer->id }}')">
+                                        <i class="fa-solid fa-heart"></i>
+                                        <span>{{ $answer->likeCount }}</span>
+                                    </a>
+                                @else
+                                    <a id="answerLike" href="javascript:;" data-liked="false" data-id="{{ $answer->id }}" onclick="likeAnswer(this, '{{ $answer->id }}')">
+                                        <i class="fa-regular fa-heart"></i>
+                                        <span>{{ $answer->likeCount }}</span>
+                                    </a>
+                                @endif
+                            @else
+                                <a href="{{ route('login') }}">
+                                    <i class="fa-regular fa-heart"></i>
+                                    <span>Like</span>
+                                </a>
+                            @endif
                         </div>
                     </div>
                     {{-- column 2 --}}
@@ -204,7 +238,6 @@
 @endsection
 
 @push('scripts')
-        {{-- Summer note --}}
         <script>
             $(document).ready(function(){
                 $('#answer').summernote({
@@ -257,4 +290,76 @@
                     });
             }
         </script>
+
+<script>
+    function likeDiscussion(element, discussionSlug) {
+        event.preventDefault();
+
+        axios.post(`/discussions/${discussionSlug}/like`)
+            .then(response => {
+                if (response.status === 200) {
+                    const likeCount = response.data.data.likeCount;
+                    element.innerHTML = '<i class="fa-solid fa-heart"></i> <span>' + likeCount + '</span>';
+                    element.setAttribute('onclick', `unlikeDiscussion(this, '${discussionSlug}')`);
+                    element.setAttribute('data-liked', 'true');
+                }
+            })
+            .catch(error => {
+                console.error('Error liking discussion:', error);
+            });
+    }
+
+    function unlikeDiscussion(element, discussionSlug) {
+        event.preventDefault();
+
+        axios.post(`/discussions/${discussionSlug}/unlike`)
+            .then(response => {
+                if (response.status === 200) {
+                    const likeCount = response.data.data.likeCount;
+                    element.innerHTML = '<i class="fa-regular fa-heart"></i> <span>' + likeCount + '</span>';
+                    element.setAttribute('onclick', `likeDiscussion(this, '${discussionSlug}')`);
+                    element.setAttribute('data-liked', 'false');
+                }
+            })
+            .catch(error => {
+                console.error('Error unliking discussion:', error);
+            });
+    }
+
+    function likeAnswer(element, answerId) {
+        event.preventDefault();
+
+        axios.post(`/answers/${answerId}/like`)
+            .then(response => {
+                if (response.status === 200) {
+                    const likeCount = response.data.data.likeCount;
+                    element.innerHTML = '<i class="fa-solid fa-heart"></i> <span>' + likeCount + '</span>';
+                    element.setAttribute('onclick', `unlikeAnswer(this, '${answerId}')`);
+                    element.setAttribute('data-liked', 'true');
+                }
+            })
+            .catch(error => {
+                console.error('Error liking answer:', error);
+            });
+    }
+
+    function unlikeAnswer(element, answerId) {
+        event.preventDefault();
+
+        axios.post(`/answers/${answerId}/unlike`)
+            .then(response => {
+                if (response.status === 200) {
+                    const likeCount = response.data.data.likeCount;
+                    element.innerHTML = '<i class="fa-regular fa-heart"></i> <span>' + likeCount + '</span>';
+                    element.setAttribute('onclick', `likeAnswer(this, '${answerId}')`);
+                    element.setAttribute('data-liked', 'false');
+                }
+            })
+            .catch(error => {
+                console.error('Error unliking answer:', error);
+            });
+    }
+</script>
+
+
 @endpush
