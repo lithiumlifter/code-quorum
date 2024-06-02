@@ -6,7 +6,7 @@
         <div id="top-section" class="container mb-2">
             <div class="row justify-content-between">
                 <div class="col-6 col-md-auto">
-                    <h2>All Discussion</h2>
+                    <h2>My Saved Discussions</h2>
                 </div>
                 <div class="col-6 col-md-auto d-flex justify-content-end">
                     <a href="{{ route('discussions.create') }}" class="btn btn-dark">Create Discussion</a>
@@ -14,50 +14,48 @@
             </div>
         </div>                
         <!-- Main content -->
-        @foreach ($discussions as $discussion)
+        @foreach ($savedDiscussions as $save)
             <div class="card card-discussions p-3 mb-3">
                 <div class="row">
                     {{-- column 1 --}}
-                    <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
-                        <div id="suka" class="me-2 me-lg-0 mb-1">
-                            {{ $discussion->likeCount }} Suka
-                        </div>
-                        <div id="jawaban" class="mb-1">
-                            {{ $discussion->answers->count() }} Jawaban
-                        </div>
-                        <div id="dilihat" class="mb-1">
-                            {{ $discussion->view_count }} Dilihat
-                        </div>
+                    <div class="col-12 col-lg-1 mb-1 mb-lg-0 d-flex flex-row flex-lg-column">
+                        @if (Auth::check() && Auth::user()->saves->contains('discussion_id', $save->discussion->id))
+                            <a href="#" class="text-decoration-none" onclick="unsaveDiscussion(this, {{ $save->discussion->id }})">
+                                <i class="fa-solid fa-bookmark"></i>
+                            </a>
+                        @else
+                            <a href="#" class="text-decoration-none" onclick="saveDiscussion(this, {{ $save->discussion->id }})">
+                                <i class="fa-regular fa-bookmark"></i>
+                            </a>
+                        @endif
                     </div>
                     {{-- column 2 --}}
-                    <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
-                        <a href="{{ route('discussions.show', $discussion->slug) }}" class="text-decoration-none">
-                            <h5>{{ $discussion->title }}</h5>
+                    <div class="col-12 col-lg-11 mb-1 mb-lg-0 d-flex flex-column">
+                        <a href="{{ route('discussions.show', $save->discussion->slug) }}" class="text-decoration-none">
+                            <h5>{{ $save->discussion->title }}</h5>
                         </a>
-                        <p>{!! $discussion->content_preview !!}</p>
+                        <p>{!! $save->discussion->content_preview !!}</p>
                         <div class="row g-0 align-items-center">
                             <div class="col me-1 me-lg-2 mb-0">
-                                @foreach ($discussion->tags as $tag)
+                                @foreach ($save->discussion->tags as $tag)
                                     <a href="#">
                                         <span class="badge rounded-pill text-bg-light">{{ $tag->name }}</span>
                                     </a>
-                                 @endforeach
+                                @endforeach
                             </div>                            
                             <div class="col-md-5 col-lg-4 mb-0">
                                 <div class="row align-items-center">
                                     <div class="col-3 col-md-2">
                                         <div class="avatar-sm-wrapper d-inline-block">
                                             <a href="#" class="me-1">
-                                                <img src="{{ $discussion->user->picture ? asset('storage/profiles/' . basename($discussion->user->picture)) : url("assets/img/user.png") }}" alt="Img_Profile" class="rounded-circle" style="object-fit: cover; width: 25px; height: 25px;">
+                                                <img src="{{ $save->discussion->user->picture ? asset('storage/profiles/' . basename($save->discussion->user->picture)) : url("assets/img/user.png") }}" alt="Img_Profile" class="rounded-circle" style="object-fit: cover; width: 25px; height: 25px;">
                                             </a>
-                                        </div> 
+                                        </div>
                                     </div>
                                     <div class="col-9 col-md-10">
                                         <span class="fs-12px">
-                                            <a href="#" class="me-1 fw-bold d-block">
-                                                {{ $discussion->user->username }}
-                                            </a>
-                                            <span class="text-grey d-block">{{ $discussion->created_at->diffForHumans() }}</span>
+                                            <a href="#" class="me-1 fw-bold d-block">{{ $save->discussion->user->username }}</a>
+                                            <span class="text-grey d-block">{{ $save->discussion->created_at->diffForHumans() }}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -67,7 +65,6 @@
                 </div>
             </div>
         @endforeach
-
     </main>
 
     <aside id="aside-right" class="col-md-3">
@@ -111,48 +108,4 @@
             </div>
         </div>
     </aside>
-
-    {{-- <div class="card card-discussions p-3 mb-3">
-        <div class="row">
-            <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-end">
-                <div class="me-2 me-lg-0 mb-1">
-                    3 Suka
-                </div>
-                <div class="mb-1">
-                    9 Jawaban
-                </div>
-                <div class="mb-1">
-                    10 Dilihat
-                </div>
-            </div>
-            <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
-                <a href="{{ route('detail-forum') }}" class="text-decoration-none">
-                    <h5>Gimana caranya masang webpack di laravel?</h5>
-                </a>
-                <p> Lorem ipsum dolor sit amet consectetur adipisicing elit. Consectetur cum est eos repudiandae in vero ex, magnam ea sunt fugiat voluptatibus? </p>
-                <div class="row g-0 align-items-center">
-                    <div class="col me-1 me-lg-2 mb-0">
-                        <a href="#">
-                            <span class="badge rounded-pill text-bg-light">Eloquent</span>
-                        </a>
-                    </div>
-                    <div class="col-5 col-lg-4 mb-0">
-                        <div class="avatar-sm-wrapper d-inline-block">
-                            <a href="#" class="me-1">
-                                <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
-                            </a>
-                        </div>
-                        <span class="fs-12px">
-                            <a href="#" class="me-1 fw-bold">
-                                Cavendio
-                            </a>
-                            <span class="text-gre">6 Jam yang lalu</span>
-                        </span>
-                    </div>
-                </div>
-                
-            </div>
-        </div>
-    </div> --}}
 @endsection
-

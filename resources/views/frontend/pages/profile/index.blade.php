@@ -3,10 +3,18 @@
 @section('content')
     <main id="main-forum" class="col-md-9 mt-3">
         @if(session('success'))
-            <div class="alert alert-success">
-                {{ session('success') }}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ session('success') }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         @endif
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible" role="alert" style="position: relative; z-index: 9999;">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+    
         <div id="top-section" class="container mb-2">
             <div class="row justify-content-between">
                 <div class="col-6 col-md-auto">
@@ -32,14 +40,14 @@
                         <div class="modal-body">
                             <div class="row">
                                 <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-center">
-                                    <img src="{{ $user->picture ?? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' }}" alt="avatar"
-                                        class="rounded-circle img-fluid" style="width: 100px; border: 1px solid black;">
+                                    <img id="previewImage" src="{{ asset('storage/profiles/' . basename($user->picture)) ?? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' }}" alt="avatar" class="rounded-circle img-fluid" style="width: 100px; height: 100px; border: 1px solid black; object-fit: cover;">
+
                                     <label for="picture" class="btn p-0 edit-avatar-show">
                                         <span class="rounded-circle p-1" style="background-color:gray;">
                                             <i class="fa-solid fa-pen" style="color: white"></i>
                                         </span>
                                     </label>
-                                    <input type="file" class="form-control d-none" id="picture" name="picture">
+                                    <input type="file" class="form-control d-none" id="picture" name="picture" onchange="previewImage(this);">
                                 </div>
                                 <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
                                     <div class="mb-3">
@@ -66,14 +74,11 @@
             </div>
         </div>
 
-
-
         <div class="card card-discussions p-3 mb-3">
             <div class="row">
                 <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-center">
-                    <img src="{{ $user->picture ?? 'https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp' }}" alt="avatar"
-                        class="rounded-circle img-fluid" style="width: 100px; border: 1px solid black;">
-                </div>
+                    <img src="{{ $user->picture ? asset('storage/profiles/' . basename($user->picture)) : url("assets/img/user.png") }}" alt="avatar" class="rounded-circle img-fluid" style="width: 100px; height: 100px; border: 1px solid black; object-fit: cover;">
+                </div>                           
                 <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
                     <h5 class="my-3" style="font-weight: bold">{{ $user->username }}</h5>
                     <p>{{ $user->about }}</p>
@@ -145,7 +150,7 @@
                                             <div class="col-3 col-md-2">
                                                 <div class="avatar-sm-wrapper d-inline-block">
                                                     <a href="#" class="me-1">
-                                                        <img src="{{ url('assets/img/icon/avatar-01.jpg') }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                                        <img src="{{ $user->picture ? asset('storage/profiles/' . basename($user->picture)) : url("assets/img/user.png") }}" alt="Img_Profile" class="rounded-circle" style="object-fit: cover; width: 25px; height: 25px;">
                                                     </a>
                                                 </div>
                                             </div>
@@ -211,7 +216,7 @@
                                             <div class="col-3 col-md-2">
                                                 <div class="avatar-sm-wrapper d-inline-block">
                                                     <a href="#" class="me-1">
-                                                        <img src="{{ url('assets/img/icon/avatar-01.jpg') }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                                        <img src="{{ $save->discussion->user->picture ? asset('storage/profiles/' . basename($save->discussion->user->picture)) : url("assets/img/user.png") }}" alt="Img_Profile" class="rounded-circle" style="object-fit: cover; width: 25px; height: 25px;">
                                                     </a>
                                                 </div>
                                             </div>
@@ -235,6 +240,16 @@
 @endsection
 
 @push('scripts')
+    <script>
+        $('#picture').on('change', function(event) {
+            var output = $('#previewImage');
+            output.attr('src', URL.createObjectURL(event.target.files[0]));
+            output.onload = function() {
+                URL.revokeObjectURL(output.attr('src'))
+            }
+        })
+    </script>
+
     <script>
         function saveDiscussion(element, discussionId) {
             event.preventDefault();

@@ -2,6 +2,18 @@
 
 @section('content')
     <main class="col-md-9 mt-3">
+        @if(session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>{{ session('success') }}</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if(session('error'))
+            <div class="alert alert-danger alert-dismissible" role="alert" style="position: relative; z-index: 9999;">
+                {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         {{-- Top --}}
         <div class="container mb-2">
             <div class="row justify-content-between">
@@ -9,7 +21,7 @@
                     <h4>All discussions > {{ $discussions->title }}</h4>
                 </div>
                 <div class="col-6 col-md-auto d-flex justify-content-end">
-                    <a href="#" class="btn btn-dark">Create discussions</a>
+                    <a href="{{ route('discussions.create') }}" class="btn btn-dark">Create discussions</a>
                 </div>
             </div>
         </div>                
@@ -34,22 +46,29 @@
                         @else
                             <a href="{{ route('login') }}">
                                 <i class="fa-regular fa-heart"></i>
-                                <span>Like</span>
+                                <span>{{ $discussions->likeCount }}</span>
                             </a>
                         @endif
                     
                     </div>
                     
                     <div class="mb-1">
-                        @if (Auth::check() && Auth::user()->saves->contains('discussion_id', $discussions->id))
-                            <a href="javascript:;" class="text-decoration-none" onclick="unsaveDiscussion(this, {{ $discussions->id }})">
-                                <i class="fa-solid fa-bookmark"></i>
-                            </a>
-                        @else
-                            <a href="javascript:;" class="text-decoration-none" onclick="saveDiscussion(this, {{ $discussions->id }})">
+                        @auth
+                            @if (Auth::check() && Auth::user()->saves->contains('discussion_id', $discussions->id))
+                                <a href="javascript:;" class="text-decoration-none" onclick="unsaveDiscussion(this, {{ $discussions->id }})">
+                                    <i class="fa-solid fa-bookmark"></i>
+                                </a>
+                            @else
+                                <a href="javascript:;" class="text-decoration-none" onclick="saveDiscussion(this, {{ $discussions->id }})">
+                                    <i class="fa-regular fa-bookmark"></i>
+                                </a>
+                            @endif
+                        @endauth
+                        @guest
+                            <a href="{{ route('login') }}" class="text-decoration-none">
                                 <i class="fa-regular fa-bookmark"></i>
                             </a>
-                        @endif
+                        @endguest
                     </div>
                 </div>
                 {{-- column 2 --}}
@@ -71,17 +90,21 @@
                             <a href="#" class="me-3 text-decoration-none">
                                 <span><i class="fa-solid fa-share"></i></span>
                             </a>
-                            <a href="{{ route('discussions.edit', $discussions->slug) }}" class="me-3 text-decoration-none">
-                                <span><i class="fa-solid fa-pencil"></i></span>
-                            </a>
-                            <a href="{{ route('discussions.destroy', $discussions->slug) }}" class="me-3 text-decoration-none" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-                                <span><i class="fa-solid fa-trash"></i></span>
-                            </a>
+                            @auth
+                                @if (Auth::user()->id == $discussions->user_id)
+                                    <a href="{{ route('discussions.edit', $discussions->slug) }}" class="me-3 text-decoration-none">
+                                        <span><i class="fa-solid fa-pencil"></i></span>
+                                    </a>
+                                    <a href="{{ route('discussions.destroy', $discussions->slug) }}" class="me-3 text-decoration-none" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
+                                        <span><i class="fa-solid fa-trash"></i></span>
+                                    </a>
+                                @endif
+                            @endauth
                         </div>                        
                         <div class="col-5 col-lg-4 mb-0">
                             <div class="avatar-sm-wrapper d-inline-block">
                                 <a href="#" class="me-1">
-                                    <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                    <img src="{{ $discussions->user->picture ? asset('storage/profiles/' . basename($discussions->user->picture)) : url("assets/img/user.png") }}" alt="Img_Profile" class="rounded-circle" style="object-fit: cover; width: 25px; height: 25px;">
                                 </a>
                             </div>
                             <span class="fs-12px">
@@ -123,7 +146,7 @@
 
         @foreach ($discussions->answers as $answer)
             {{-- Answer Card --}}
-            <div class="card card-discussionss p-3">
+            <div class="card card-discussionss p-3 mb-3">
                 <div class="row">
                     {{-- column 1 --}}
                     <div class="col-12 col-lg-1 mb-1 mb-lg-0 d-flex flex-row flex-lg-column">
@@ -154,17 +177,21 @@
                         {{-- row 2 --}}
                         <div class="row g-0 align-items-center mt-3">
                             <div class="col me-1 me-lg-2 mb-0 d-flex">
-                                <a href="{{ route('answers.edit', $answer->id) }}" class="me-3 text-decoration-none">
-                                    <span><i class="fa-solid fa-pencil"></i></span>
-                                </a>
-                                <a href="{{ route('answers.destroy', $answer->id) }}" class="me-3 text-decoration-none" data-bs-toggle="modal" data-bs-target="#confirmDeleteAnswer">
-                                    <span><i class="fa-solid fa-trash"></i></span>
-                                </a>
+                                @auth
+                                    @if (Auth::user()->id == $answer->user_id)
+                                        <a href="{{ route('answers.edit', $answer->id) }}" class="me-3 text-decoration-none">
+                                            <span><i class="fa-solid fa-pencil"></i></span>
+                                        </a>
+                                        <a href="{{ route('answers.destroy', $answer->id) }}" class="me-3 text-decoration-none" data-bs-toggle="modal" data-bs-target="#confirmDeleteAnswer">
+                                            <span><i class="fa-solid fa-trash"></i></span>
+                                        </a>
+                                    @endif
+                                @endauth
                             </div>
                             <div class="col-5 col-lg-4 mb-0">
                                 <div class="avatar-sm-wrapper d-inline-block">
                                     <a href="#" class="me-1">
-                                        <img src="{{ url("assets/img/icon/avatar-01.jpg") }}" alt="Img_Profile" class="avatar avatar-sm rounded-circle">
+                                        <img src="{{ $answer->user->picture ? asset('storage/profiles/' . basename($answer->user->picture)) : url("assets/img/user.png") }}" alt="Img_Profile" class="rounded-circle" style="object-fit: cover; width: 25px; height: 25px;">
                                     </a>
                                 </div>
                                 <span class="fs-12px">
@@ -202,6 +229,13 @@
                 </div>
             </div>
         @endforeach
+
+        @if ($discussions->answers->isEmpty())
+            {{-- Display something else here --}}
+            <div class="card card-discussionss p-3 mb-3">
+                <p>No answers available</p>
+            </div>
+        @endif
 
         {{-- summernote answer --}}
         <div class="mb-3 mt-3">

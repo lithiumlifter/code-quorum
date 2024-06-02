@@ -60,10 +60,10 @@
                         </ul>
                     </div>
                   @else
-                      <li class="nav-item my-auto">
+                      <li class="nav-item my-auto nav-home">
                           <a class="nav-link text-nowrap text-blue" href="{{ route('login') }}">Log In</a>
                       </li>
-                      <li class="nav-item ps-1 pe-0">
+                      <li class="nav-item ps-1 pe-0 nav-home">
                           <a class="btn btn-register text-white" href="{{ route('register') }}">Register</a>
                       </li>
                   @endif
@@ -77,8 +77,8 @@
             <div class="col-md-6">
               <h1>Selamat Datang di </h1> <h1 class="text-blue-main">Code Quorum!</h1>
               <p class="mb-4">Tempat di Mana Kode Berkumpul dan Pengetahuan Berkembang!</p>
-              <a href="" class="btn btn-hero-first">Register</a>
-              <a href="" class="btn btn-hero-second">Join Forum</a>
+              <a href="{{ route('register') }}" class="btn btn-hero-first">Register</a>
+              <a href="{{ route('login') }}" class="btn btn-hero-second">Join Forum</a>
             </div>
             <div class="col-md-6 order-first order-lg-last">
               <img class="hero-image" src="{{ url("assets/img/illustration_home.jpg") }}" alt="Ilustrasi home page">

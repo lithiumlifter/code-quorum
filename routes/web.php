@@ -1,6 +1,4 @@
 <?php
-
-use App\Models\Discussion;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SaveController;
@@ -25,7 +23,12 @@ Route::get('/', function () {
 })->name('home');
 
 Route::get('discussions', [DiscussionController::class, 'index'])->name('discussions.index');
-// Route::get('profile', [UserController::class, 'index'])->name('profile.index');
+Route::get('my-discussions', [DiscussionController::class, 'myDiscussions'])->name('discussions.myDiscussions');
+Route::get('my-saves', [DiscussionController::class, 'mySaves'])->name('discussions.mySaves');
+Route::get('profile', [UserController::class, 'index'])->name('profile.index');
+Route::get('tags', [DiscussionController::class, 'tag'])->name('discussions.tags');
+Route::get('tags/{$slug}', [DiscussionController::class, 'showTag'])->name('discussions.showTags');
+Route::get('my-answers', [DiscussionController::class, 'myAnswer'])->name('discussions.myAnswers');
 
 Route::middleware('auth')->group(function() {
     Route::resource('discussions', DiscussionController::class)->only(['create','show', 'store', 'edit', 'update', 'destroy']);
@@ -48,5 +51,3 @@ Route::middleware('auth')->group(function () {
 });
 
 Auth::routes();
-
-// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\DiscussionRequest;
 use App\Models\Tag;
+use App\Models\Save;
+use App\Models\Answer;
 use App\Models\Discussion;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\DiscussionRequest;
 
 class DiscussionController extends Controller
 {
@@ -21,12 +24,52 @@ class DiscussionController extends Controller
         return view('frontend.pages.discussion.index', compact('discussions', 'tags'));
     }
 
+    public function myDiscussions()
+    {
+        $userId = auth()->id();
+        $discussions = Discussion::with('user', 'tags')
+                                ->where('user_id', $userId)
+                                ->orderBy('created_at', 'desc')
+                                ->get();
+        $tags = Tag::all();
+        return view('frontend.pages.discussion.myDiscussion.index', compact('discussions', 'tags'));
+    }
+
+    public function mySaves()
+    {
+        $user = auth()->user();
+        $savedDiscussions = Save::where('user_id', $user->id)
+                                ->with('discussion.tags', 'discussion.user')
+                                ->get();
+        $tags = Tag::all();
+        return view('frontend.pages.save.mySave.index', compact('savedDiscussions', 'tags'));
+    }
+
+    public function tag()
+    {
+        $tags = Tag::all();
+        return view('frontend.pages.tag.index', compact('tags'));
+    }
+
+    public function showTag($slug)
+    {
+        $tag = Tag::where('slug', $slug)->firstOrFail();
+        $discussions = $tag->discussions()->latest()->paginate(10);
+        return view('frontend.pages.tag.show', compact('tag', 'discussions'));
+    }
+
+    public function myAnswer(){
+        $user = Auth::user();
+        $answers = Answer::where('user_id', $user->id)->get();
+        $tags = Tag::all();
+
+        return view('frontend.pages.answer.myAnswer.index', compact('answers', 'tags'));
+    }
+
     public function create(){
         $tags = Tag::all();
 
-        return view('frontend.pages.discussion.create', [
-            'tags' => $tags,
-        ]);
+        return view('frontend.pages.discussion.create', compact('tags'));
     }
 
     /**
@@ -49,8 +92,7 @@ class DiscussionController extends Controller
     
         $discussion->tags()->attach(Tag::whereIn('slug', $tagSlugs)->pluck('id')->toArray());
     
-        session()->flash('notif.success', 'Discussion created successfully');
-        return redirect()->route('discussions.index');
+        return redirect()->route('discussions.myDiscussions')->with('success', 'Successfully created a new discussion');
     }
 
     /**
@@ -59,6 +101,7 @@ class DiscussionController extends Controller
     public function show($slug)
     {
         $discussions = Discussion::with(['user', 'tags'])->where('slug', $slug)->firstOrFail();
+        $discussions->increment('view_count');
         return view('frontend.pages.discussion.show', compact('discussions'));
     }
     
@@ -88,8 +131,7 @@ class DiscussionController extends Controller
         // Sync tags
         $discussion->tags()->sync(Tag::whereIn('slug', $tagSlugs)->pluck('id')->toArray());
     
-        session()->flash('notif.success', 'Discussion updated successfully');
-        return redirect()->route('discussions.index');
+        return redirect()->route('discussions.myDiscussions')->with('success', 'Discussion updated successfully');
     }
 
     /**
@@ -113,8 +155,7 @@ class DiscussionController extends Controller
         $delete = $discussion->delete();
     
         if ($delete) {
-            session()->flash('notif.success', 'Discussion deleted successfully');
-            return redirect()->route('discussions.index');
+            return redirect()->route('discussions.myDiscussions')->with('success', 'Discussion deleted successfully');
         }
     
         return abort(500);

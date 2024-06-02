@@ -45,7 +45,12 @@ class UserController extends Controller
                 Storage::delete($user->picture);
             }
 
-            $path = $request->file('picture')->store('profiles');
+            $path = $request->file('picture')->store('public/profiles');
+
+            if (!$path) {
+                return redirect()->back()->with('error', 'Failed to save profile picture.');
+            }
+
             $user->picture = $path;
         }
 
