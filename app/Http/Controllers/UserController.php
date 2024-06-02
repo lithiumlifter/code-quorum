@@ -25,6 +25,18 @@ class UserController extends Controller
         return view('frontend.pages.profile.index', compact('user', 'discussions' , 'answers', 'savedDiscussions'));
     }
 
+    public function show($uid)
+    {
+        $user = User::where('uid', $uid)->firstOrFail();
+
+        $discussions = Discussion::where('user_id', $user->id)->get();
+        $answers = Answer::where('user_id', $user->id)->get();
+        $savedDiscussions = Save::where('user_id', $user->id)->with('discussion')->get();
+
+        return view('frontend.pages.profile.show', compact('user', 'discussions', 'answers', 'savedDiscussions'));
+    }
+
+
     public function update(Request $request)
     {
         $user = Auth::user();

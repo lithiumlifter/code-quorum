@@ -26,6 +26,7 @@ Route::get('discussions', [DiscussionController::class, 'index'])->name('discuss
 Route::get('my-discussions', [DiscussionController::class, 'myDiscussions'])->name('discussions.myDiscussions');
 Route::get('my-saves', [DiscussionController::class, 'mySaves'])->name('discussions.mySaves');
 Route::get('profile', [UserController::class, 'index'])->name('profile.index');
+Route::get('profile/{$uid}', [UserController::class, 'show'])->name('profile.show');
 Route::get('tags', [DiscussionController::class, 'tag'])->name('discussions.tags');
 Route::get('tags/{$slug}', [DiscussionController::class, 'showTag'])->name('discussions.showTags');
 Route::get('my-answers', [DiscussionController::class, 'myAnswer'])->name('discussions.myAnswers');

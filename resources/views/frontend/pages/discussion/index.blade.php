@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="col-9 col-md-10">
                                         <span class="fs-12px">
-                                            <a href="#" class="me-1 fw-bold d-block">
+                                            <a href="{{ route('profile.show', $discussion->user->uid) }}" class="me-1 fw-bold d-block">
                                                 {{ $discussion->user->username }}
                                             </a>
                                             <span class="text-grey d-block">{{ $discussion->created_at->diffForHumans() }}</span>

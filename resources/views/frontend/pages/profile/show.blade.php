@@ -102,23 +102,16 @@
                     <div class="mb-2">Answer</div>
                     <div class="fw-bold">{{ $answers->count() }}</div>
                 </div>
-                <div class="col-3 d-flex flex-column align-items-center">
-                    <div class="mb-2">Save</div>
-                    <div class="fw-bold">{{ $savedDiscussions->count() }}</div>
-                </div>
             </div>
         </div>
 
         <div class="card card-discussions p-3 mb-3">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">My Discussion</button>
+                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Discussion</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">My Answer</button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Save</button>
+                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Answer</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -180,57 +173,6 @@
                                 </div>
                             </div>
                         </div>
-                    @endforeach
-                </div>
-                <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
-                    @foreach ($savedDiscussions as $save)
-                    <div class="card card-discussions p-3 mb-3 mt-3">
-                        <div class="row">
-                            <div class="col-12 col-lg-1 mb-1 mb-lg-0 d-flex flex-row flex-lg-column">
-                                @if (Auth::check() && Auth::user()->saves->contains('discussion_id', $save->discussion->id))
-                                    <a href="#" class="text-decoration-none" onclick="unsaveDiscussion(this, {{ $save->discussion->id }})">
-                                        <i class="fa-solid fa-bookmark"></i>
-                                    </a>
-                                @else
-                                    <a href="#" class="text-decoration-none" onclick="saveDiscussion(this, {{ $save->discussion->id }})">
-                                        <i class="fa-regular fa-bookmark"></i>
-                                    </a>
-                                @endif
-                            </div>
-                            <div class="col-12 col-lg-11 mb-1 mb-lg-0 d-flex flex-column">
-                                <a href="{{ route('discussions.show', $save->discussion->slug) }}" class="text-decoration-none">
-                                    <h5>{{ $save->discussion->title }}</h5>
-                                </a>
-                                <p>{!! $save->discussion->content_preview !!}</p>
-                                <div class="row g-0 align-items-center">
-                                    <div class="col me-1 me-lg-2 mb-0">
-                                        @foreach ($save->discussion->tags as $tag)
-                                            <a href="#">
-                                                <span class="badge rounded-pill text-bg-light">{{ $tag->name }}</span>
-                                            </a>
-                                        @endforeach
-                                    </div>
-                                    <div class="col-md-5 col-lg-4 mb-0">
-                                        <div class="row align-items-center">
-                                            <div class="col-3 col-md-2">
-                                                <div class="avatar-sm-wrapper d-inline-block">
-                                                    <a href="#" class="me-1">
-                                                        <img src="{{ $save->discussion->user->picture ? asset('storage/profiles/' . basename($save->discussion->user->picture)) : url("assets/img/user.png") }}" alt="Img_Profile" class="rounded-circle" style="object-fit: cover; width: 25px; height: 25px;">
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-9 col-md-10">
-                                                <span class="fs-12px">
-                                                    <a href="#" class="me-1 fw-bold d-block">{{ $save->discussion->user->username }}</a>
-                                                    <span class="text-grey d-block">{{ $save->discussion->created_at->diffForHumans() }}</span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     @endforeach
                 </div>
             </div>
