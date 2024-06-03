@@ -26,7 +26,7 @@ class DiscussionController extends Controller
             ->advancedFilter($filters)
             ->orderBy('created_at', 'desc');
         
-        $discussions = $query->get();
+            $discussions = $query->paginate(10);
         
         $tags = Tag::all();
         
@@ -45,7 +45,7 @@ class DiscussionController extends Controller
             ->advancedFilter($filters)
             ->orderBy('created_at', 'desc');
     
-        $discussions = $query->get();
+        $discussions = $query->paginate(10);
         $tags = Tag::all();
         
         return view('frontend.pages.discussion.myDiscussion.index', compact('discussions', 'tags', 'filters'));
@@ -57,7 +57,7 @@ class DiscussionController extends Controller
         $user = auth()->user();
         $savedDiscussions = Save::where('user_id', $user->id)
                                 ->with('discussion.tags', 'discussion.user')
-                                ->get();
+                                ->paginate(10);
         $tags = Tag::all();
         return view('frontend.pages.save.mySave.index', compact('savedDiscussions', 'tags'));
     }
@@ -77,7 +77,7 @@ class DiscussionController extends Controller
 
     public function myAnswer(){
         $user = Auth::user();
-        $answers = Answer::where('user_id', $user->id)->get();
+        $answers = Answer::where('user_id', $user->id)->paginate(10);
         $tags = Tag::all();
 
         return view('frontend.pages.answer.myAnswer.index', compact('answers', 'tags'));

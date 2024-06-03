@@ -162,6 +162,7 @@
                 </div>
             </div>
         @endforeach
+        {{ $discussions->links() }}
     </main>
 
     <aside id="aside-right" class="col-md-3">

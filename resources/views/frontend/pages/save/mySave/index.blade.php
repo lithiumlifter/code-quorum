@@ -65,6 +65,7 @@
                 </div>
             </div>
         @endforeach
+        {{ $savedDiscussions->links() }}
     </main>
 
     <aside id="aside-right" class="col-md-3">
