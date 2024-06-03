@@ -10,9 +10,92 @@
                 </div>
                 <div class="col-6 col-md-auto d-flex justify-content-end">
                     <a href="{{ route('discussions.create') }}" class="btn btn-dark">Create Discussion</a>
+                    <button class="btn btn-outline-secondary btn-sm d-flex align-items-center ml-2" data-toggle="collapse" data-target="#filterPanel" aria-expanded="false" aria-controls="filterPanel">
+                        <svg aria-hidden="true" class="bi bi-filter" width="18" height="18" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm-2-2.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1H1.5a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                        <span class="ml-1">Filter</span>
+                    </button>
                 </div>
             </div>
-        </div>                
+        </div>       
+        <!-- Filter Panel -->
+        <div class="collapse mb-3" id="filterPanel">
+            <div class="card card-body">
+                <form action="{{ route('discussions.index') }}" method="GET">
+                    <div class="row">
+                        <!-- Filter by Section -->
+                        <div class="col-md-4">
+                            <fieldset>
+                                <legend>Filter by</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="noAnswers" name="filter[]" value="noAnswers" {{ in_array('noAnswers', $filters['filter'] ?? []) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="noAnswers">No answers</label>
+                                </div>                                
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="noLikes" name="filter[]" value="noLikes" {{ in_array('noLikes', $filters['filter'] ?? []) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="noLikes">No likes</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="noViews" name="filter[]" value="noViews" {{ in_array('noViews', $filters['filter'] ?? []) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="noViews">No views</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="mostViews" name="filter[]" value="mostViews" {{ in_array('mostViews', $filters['filter'] ?? []) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="mostViews">Most views</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="mostLikes" name="filter[]" value="mostLikes" {{ in_array('mostLikes', $filters['filter'] ?? []) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="mostLikes">Most likes</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="mostAnswers" name="filter[]" value="mostAnswers" {{ in_array('mostAnswers', $filters['filter'] ?? []) ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="mostAnswers">Most Answers</label>
+                                </div>                                
+                            </fieldset>
+                        </div>
+                
+                        <!-- Sorted by Section -->
+                        <div class="col-md-4">
+                            <fieldset>
+                                <legend>Sorted by</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="newest" name="sort" value="newest">
+                                    <label class="form-check-label" for="newest">Newest</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="longest" name="sort" value="longest">
+                                    <label class="form-check-label" for="longest">longest</label>
+                                </div>
+                            </fieldset>
+                        </div>
+                
+                        <!-- Tagged with Section -->
+                        <div class="col-md-4">
+                            <fieldset>
+                                <legend>Tagged with</legend>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="allTags" name="tagMode" value="allTags">
+                                    <label class="form-check-label" for="allTags">All tags</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="specifiedTags" name="tagMode" value="specifiedTags" checked>
+                                    <label class="form-check-label" for="specifiedTags">The following tags:</label>
+                                </div>
+                                <input type="text" class="form-control mt-2" id="tagQuery" name="tagQuery" placeholder="e.g. javascript, python">
+                            </fieldset>
+                        </div>
+                    </div>
+                
+                    <!-- Buttons Section -->
+                    <div class="form-group d-flex justify-content-between mt-3">
+                        <button type="submit" class="btn btn-primary">Apply filter</button>
+                        <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#filterPanel">Cancel</button>
+                    </div>
+                </form>
+                
+            </div>
+        </div> 
         <!-- Main content -->
         @foreach ($discussions as $discussion)
             <div class="card card-discussions p-3 mb-3">
@@ -103,7 +186,7 @@
                 <div class="card-body text-center">
                     <h4>All Tags</h4>
                     @foreach ($tags as $tag)
-                        <a href="#">
+                        <a href="/discussions?tag={{ $tag->slug }}">
                             <span class="badge rounded-pill text-bg-light">{{ $tag->name }}</span>
                         </a>
                     @endforeach

@@ -16,24 +16,41 @@ class DiscussionController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $discussions = Discussion::with('user', 'tags')
-                                ->orderBy('created_at', 'desc')->get();
+        $filters = $request->all();
+        $filters['filter'] = $request->has('filter') ? $request->input('filter') : [];
+        
+        $query = Discussion::with('user', 'tags', 'likes')
+            ->filter($request->only(['search', 'tag']))
+            ->advancedFilter($filters)
+            ->orderBy('created_at', 'desc');
+        
+        $discussions = $query->get();
+        
         $tags = Tag::all();
-        return view('frontend.pages.discussion.index', compact('discussions', 'tags'));
+        
+        return view('frontend.pages.discussion.index', compact('discussions', 'tags', 'filters'));
     }
-
-    public function myDiscussions()
+    
+    public function myDiscussions(Request $request)
     {
         $userId = auth()->id();
-        $discussions = Discussion::with('user', 'tags')
-                                ->where('user_id', $userId)
-                                ->orderBy('created_at', 'desc')
-                                ->get();
+        $filters = $request->all();
+        $filters['filter'] = $request->has('filter') ? $request->input('filter') : [];
+    
+        $query = Discussion::with('user', 'tags')
+            ->where('user_id', $userId)
+            ->filter($request->only(['search', 'tag']))
+            ->advancedFilter($filters)
+            ->orderBy('created_at', 'desc');
+    
+        $discussions = $query->get();
         $tags = Tag::all();
-        return view('frontend.pages.discussion.myDiscussion.index', compact('discussions', 'tags'));
+        
+        return view('frontend.pages.discussion.myDiscussion.index', compact('discussions', 'tags', 'filters'));
     }
+    
 
     public function mySaves()
     {
