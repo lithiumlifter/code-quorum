@@ -49,7 +49,7 @@
                 ['color' ,['color']],
                 ['para' ,['ul', 'ol', 'paragraph']],
                 ['table' ,['table']],
-                ['insert' ,['link']],
+                ['insert' ,['link', 'picture']],
                 ['view' ,['codeview', 'help']],
             ]
         });
