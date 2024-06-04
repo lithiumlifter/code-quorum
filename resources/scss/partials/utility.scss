@@ -44,3 +44,25 @@ pre {
     transform: scale(1.05);
     background-color: #f8f9fa;
 }
+
+.dropdown-item.read {
+    background-color: #f8f9fa;
+    color: #515456;
+}
+
+
+.read .text-truncate,
+.read .text-gray-900,
+.read .text-gray-500 {
+    color: #d3d3d3; 
+    font-weight: normal; 
+}
+
+.read .notification-image {
+    opacity: 0.5;
+}
+
+.read .status-indicator {
+    background-color: #d3d3d3;
+}
+

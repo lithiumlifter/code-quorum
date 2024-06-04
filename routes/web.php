@@ -1,11 +1,12 @@
 <?php
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\SaveController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\DiscussionController;
-use App\Http\Controllers\LikeController;
+use App\Http\Controllers\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,6 +22,8 @@ use App\Http\Controllers\LikeController;
 Route::get('/', function () {
     return view('frontend.home');
 })->name('home');
+
+Route::put('/mark-notification-as-read/{notificationId}', [NotificationController::class, 'markAsRead'])->name('markNotificationAsRead');
 
 Route::get('discussions', [DiscussionController::class, 'index'])->name('discussions.index');
 Route::get('my-discussions', [DiscussionController::class, 'myDiscussions'])->name('discussions.myDiscussions');
@@ -40,7 +43,6 @@ Route::middleware('auth')->group(function() {
     Route::post('answers/{answer}/unlike', [LikeController::class, 'answerUnLike'])->name('answer.like.unlike');
 });
 
-// Rute untuk jawaban
 Route::post('discussions/{discussionSlug}/answers', [AnswerController::class, 'store'])->name('answers.store');
 Route::delete('answers/{answer}', [AnswerController::class, 'destroy'])->name('answers.destroy');
 Route::put('answers/{answer}', [AnswerController::class, 'update'])->name('answers.update');

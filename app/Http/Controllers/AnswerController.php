@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Answer;
 use App\Models\Discussion;
+use App\Models\Notification;
 use Illuminate\Http\Request;
 
 class AnswerController extends Controller
@@ -13,18 +14,9 @@ class AnswerController extends Controller
      */
     public function index()
     {
-        // Menampilkan daftar diskusi
         $discussions = Discussion::with('user')
                                 ->orderBy('created_at', 'desc')->get();
         return view('frontend.pages.discussion.show', compact('discussions'));
-    }
-
-    /**
-     * Show the form for creating a new answer.
-     */
-    public function create()
-    {
-        //
     }
 
     /**
@@ -33,28 +25,31 @@ class AnswerController extends Controller
     public function store(Request $request, $discussionSlug)
     {
         $discussion = Discussion::where('slug', $discussionSlug)->firstOrFail();
-
+    
         $request->validate([
             'answer' => 'required|string',
         ]);
-
+    
         $answer = new Answer;
         $answer->answer = strip_tags($request->input('answer'));
         $answer->user_id = auth()->id();
         $answer->discussion_id = $discussion->id;
         $answer->save();
-
+    
+        if ($discussion->user_id != auth()->id()) {
+            Notification::create([
+                'user_id' => $discussion->user_id,
+                'discussion_id' => $discussion->id,
+                'answer_id' => $answer->id,
+                'liked_by_user_id' => auth()->id(),
+                'message' => 'replied to your discussion',
+                'read' => false,
+            ]);
+        }
+    
         return redirect()->route('discussions.show', $discussionSlug)->with('success', 'Answer added successfully.');
     }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Answer $answer)
-    {
-        //
-    }
-
+    
     /**
      * Show the form for editing the specified resource.
      */
