@@ -121,7 +121,7 @@
                         <div class="row g-0 align-items-center">
                             <div class="col me-1 me-lg-2 mb-0">
                                 @foreach ($discussion->tags as $tag)
-                                    <a href="#">
+                                    <a href="/discussions?tag={{ $tag->slug }}">
                                         <span class="badge rounded-pill text-bg-light">{{ $tag->name }}</span>
                                     </a>
                                  @endforeach

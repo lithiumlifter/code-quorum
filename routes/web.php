@@ -6,6 +6,7 @@ use App\Http\Controllers\SaveController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AnswerController;
 use App\Http\Controllers\DiscussionController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NotificationController;
 
 /*
@@ -18,13 +19,8 @@ use App\Http\Controllers\NotificationController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
-Route::get('/', function () {
-    return view('frontend.home');
-})->name('home');
-
+Route::get('/' , [HomeController::class, 'index'])->name('home');
 Route::put('/mark-notification-as-read/{notificationId}', [NotificationController::class, 'markAsRead'])->name('markNotificationAsRead');
-
 Route::get('discussions', [DiscussionController::class, 'index'])->name('discussions.index');
 Route::get('my-discussions', [DiscussionController::class, 'myDiscussions'])->name('discussions.myDiscussions');
 Route::get('my-saves', [DiscussionController::class, 'mySaves'])->name('discussions.mySaves');

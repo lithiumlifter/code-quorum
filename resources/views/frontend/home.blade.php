@@ -24,7 +24,7 @@
                 <span class="navbar-toggler-icon"></span>
               </button>
               <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <ul class="navbar-nav mb-2 mb-lg-0">
                   <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="{{ route('home') }}">Home</a>
                   </li>
@@ -32,26 +32,24 @@
                     <a class="nav-link" aria-current="page" href="{{ route('discussions.index') }}">Forum</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="#">About Us</a>
+                    <a class="nav-link" aria-current="page" href="#about-us">Tentang Kami</a>
                   </li>
                 </ul>
-                <form class="d-flex w-50" role="search">
-                  <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                  {{-- <button class="btn btn-light" type="submit">Search</button> --}}
-                </form>
                 <ul class="navbar-nav ms-auto my-2 my-lg-0">
                   @if (Auth::check())
                       <div class="dropdown no-arrow text-end">
                         <a href="#" class="d-block link-dark text-decoration-none" id="dropdownUser1" data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="{{ Auth::user()->profile_image ?? 'https://github.com/mdo.png' }}" alt="mdo" width="32" height="32" class="rounded-circle">
+                            <img src="{{ Auth::user()->picture ? asset('storage/profiles/' . basename(Auth::user()->picture)) : url('assets/img/user.png') }}" alt="mdo" width="32" height="32" class="rounded-circle">
                         </a>
-                        <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
-                            <li><a class="dropdown-item" href="{{ route('profile.index') }}">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <ul class="dropdown-menu text-small dropdown-menu-end" aria-labelledby="dropdownUser1">
+                            <li><a class="dropdown-item text-muted" href="{{ route('profile.index') }}">
+                              <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400" style="color: gray"></i> Profile</a></li>
+                            <li><a class="dropdown-item text-muted" href="#">
+                              <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400" style="color: gray"></i> Settings</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li>
-                                <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    Logout
+                                <a class="dropdown-item text-muted" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400" style="color: gray"></i> Logout
                                 </a>
                                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                     @csrf
@@ -95,270 +93,162 @@
                       <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
                   </div> --}}
                   <div class="row text-center">
-                      <div class="col-md-4">
-                          <span class="fa-stack fa-4x">
-                              <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                              <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
-                          </span>
-                          <h4 class="my-3">Ask the Community</h4>
-                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                      </div>
-                      <div class="col-md-4">
-                          <span class="fa-stack fa-4x">
-                              <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                              <i class="fas fa-laptop fa-stack-1x fa-inverse"></i>
-                          </span>
-                          <h4 class="my-3">Responsive Design</h4>
-                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                      </div>
-                      <div class="col-md-4">
-                          <span class="fa-stack fa-4x">
-                              <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                              <i class="fas fa-lock fa-stack-1x fa-inverse"></i>
-                          </span>
-                          <h4 class="my-3">Web Security</h4>
-                          <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
-                      </div>
-                  </div>
+                      <div class="col-md-4 feature-item">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-blue-main"></i>
+                            <i class="fas fa-comments fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">Ask the Community</h4>
+                        <p class="text-muted">Dapatkan wawasan langsung dari komunitas kami. Ajukan pertanyaan, bagikan pengetahuan, dan temukan solusi dari pengguna lain. Di sinilah kolaborasi dan pembelajaran bersama dimulai.</p>
+                    </div>                  
+                    <div class="col-md-4 feature-item">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-blue-main"></i>
+                            <i class="fas fa-code fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">Code Collaboration</h4>
+                        <p class="text-muted">Kolaborasi dalam pengembangan kode adalah kunci kesuksesan. Dengan platform kami, Anda dapat bekerja sama dengan developer lain untuk membangun solusi yang kuat dan inovatif.</p>
+                    </div>
+                    <div class="col-md-4 feature-item">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-blue-main"></i>
+                            <i class="fas fa-lightbulb fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">Expert Advice</h4>
+                        <p class="text-muted">Dapatkan saran dan arahan dari para ahli di industri. Temukan solusi terbaik untuk tantangan teknis Anda dan tingkatkan keahlian Anda dalam pengembangan perangkat lunak.</p>
+                    </div>
+                </div>
+                            
                 </div>
             </section>
           {{-- SECTION 2 --}}
-          <section class="page-section mt-2" id="services">
+          <section class="page-section">
+            <div class="container">
+                <div class="text-center mb-5">
+                  <h2 class="section-heading">Tanya Jawab & Berkolaborasi</h2>
+                  <h3 class="section-subheading text-muted">Mari Berdiskusi dan Bekerja Sama.</h3>
+                </div>
+                <div class="row">
+                  @foreach ($latestDiscussions as $discussion)
+                  <div class="col-12 col-lg-4 mb-3">
+                      <div class="card p-3 shadow-lg" style="border: none; min-height: 200px;">
+                          <a href="{{ route('discussions.show', $discussion->slug) }}" style="text-decoration: none;">
+                              <h5 style="font-size: 16px; color: black;">{{ $discussion->title }}</h5>
+                          </a>
+                          <div>
+                              <p class="mb-5" style="font-size: 12px">
+                                  {{ $discussion->content_preview }}
+                              </p>
+                              <div class="row">
+                                  <div class="col me-1 me-lg-2">
+                                      @foreach ($discussion->tags->take(1) as $tag)
+                                          <a href="/discussions?tag={{ $tag->slug }}" style="text-decoration: none;">
+                                              <span class="badge rounded-pill text-bg-light">{{ $tag->name }}</span>
+                                          </a>
+                                      @endforeach
+                                      @if ($discussion->tags->count() > 1)
+                                          <span class="badge rounded-pill text-bg-light">...</span>
+                                      @endif
+                                  </div>
+                                  <div class="col-5 col-lg-7">
+                                      <div class="avatar-sm-wrapper d-inline-block">
+                                          <a href="{{ route('profile.show', $discussion->user->uid) }}" class="me-1">
+                                              <img src="{{ $discussion->user->picture ? asset('storage/profiles/' . basename($discussion->user->picture)) : url("assets/img/user.png") }}" 
+                                                  class="avatar rounded-circle" alt="{{ $discussion->user->name }}" style="width: 25px; height: 25px;">
+                                          </a>
+                                      </div>
+                                      <span class="fs-12px">
+                                          <a href="{{ route('profile.show', $discussion->user->uid) }}" class="me-1 fw-bold" style="text-decoration: none; color:black;">
+                                              {{ 
+                                                strlen($discussion->user->username) > 7
+                                                ? substr($discussion->user->username , 0, 7) . '...'
+                                                : $discussion->user->username
+                                              }}
+                                          </a>
+                                          <span class="color-gray">{{ $discussion->created_at->diffForHumans() }}</span>
+                                      </span>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+              @endforeach
+              
+                </div>
+            </div>
+          </section>
+         
+          {{-- ABOUT US --}}
+          <section class="page-section mb-5" id="about-us">
             <div class="container p-5">
-              <div class="text-center mb-5">
-                <h2 class="section-heading">Tanya Jawab & Berkolaborasi</h2>
-                <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+              <div class="text-center mb-4">
+                <h2 class="section-heading">Tentang Kami</h2>
+                <h3 class="section-subheading text-muted">Pelajari lebih lanjut tentang platform kami.</h3>
               </div>
-              {{-- Baris 1 --}}
               <div class="row">
-                <!-- Kolom Pertama -->
-                <div class="col-md-4">
-                  <div class="card mb-4 border-0 shadow-lg rounded">
-                    <div class="row">
-                      <!-- Kolom Pertama di Baris Pertama -->
-                      <div class="col-md-2">
-                        <img src="{{ url("assets/img/user.png") }}" class="card-img-top img-small" alt="Gambar Postingan 1">
-                      </div>
-                      <!-- Kolom Kedua di Baris Pertama -->
-                      <div class="col-md-10">
-                        <div class="card-body bg-white">
-                          <h5 class="card-title">Nama Pengguna</h5>
-                          <p class="card-text"><small class="text-muted">1 jam yang lalu</small></p>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Baris Kedua -->
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="card-body bg-white">
-                          <h5 class="card-title">Kode JavaScript Error</h5>
-                          <p class="card-text">Permisi mau tanya, ada yang bisa bantu kenapa kode webpack saya di JavaScript tidak terbaca? ini sudah saya lampirkan screenshoot-nya juga. Terimakasih.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {{-- Kolom 2 --}}
-                <!-- Kolom Pertama -->
-                <div class="col-md-4">
-                  <div class="card mb-4 border-0 shadow-lg rounded">
-                    <div class="row">
-                      <!-- Kolom Pertama di Baris Pertama -->
-                      <div class="col-md-2">
-                        <img src="{{ url("assets/img/user.png") }}" class="card-img-top img-small" alt="Gambar Postingan 1">
-                      </div>
-                      <!-- Kolom Kedua di Baris Pertama -->
-                      <div class="col-md-10">
-                        <div class="card-body bg-white">
-                          <h5 class="card-title">Nama Pengguna</h5>
-                          <p class="card-text"><small class="text-muted">1 jam yang lalu</small></p>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Baris Kedua -->
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="card-body bg-white">
-                          <h5 class="card-title">Kode JavaScript Error</h5>
-                          <p class="card-text">Permisi mau tanya, ada yang bisa bantu kenapa kode webpack saya di JavaScript tidak terbaca? ini sudah saya lampirkan screenshoot-nya juga. Terimakasih.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {{-- Kolom 3 --}}
-                <!-- Kolom Pertama -->
-                <div class="col-md-4">
-                  <div class="card mb-4 border-0 shadow-lg rounded">
-                    <div class="row">
-                      <!-- Kolom Pertama di Baris Pertama -->
-                      <div class="col-md-2">
-                        <img src="{{ url("assets/img/user.png") }}" class="card-img-top img-small" alt="Gambar Postingan 1">
-                      </div>
-                      <!-- Kolom Kedua di Baris Pertama -->
-                      <div class="col-md-10">
-                        <div class="card-body bg-white">
-                          <h5 class="card-title">Nama Pengguna</h5>
-                          <p class="card-text"><small class="text-muted">1 jam yang lalu</small></p>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Baris Kedua -->
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="card-body bg-white">
-                          <h5 class="card-title">Kode JavaScript Error</h5>
-                          <p class="card-text">Permisi mau tanya, ada yang bisa bantu kenapa kode webpack saya di JavaScript tidak terbaca? ini sudah saya lampirkan screenshoot-nya juga. Terimakasih.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              {{-- Baris 2 --}}
-              <div class="row">
-                <!-- Kolom Pertama -->
-                <div class="col-md-4">
-                  <div class="card mb-4 border-0 shadow-lg rounded">
-                    <div class="row">
-                      <!-- Kolom Pertama di Baris Pertama -->
-                      <div class="col-md-2">
-                        <img src="{{ url("assets/img/user.png") }}" class="card-img-top img-small" alt="Gambar Postingan 1">
-                      </div>
-                      <!-- Kolom Kedua di Baris Pertama -->
-                      <div class="col-md-10">
-                        <div class="card-body bg-white">
-                          <h5 class="card-title">Nama Pengguna</h5>
-                          <p class="card-text"><small class="text-muted">1 jam yang lalu</small></p>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Baris Kedua -->
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="card-body bg-white">
-                          <h5 class="card-title">Kode JavaScript Error</h5>
-                          <p class="card-text">Permisi mau tanya, ada yang bisa bantu kenapa kode webpack saya di JavaScript tidak terbaca? ini sudah saya lampirkan screenshoot-nya juga. Terimakasih.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {{-- Kolom 2 --}}
-                <!-- Kolom Pertama -->
-                <div class="col-md-4">
-                  <div class="card mb-4 border-0 shadow-lg rounded">
-                    <div class="row">
-                      <!-- Kolom Pertama di Baris Pertama -->
-                      <div class="col-md-2">
-                        <img src="{{ url("assets/img/user.png") }}" class="card-img-top img-small" alt="Gambar Postingan 1">
-                      </div>
-                      <!-- Kolom Kedua di Baris Pertama -->
-                      <div class="col-md-10">
-                        <div class="card-body bg-white">
-                          <h5 class="card-title">Nama Pengguna</h5>
-                          <p class="card-text"><small class="text-muted">1 jam yang lalu</small></p>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Baris Kedua -->
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="card-body bg-white">
-                          <h5 class="card-title">Kode JavaScript Error</h5>
-                          <p class="card-text">Permisi mau tanya, ada yang bisa bantu kenapa kode webpack saya di JavaScript tidak terbaca? ini sudah saya lampirkan screenshoot-nya juga. Terimakasih.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {{-- Kolom 3 --}}
-                <!-- Kolom Pertama -->
-                <div class="col-md-4">
-                  <div class="card mb-4 border-0 shadow-lg rounded">
-                    <div class="row">
-                      <!-- Kolom Pertama di Baris Pertama -->
-                      <div class="col-md-2">
-                        <img src="{{ url("assets/img/user.png") }}" class="card-img-top img-small" alt="Gambar Postingan 1">
-                      </div>
-                      <!-- Kolom Kedua di Baris Pertama -->
-                      <div class="col-md-10">
-                        <div class="card-body bg-white">
-                          <h5 class="card-title">Nama Pengguna</h5>
-                          <p class="card-text"><small class="text-muted">1 jam yang lalu</small></p>
-                        </div>
-                      </div>
-                    </div>
-                    <!-- Baris Kedua -->
-                    <div class="row">
-                      <div class="col-md-12">
-                        <div class="card-body bg-white">
-                          <h5 class="card-title">Kode JavaScript Error</h5>
-                          <p class="card-text">Permisi mau tanya, ada yang bisa bantu kenapa kode webpack saya di JavaScript tidak terbaca? ini sudah saya lampirkan screenshoot-nya juga. Terimakasih.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                <div class="col-lg-8 mx-auto">
+                  <p class="text-muted">Di Code Quorum, kami percaya pada kekuatan pembelajaran dan kolaborasi yang didorong oleh komunitas. Platform kami dirancang untuk menyatukan pengembang, programmer, dan penggemar teknologi dari seluruh dunia untuk berbagi pengetahuan, bertanya, dan berkolaborasi dalam proyek-proyek.</p>
+                  <p class="text-muted">Baik Anda seorang pengembang berpengalaman yang mencari saran ahli atau seorang pemula yang baru memulai perjalanan coding, Code Quorum menyediakan lingkungan yang sempurna untuk terhubung dengan individu yang berpikiran sama, mempelajari keterampilan baru, dan tumbuh bersama.</p>
+                  <p class="text-muted">Bergabunglah dengan kami hari ini dan menjadi bagian dari komunitas pengembang kami yang dinamis. Mari kita kode, berkolaborasi, dan berinovasi bersama!</p>
               </div>
             </div>
-          </section>                
+          </section>
         </main>
         {{-- FOOTER --}}
         <footer class="footer-20192 mt-5">
           <div class="site-section">
-            <div class="container">
-              <div class="cta d-block d-md-flex align-items-center px-5">
-                <div>
-                  <h2 class="mb-0">Siap untuk berkontribusi?</h2>
-                  <h3 class="text-dark">Let's get started!</h3>
-                </div>
-                <div class="ml-auto">
-                  <a href="#" class="btn btn-dark rounded-0 py-3 px-5">Join Forum</a>
-                </div>
+              <div class="container">
+                  <div class="cta justify-content-between align-items-center px-5">
+                      <div>
+                          <h2 class="mb-0">Siap untuk berkontribusi?</h2>
+                          <h3 class="text-dark">Let's get started!</h3>
+                      </div>
+                      <div>
+                          <a href="{{ route('login') }}" class="btn btn-dark rounded-0 py-3 px-5">Gabung Forum!</a>
+                      </div>
+                  </div>
+                  <div class="row mt-4">
+                      <div class="col-sm">
+                          <a href="#" class="footer-logo">Code Quorum</a>
+                          <p class="copyright">
+                              <small>&copy; 2024</small>
+                          </p>
+                      </div>
+                      <div class="col-sm">
+                          <h3>Perusahaan</h3>
+                          <ul class="list-unstyled links">
+                              <li><a href="#">About us</a></li>
+                              <li><a href="#">Contact us</a></li>
+                          </ul>
+                      </div>
+                      <div class="col-sm">
+                          <h3>Informasi Lebih Lanjut</h3>
+                          <ul class="list-unstyled links">
+                              <li><a href="#">Terms &amp; Conditions</a></li>
+                              <li><a href="#">Privacy Policy</a></li>
+                          </ul>
+                      </div>
+                      <div class="col-sm">
+                          <h3>Alamat</h3>
+                          <ul class="list-unstyled links">
+                              <li><p>Jl. Ketintang Baru XVII no. 22B, Kec. Gayungan, Kel. Ketintang, Kota Surabaya, Jawa Timur.</p></li>
+                          </ul>
+                      </div>
+                      <div class="col-md-3">
+                          <h3>Follow us</h3>
+                          <ul class="list-unstyled social">
+                              <li><a href="#"><span class="icon-facebook"><i class="fa-brands fa-facebook"></i></span></a></li>
+                              <li><a href="#"><span class="icon-twitter"><i class="fa-brands fa-twitter"></i></span></a></li>
+                              <li><a href="#"><span class="icon-linkedin"><i class="fa-brands fa-linkedin"></i></span></a></li>
+                              <li><a href="#"><span class="icon-medium"><i class="fa-brands fa-medium"></i></span></a></li>
+                              <li><a href="#"><span class="icon-paper-plane"><i class="fa-brands fa-instagram"></i></span></a></li>
+                          </ul>
+                      </div>
+                  </div>
               </div>
-              <div class="row">
-                <div class="col-sm">
-                  <a href="#" class="footer-logo">Code Quorum</a>
-                  <p class="copyright">
-                    <small>&copy; 2024</small>
-                  </p>
-                </div>
-                <div class="col-sm">
-                  <h3>Perusahaan</h3>
-                  <ul class="list-unstyled links">
-                    <li><a href="#">About us</a></li>
-                    <li><a href="#">Contact us</a></li>
-                  </ul>
-                </div>
-                <div class="col-sm">
-                  <h3>Informasi Lebih Lanjut</h3>
-                  <ul class="list-unstyled links">
-                    <li><a href="#">Terms &amp; Conditions</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                  </ul>
-                </div>
-                <div class="col-sm">
-                  <h3>Alamat</h3>
-                  <ul class="list-unstyled links">
-                    <li><p>Jl. Ketintang Baru XVII no. 22B, Kec. Gayungan, Kel. Ketintang, Kota Surabaya, Jawa Timur.</p></li>
-                  </ul>
-                </div>
-                <div class="col-md-3">
-                  <h3>Follow us</h3>
-                  <ul class="list-unstyled social">
-                    <li><a href="#"><span class="icon-facebook"></span></a></li>
-                    <li><a href="#"><span class="icon-twitter"></span></a></li>
-                    <li><a href="#"><span class="icon-linkedin"></span></a></li>
-                    <li><a href="#"><span class="icon-medium"></span></a></li>
-                    <li><a href="#"><span class="icon-paper-plane"></span></a></li>
-                  </ul>
-                </div>
-                
-              </div>
-            </div>
           </div>
-        </footer>
+      </footer>
+      
         {{-- SCRIPT --}}
         <script>
           window.addEventListener("scroll", function() {
