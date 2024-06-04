@@ -1,68 +1,123 @@
-.bg-blue-main{
-    background-color: $blue-main;
+.bg-blue-main {
+    background-color: $blue-main !important;
 }
 
-.btn-register{
-    background-color: $blue-main;
-    border-radius: 50px;
-    &:hover{
-        background-color: black;
+.btn-blue-main-color {
+    background-color: $blue-main !important;
+    border-color: $blue-main !important;
+    color: white !important;
+
+    &:hover {
+        background-color: darken($blue-main, 10%) !important;
+        border-color: darken($blue-main, 10%) !important;
     }
 }
 
-.text-blue{
-    color: $blue-main;
+.btn-outline-blue-main-color {
+    background-color: transparent !important;
+    border-color: $blue-main !important;
+    color: $blue-main !important;
+
+    &:hover {
+        background-color: $blue-main !important;
+        border-color: darken($blue-main, 10%) !important;
+        color: white !important;
+    }
 }
 
-.h-80px{
-    height: 80px;
+
+.btn-blue-main {
+    background-color: $blue-main !important;
+    border-color: $blue-main !important;
+    color: white !important;
+    border-top-left-radius: 0 !important;
+    border-bottom-left-radius: 0 !important;
+    border-radius: 25px !important;
+
+    &:hover {
+        background-color: darken($blue-main, 10%) !important;
+        border-color: darken($blue-main, 10%) !important;
+    }
 }
 
-.navbar-nav{
+.btn-register {
+    background-color: $blue-main !important;
+    border-radius: 50px !important;
+    &:hover {
+        background-color: black !important;
+    }
+}
+
+.text-blue {
+    color: $blue-main !important;
+}
+
+.h-80px {
+    height: 80px !important;
+}
+
+.navbar-nav {
     margin-left: auto;
-    .nav-link.active{
-        font-weight: bold;
+    .nav-link.active {
+        font-weight: bold !important;
     }
 }
 
 pre {
-    padding: 12px;
-    font-size: 14px;
-    background-color: #fafbfd;
-    border: 1px solid #eaecf0;
-    border-radius: 6px;
-    color: #69747f;
+    padding: 12px !important;
+    font-size: 14px !important;
+    background-color: #fafbfd !important;
+    border: 1px solid #eaecf0 !important;
+    border-radius: 6px !important;
+    color: #69747f !important;
 }
 
 .card-tags .tag-card {
-    border: 1px solid #dee2e6;
-    border-radius: 0.25rem;
-    transition: transform 0.2s ease-in-out;
+    border: 1px solid #dee2e6 !important;
+    border-radius: 0.25rem !important;
+    transition: transform 0.2s ease-in-out !important;
 }
 
 .card-tags .tag-card:hover {
-    transform: scale(1.05);
-    background-color: #f8f9fa;
+    transform: scale(1.05) !important;
+    background-color: #f8f9fa !important;
 }
 
 .dropdown-item.read {
-    background-color: #f8f9fa;
-    color: #515456;
+    background-color: #f8f9fa !important;
+    color: #515456 !important;
 }
-
 
 .read .text-truncate,
 .read .text-gray-900,
 .read .text-gray-500 {
-    color: #d3d3d3; 
-    font-weight: normal; 
+    color: #d3d3d3 !important;
+    font-weight: normal !important;
 }
 
 .read .notification-image {
-    opacity: 0.5;
+    opacity: 0.5 !important;
 }
 
 .read .status-indicator {
-    background-color: #d3d3d3;
+    background-color: #d3d3d3 !important;
 }
 
+.input-group .form-control {
+    border-radius: 25px 0 0 25px !important;
+    background-color: #f8f9fa !important;
+}
+
+.input-group-append .btn {
+    border-radius: 0 25px 25px 0 !important;
+}
+
+/* Warna default untuk ikon dan teks */
+#sidebar-forum .nav-link i, 
+#sidebar-forum .nav-link span {
+    color: rgb(192, 192, 192); /* warna default untuk ikon dan teks */
+}
+
+#sidebar-forum .nav-item.active .nav-link span {
+    color: black; /* warna teks saat tautan aktif */
+}

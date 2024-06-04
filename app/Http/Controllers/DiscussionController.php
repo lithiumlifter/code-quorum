@@ -9,6 +9,7 @@ use App\Models\Discussion;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\DiscussionRequest;
 
 class DiscussionController extends Controller
@@ -101,16 +102,45 @@ class DiscussionController extends Controller
         $data['user_id'] = auth()->id();
         $data['slug'] = Str::slug($data['title']) . '-' . time();
     
+        // Load konten HTML dari Summernote
+        $dom = new \DOMDocument();
+        $dom->loadHTML($data['content'], LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    
+        // Temukan semua elemen img dalam konten
+        $images = $dom->getElementsByTagName('img');
+    
+        foreach ($images as $key => $img) {
+            // Dapatkan data gambar dari src
+            $src = $img->getAttribute('src');
+            $image_data = substr($src, strpos($src, ',') + 1);
+            $image_data = base64_decode($image_data);
+        
+            // Simpan gambar ke dalam penyimpanan Laravel
+            $image_name = "public/images/" . time() . $key . '.png';
+            Storage::put($image_name, $image_data);
+        
+            // Ganti src dengan URL penyimpanan gambar
+            $img->removeAttribute('src');
+            $img->setAttribute('src', Storage::url($image_name));
+        }
+        
+        // Simpan kembali konten yang telah dimodifikasi ke dalam variabel $content
+        $data['content'] = $dom->saveHTML();
+        
+        // Mengambil konten tanpa tag HTML untuk konten preview
         $stripContent = strip_tags($data['content']);
         $isContentLong = strlen($stripContent) > 120;
         $data['content_preview'] = $isContentLong ? (substr($stripContent, 0, 120) . '...') : $stripContent;
     
+        // Buat diskusi baru dengan data yang dimodifikasi
         $discussion = Discussion::create($data);
     
+        // Lampirkan tag
         $discussion->tags()->attach(Tag::whereIn('slug', $tagSlugs)->pluck('id')->toArray());
     
         return redirect()->route('discussions.myDiscussions')->with('success', 'Successfully created a new discussion');
     }
+    
 
     /**
      * Display the specified resource.
@@ -128,54 +158,147 @@ class DiscussionController extends Controller
         return view('frontend.pages.discussion.edit', compact('discussions', 'tags'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(DiscussionRequest $request, Discussion $discussion){
-        $data = $request->validated();
-        $tagSlugs = $data['tag_slug'];
-        unset($data['tag_slug']);
+/**
+ * Update the specified resource in storage.
+ */
+public function update(DiscussionRequest $request, Discussion $discussion){
+    $data = $request->validated();
+    $tagSlugs = $data['tag_slug'];
+    unset($data['tag_slug']);
+
+    // Dapatkan konten lama dari diskusi sebelum diperbarui
+    $oldContent = $discussion->content;
+
+    // Load konten HTML baru dari Summernote
+    $dom = new \DOMDocument();
+    $dom->loadHTML($data['content'], LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+
+    // Temukan semua elemen img dalam konten baru
+    $images = $dom->getElementsByTagName('img');
+
+    // Array untuk menyimpan nama gambar yang baru diunggah
+    $newImageNames = [];
+
+    foreach ($images as $key => $img) {
+        // Dapatkan data gambar dari src
+        $src = $img->getAttribute('src');
+        $image_data = substr($src, strpos($src, ',') + 1);
+        $image_data = base64_decode($image_data);
     
-        // Update discussion data
-        $discussion->update($data);
-    
-        // Update content preview
-        $stripContent = strip_tags($discussion->content);
-        $isContentLong = strlen($stripContent) > 120;
-        $discussion->content_preview = $isContentLong ? (substr($stripContent, 0, 120) . '...') : $stripContent;
-        $discussion->save();
-    
-        // Sync tags
-        $discussion->tags()->sync(Tag::whereIn('slug', $tagSlugs)->pluck('id')->toArray());
-    
-        return redirect()->route('discussions.myDiscussions')->with('success', 'Discussion updated successfully');
+        // Simpan gambar ke dalam penyimpanan Laravel
+        $newImageName = "public/images/" . time() . $key . '.png';
+        Storage::put($newImageName, $image_data);
+        $newImageNames[] = $newImageName; // Simpan nama gambar baru
+        
+        // Ganti src dengan URL penyimpanan gambar yang baru
+        $img->removeAttribute('src');
+        $img->setAttribute('src', Storage::url($newImageName));
     }
+
+    // Simpan kembali konten yang telah dimodifikasi ke dalam variabel $content
+    $data['content'] = $dom->saveHTML();
+    
+    // Mengambil konten tanpa tag HTML untuk konten preview
+    $stripContent = strip_tags($data['content']);
+    $isContentLong = strlen($stripContent) > 120;
+    $data['content_preview'] = $isContentLong ? (substr($stripContent, 0, 120) . '...') : $stripContent;
+
+    // Periksa apakah ada gambar yang dihapus
+    $deletedImages = $this->getDeletedImages($oldContent, $data['content']);
+
+    // Hapus gambar yang dihapus dari penyimpanan
+    foreach ($deletedImages as $deletedImage) {
+        Storage::delete('public/images/' . $deletedImage);
+    }
+
+    // Update discussion data
+    $discussion->update($data);
+
+    // Sync tags
+    $discussion->tags()->sync(Tag::whereIn('slug', $tagSlugs)->pluck('id')->toArray());
+
+    return redirect()->route('discussions.myDiscussions')->with('success', 'Discussion updated successfully');
+}
+
+/**
+ * Mendapatkan daftar gambar yang dihapus dari konten lama ke konten baru
+ */
+private function getDeletedImages($oldContent, $newContent)
+{
+    // Dapatkan daftar semua gambar dari konten lama
+    preg_match_all('/<img[^>]+>/i', $oldContent, $oldImages);
+    $oldImageSrcs = [];
+    foreach ($oldImages[0] as $img) {
+        preg_match('/src="([^"]+)/i', $img, $src);
+        $oldImageSrcs[] = str_replace('src="', '', $src[0]);
+    }
+
+    // Dapatkan daftar semua gambar dari konten baru
+    preg_match_all('/<img[^>]+>/i', $newContent, $newImages);
+    $newImageSrcs = [];
+    foreach ($newImages[0] as $img) {
+        preg_match('/src="([^"]+)/i', $img, $src);
+        $newImageSrcs[] = str_replace('src="', '', $src[0]);
+    }
+
+    // Temukan gambar yang dihapus dari konten lama ke konten baru
+    $deletedImages = array_diff($oldImageSrcs, $newImageSrcs);
+    $deletedImageNames = [];
+    foreach ($deletedImages as $src) {
+        $deletedImageNames[] = basename(parse_url($src, PHP_URL_PATH));
+    }
+
+    return $deletedImageNames;
+}
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($slug)
-    {
-        $discussion = Discussion::with('tags')->where('slug', $slug)->first();
-    
-        if (!$discussion) {
-            return abort(404);
-        }
-    
-        // Memeriksa apakah pengguna yang masuk memiliki diskusi yang ingin dihapus
-        $isOwnedByUser = $discussion->user_id == auth()->id();
-    
-        if (!$isOwnedByUser) {
-            return abort(403); // Unauthorized
-        }
-    
-        $delete = $discussion->delete();
-    
-        if ($delete) {
-            return redirect()->route('discussions.myDiscussions')->with('success', 'Discussion deleted successfully');
-        }
-    
-        return abort(500);
+public function destroy($slug)
+{
+    $discussion = Discussion::with('tags')->where('slug', $slug)->first();
+
+    if (!$discussion) {
+        return abort(404);
     }
+
+    // Memeriksa apakah pengguna yang masuk memiliki diskusi yang ingin dihapus
+    $isOwnedByUser = $discussion->user_id == auth()->id();
+
+    if (!$isOwnedByUser) {
+        return abort(403); // Unauthorized
+    }
+
+    // Hapus gambar yang terkait dengan diskusi dari penyimpanan
+    $this->deleteDiscussionImages($discussion->content);
+
+    $delete = $discussion->delete();
+
+    if ($delete) {
+        return redirect()->route('discussions.myDiscussions')->with('success', 'Discussion deleted successfully');
+    }
+
+    return abort(500);
+}
+
+/**
+ * Hapus gambar yang terkait dengan diskusi dari penyimpanan
+ */
+private function deleteDiscussionImages($content)
+{
+    // Dapatkan daftar semua gambar dari konten diskusi
+    preg_match_all('/<img[^>]+>/i', $content, $images);
+    $imageSrcs = [];
+    foreach ($images[0] as $img) {
+        preg_match('/src="([^"]+)/i', $img, $src);
+        $imageSrcs[] = str_replace('src="', '', $src[0]);
+    }
+
+    // Hapus gambar dari penyimpanan
+    foreach ($imageSrcs as $src) {
+        Storage::delete('public/images/' . basename(parse_url($src, PHP_URL_PATH)));
+    }
+}
+
     
 }

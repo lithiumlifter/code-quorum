@@ -25,14 +25,14 @@
         </ul>
 
         <!-- Sidebar - Brand - LG -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center d-lg-block" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center d-lg-block" href="{{ route('home') }}">
             <div class="sidebar-brand-text mx-3">
                 <img class="h-80px p-2 d-none d-md-block" src="{{ url('assets/img/logo.png') }}" alt="Logo Code Quorum">
             </div>
         </a>
 
         <!-- Sidebar - Brand - SM -->
-        <a class="sidebar-brand d-flex align-items-center justify-content-center d-md-none" href="index.html">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center d-md-none" href="{{ route('home') }}">
             <div class="sidebar-brand-text mx-3">
                 <img class="h-60px p-2" src="{{ url('assets/img/logo_sm.png') }}" alt="Logo Code Quorum">
             </div>
@@ -47,10 +47,10 @@
                     <input type="text" name="search" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="{{ request('search') }}">
                 @endif
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="submit">
+                    <button class="btn btn-blue-main" type="submit">
                         <i class="fas fa-search fa-sm"></i>
                     </button>
-                </div>
+                </div>                
             </div>
         </form>
 
@@ -68,14 +68,16 @@
                     aria-labelledby="searchDropdown">
                     <form class="form-inline mr-auto w-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small"
-                                placeholder="Search for..." aria-label="Search"
-                                aria-describedby="basic-addon2">
+                            @if (request('tag'))
+                                <input type="text" name="search" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="{{ request('search') }}">
+                            @else
+                                <input type="text" name="search" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2" value="{{ request('search') }}">
+                            @endif
                             <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
+                                <button class="btn btn-blue-main" type="submit">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
-                            </div>
+                            </div>                
                         </div>
                     </form>
                 </div>
@@ -92,7 +94,7 @@
                 <!-- Dropdown - Alerts -->
                 <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
                     aria-labelledby="alertsDropdown">
-                    <h6 class="dropdown-header">
+                    <h6 class="dropdown-header bg-blue-main">
                         Notification
                     </h6>
                     @foreach($notifications as $notification)

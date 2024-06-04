@@ -16,20 +16,20 @@
         @endif
         {{-- Top --}}
         <div id="top-section" class="container mb-2">
-            <div class="row justify-content-between">
-                <div class="col-6 col-md-auto">
-                    <h2>My Discussions</h2>
+            <div class="row justify-content-between align-items-center">
+                <div class="col-12 col-sm-auto mb-2 mb-sm-0">
+                    <h2><strong>My Discussion</strong></h2>
                 </div>
-                <div class="col-6 col-md-auto d-flex justify-content-end">
-                    <a href="{{ route('discussions.create') }}" class="btn btn-dark">Create Discussion</a>
-                    <button class="btn btn-outline-secondary btn-sm d-flex align-items-center ml-2" data-toggle="collapse" data-target="#filterPanel" aria-expanded="false" aria-controls="filterPanel">
+                <div class="col-12 col-sm-auto ml-sm-auto d-flex justify-content-end">
+                    <a href="{{ route('discussions.create') }}" class="btn btn-dark mr-2">Create Discussion</a>
+                    <button class="btn btn-outline-secondary btn-sm d-flex align-items-center" data-toggle="collapse" data-target="#filterPanel" aria-expanded="false" aria-controls="filterPanel">
                         <svg aria-hidden="true" class="bi bi-filter" width="18" height="18" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                             <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zM3 8a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9A.5.5 0 0 1 3 8zm-2-2.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 0 1H1.5a.5.5 0 0 1-.5-.5z"/>
                         </svg>
                         <span class="ml-1">Filter</span>
                     </button>
                 </div>
-            </div>
+            </div>            
         </div>
          <!-- Filter Panel -->
          <div class="collapse mb-3" id="filterPanel">
@@ -101,7 +101,7 @@
                 
                     <!-- Buttons Section -->
                     <div class="form-group d-flex justify-content-between mt-3">
-                        <button type="submit" class="btn btn-primary">Apply filter</button>
+                        <button type="submit" class="btn btn-blue-main-color">Apply filter</button>
                         <button type="button" class="btn btn-secondary" data-toggle="collapse" data-target="#filterPanel">Cancel</button>
                     </div>
                 </form>
@@ -126,14 +126,14 @@
                     </div>
                     {{-- column 2 --}}
                     <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
-                        <a href="{{ route('discussions.show', $discussion->slug) }}" class="text-decoration-none">
+                        <a href="{{ route('discussions.show', $discussion->slug) }}" class="text-decoration-none text-blue">
                             <h5>{{ $discussion->title }}</h5>
                         </a>
                         <p>{!! $discussion->content_preview !!}</p>
                         <div class="row g-0 align-items-center">
                             <div class="col me-1 me-lg-2 mb-0">
                                 @foreach ($discussion->tags as $tag)
-                                    <a href="#">
+                                    <a class="text-decoration-none" href="/discussions?tag={{ $tag->slug }}">
                                         <span class="badge rounded-pill text-bg-light">{{ $tag->name }}</span>
                                     </a>
                                 @endforeach
@@ -149,7 +149,7 @@
                                     </div>
                                     <div class="col-9 col-md-10">
                                         <span class="fs-12px">
-                                            <a href="#" class="me-1 fw-bold d-block">
+                                            <a href="#" class="me-1 fw-bold d-block text-blue text-decoration-none">
                                                 {{ $discussion->user->username }}
                                             </a>
                                             <span class="text-grey d-block">{{ $discussion->created_at->diffForHumans() }}</span>
@@ -175,8 +175,8 @@
                         <p>Welcome back,</p>
                         <h5 class="my-3">{{ auth()->user()->username }}</h5>
                         <div class="d-flex justify-content-center mb-2">
-                            <a href="{{ route('profile.index') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Edit</a>
-                            <a type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary ms-1">Share</a>
+                            <a href="{{ route('profile.index') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-blue-main-color">Edit</a>
+                            <a type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-blue-main-color ms-1">Share</a>
                         </div>
                     </div>
                 @endauth
@@ -187,8 +187,8 @@
                         <p>Welcome,</p>
                         <h5 class="my-3">Guest User</h5>
                         <div class="d-flex justify-content-center mb-2">
-                            <a href="{{ route('login') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary">Login</a>
-                            <a href="{{ route('register') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-primary ms-1">Register</a>
+                            <a href="{{ route('login') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-blue-main-color">Login</a>
+                            <a href="{{ route('register') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-blue-main-color ms-1">Register</a>
                         </div>
                     </div>
                 @endguest
@@ -196,9 +196,9 @@
 
             <div class="card mt-3">
                 <div class="card-body text-center">
-                    <h4>All Tags</h4>
+                    <h4><strong>All Tags</strong></h4>
                     @foreach ($tags as $tag)
-                        <a href="#">
+                        <a class="text-decoration-none" href="/discussions?tag={{ $tag->slug }}">
                             <span class="badge rounded-pill text-bg-light">{{ $tag->name }}</span>
                         </a>
                     @endforeach

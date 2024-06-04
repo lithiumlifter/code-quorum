@@ -16,11 +16,11 @@
         @endif
     
         <div id="top-section" class="container mb-2">
-            <div class="row justify-content-between">
-                <div class="col-6 col-md-auto">
-                    <h2>Profile</h2>
+            <div class="row justify-content-between align-items-center">
+                <div class="col-12 col-sm-auto mb-2 mb-sm-0">
+                    <h2><strong>Profile</strong></h2>
                 </div>
-                <div class="col-6 col-md-auto d-flex justify-content-end">
+                <div class="col-12 col-sm-auto ml-sm-auto d-flex justify-content-end">
                     <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#ModalProfile">Edit Profile</a>
                 </div>
             </div>
@@ -66,7 +66,7 @@
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            <button type="submit" class="btn btn-blue-main-color">Save changes</button>
                         </div>
                     </form>
                 </div>
@@ -112,13 +112,13 @@
         <div class="card card-discussions p-3 mb-3">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">My Discussion</button>
+                    <button class="nav-link active text-blue" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">My Discussion</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">My Answer</button>
+                    <button class="nav-link text-blue" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">My Answer</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Save</button>
+                    <button class="nav-link text-blue" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Save</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -132,14 +132,14 @@
                                 <div id="dilihat" class="mb-1">10 Dilihat</div>
                             </div>
                             <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
-                                <a href="{{ route('discussions.show', $discussion->slug) }}" class="text-decoration-none">
+                                <a href="{{ route('discussions.show', $discussion->slug) }}" class="text-decoration-none text-blue">
                                     <h5>{{ $discussion->title }}</h5>
                                 </a>
                                 <p>{!! $discussion->content_preview !!}</p>
                                 <div class="row g-0 align-items-center">
                                     <div class="col me-1 me-lg-2 mb-0">
                                         @foreach ($discussion->tags as $tag)
-                                            <a href="#">
+                                            <a class="text-decoration-none" href="/discussions?tag={{ $tag->slug }}">
                                                 <span class="badge rounded-pill text-bg-light">{{ $tag->name }}</span>
                                             </a>
                                         @endforeach
@@ -155,7 +155,7 @@
                                             </div>
                                             <div class="col-9 col-md-10">
                                                 <span class="fs-12px">
-                                                    <a href="#" class="me-1 fw-bold d-block">{{ $discussion->user->username }}</a>
+                                                    <a href="{{ route('profile.show', $discussion->user->uid) }}" class="me-1 fw-bold d-block text-blue text-decoration-none">{{ $discussion->user->username }}</a>
                                                     <span class="text-grey d-block">{{ $discussion->created_at->diffForHumans() }}</span>
                                                 </span>
                                             </div>
@@ -175,7 +175,7 @@
                                 <div class="col">
                                     <span>Replied to</span>
                                     <span class="fw-bold text-primary">
-                                        <a href="#">{{ $answer->answer }}</a>
+                                        <a class="text-blue text-decoration-none" href="#">{{ $answer->answer }}</a>
                                     </span>
                                 </div>
                             </div>
@@ -198,14 +198,14 @@
                                 @endif
                             </div>
                             <div class="col-12 col-lg-11 mb-1 mb-lg-0 d-flex flex-column">
-                                <a href="{{ route('discussions.show', $save->discussion->slug) }}" class="text-decoration-none">
+                                <a href="{{ route('discussions.show', $save->discussion->slug) }}" class="text-decoration-none text-blue">
                                     <h5>{{ $save->discussion->title }}</h5>
                                 </a>
                                 <p>{!! $save->discussion->content_preview !!}</p>
                                 <div class="row g-0 align-items-center">
                                     <div class="col me-1 me-lg-2 mb-0">
                                         @foreach ($save->discussion->tags as $tag)
-                                            <a href="#">
+                                            <a class="text-decoration-none" href="/discussions?tag={{ $tag->slug }}">
                                                 <span class="badge rounded-pill text-bg-light">{{ $tag->name }}</span>
                                             </a>
                                         @endforeach
@@ -221,7 +221,7 @@
                                             </div>
                                             <div class="col-9 col-md-10">
                                                 <span class="fs-12px">
-                                                    <a href="#" class="me-1 fw-bold d-block">{{ $save->discussion->user->username }}</a>
+                                                    <a href="#" class="me-1 fw-bold d-block text-blue text-decoration-none">{{ $save->discussion->user->username }}</a>
                                                     <span class="text-grey d-block">{{ $save->discussion->created_at->diffForHumans() }}</span>
                                                 </span>
                                             </div>

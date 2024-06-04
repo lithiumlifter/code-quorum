@@ -16,11 +16,11 @@
         @endif
         {{-- Top --}}
         <div class="container mb-2">
-            <div class="row justify-content-between">
-                <div class="col-6 col-md-auto">
-                    <h4>All discussions > {{ $discussions->title }}</h4>
+            <div class="row justify-content-between align-items-center">
+                <div class="col-12 col-sm-auto mb-2 mb-sm-0">
+                    <h4><strong>All discussions ></strong> {{ $discussions->title }}</h4>
                 </div>
-                <div class="col-6 col-md-auto d-flex justify-content-end">
+                <div class="col-12 col-sm-auto ml-sm-auto d-flex justify-content-end">
                     <a href="{{ route('discussions.create') }}" class="btn btn-dark">Create discussions</a>
                 </div>
             </div>
@@ -33,14 +33,14 @@
                     <div class="me-2 me-lg-0 mb-2">
                         @if (Auth::check())
                                 @if ($discussions->liked())
-                                    <a id="discussionUnlike" href="javascript:;" data-liked="true" data-slug="{{ $discussions->slug }}" onclick="unlikeDiscussion(this, '{{ $discussions->slug }}')">
-                                        <i class="fa-solid fa-heart"></i>
-                                        <span>{{ $discussions->likeCount }}</span>
+                                    <a id="discussionUnlike" href="javascript:;" data-liked="true" data-slug="{{ $discussions->slug }}" onclick="unlikeDiscussion(this, '{{ $discussions->slug }}')" class="text-decoration-none">
+                                        <i class="fa-solid fa-heart text-danger"></i>
+                                        <span class="text-dark">{{ $discussions->likeCount }}</span>
                                     </a>
                                 @else
-                                    <a id="discussionLike" href="javascript:;" data-liked="false" data-slug="{{ $discussions->slug }}" onclick="likeDiscussion(this, '{{ $discussions->slug }}')">
-                                        <i class="fa-regular fa-heart"></i>
-                                        <span>{{ $discussions->likeCount }}</span>
+                                    <a id="discussionLike" href="javascript:;" data-liked="false" data-slug="{{ $discussions->slug }}" onclick="likeDiscussion(this, '{{ $discussions->slug }}')" class="text-decoration-none">
+                                        <i class="fa-regular fa-heart text-danger"></i>
+                                        <span class="text-dark">{{ $discussions->likeCount }}</span>
                                     </a>
                                 @endif
                         @else
@@ -88,19 +88,19 @@
                     <div class="row g-0 align-items-center mt-3">
                         <div class="col me-1 me-lg-2 mb-0 d-flex">
                             <a href="#" class="me-3 text-decoration-none">
-                                <span><i class="fa-solid fa-share"></i></span>
+                                <span><i class="fa-solid fa-share text-muted"></i></span>
                             </a>
                             @auth
                                 @if (Auth::user()->id == $discussions->user_id)
                                     <a href="{{ route('discussions.edit', $discussions->slug) }}" class="me-3 text-decoration-none">
-                                        <span><i class="fa-solid fa-pencil"></i></span>
+                                        <span><i class="fa-solid fa-pencil text-muted"></i></span>
                                     </a>
                                     <a href="{{ route('discussions.destroy', $discussions->slug) }}" class="me-3 text-decoration-none" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal">
-                                        <span><i class="fa-solid fa-trash"></i></span>
+                                        <span><i class="fa-solid fa-trash text-muted"></i></span>
                                     </a>
                                 @endif
                             @endauth
-                        </div>                        
+                        </div>                                               
                         <div class="col-5 col-lg-4 mb-0">
                             <div class="avatar-sm-wrapper d-inline-block">
                                 <a href="#" class="me-1">
@@ -108,7 +108,7 @@
                                 </a>
                             </div>
                             <span class="fs-12px">
-                                <a href="#" class="me-1 fw-bold">
+                                <a href="#" class="me-1 fw-bold text-blue text-decoration-none">
                                     {{ $discussions->user->username }}
                                 </a>
                                 <span class="text-gre">{{ $discussions->created_at->diffForHumans() }}</span>
@@ -142,7 +142,7 @@
             </div>
         </div>
 
-        <h3 class="mt-3 mb-3">Answers</h3>
+        <h4 class="mt-3 mb-3 pl-2">Answers</h4>
 
         @foreach ($discussions->answers as $answer)
             {{-- Answer Card --}}
@@ -153,20 +153,20 @@
                         <div class="me-2 me-lg-0 mb-2">
                             @if (Auth::check())
                                 @if ($answer->liked())
-                                    <a id="answerUnlike" href="javascript:;" data-liked="true" data-id="{{ $answer->id }}" onclick="unlikeAnswer(this, '{{ $answer->id }}')">
-                                        <i class="fa-solid fa-heart"></i>
-                                        <span>{{ $answer->likeCount }}</span>
+                                    <a id="answerUnlike" href="javascript:;" data-liked="true" data-id="{{ $answer->id }}" onclick="unlikeAnswer(this, '{{ $answer->id }}')" class="text-decoration-none">
+                                        <i class="fa-solid fa-heart text-danger"></i>
+                                        <span class="text-dark">{{ $answer->likeCount }}</span>
                                     </a>
                                 @else
-                                    <a id="answerLike" href="javascript:;" data-liked="false" data-id="{{ $answer->id }}" onclick="likeAnswer(this, '{{ $answer->id }}')">
-                                        <i class="fa-regular fa-heart"></i>
-                                        <span>{{ $answer->likeCount }}</span>
+                                    <a id="answerLike" href="javascript:;" data-liked="false" data-id="{{ $answer->id }}" onclick="likeAnswer(this, '{{ $answer->id }}')" class="text-decoration-none">
+                                        <i class="fa-regular fa-heart text-danger"></i>
+                                        <span class="text-dark">{{ $answer->likeCount }}</span>
                                     </a>
                                 @endif
                             @else
-                                <a href="{{ route('login') }}">
-                                    <i class="fa-regular fa-heart"></i>
-                                    <span>Like</span>
+                                <a id="answerLike" href="javascript:;" data-liked="false" data-id="{{ $answer->id }}" onclick="likeAnswer(this, '{{ $answer->id }}')">
+                                    <i class="fa-regular fa-heart text-danger"></i>
+                                    <span>{{ $answer->likeCount }}</span>
                                 </a>
                             @endif
                         </div>
@@ -180,10 +180,10 @@
                                 @auth
                                     @if (Auth::user()->id == $answer->user_id)
                                         <a href="{{ route('answers.edit', $answer->id) }}" class="me-3 text-decoration-none">
-                                            <span><i class="fa-solid fa-pencil"></i></span>
+                                            <span><i class="fa-solid fa-pencil text-muted"></i></span>
                                         </a>
                                         <a href="{{ route('answers.destroy', $answer->id) }}" class="me-3 text-decoration-none" data-bs-toggle="modal" data-bs-target="#confirmDeleteAnswer">
-                                            <span><i class="fa-solid fa-trash"></i></span>
+                                            <span><i class="fa-solid fa-trash text-muted"></i></span>
                                         </a>
                                     @endif
                                 @endauth
@@ -195,7 +195,7 @@
                                     </a>
                                 </div>
                                 <span class="fs-12px">
-                                    <a href="#" class="me-1 fw-bold">
+                                    <a href="#" class="me-1 fw-bold text-blue text-decoration-none">
                                         {{ $answer->user->username }}
                                     </a>
                                     <span class="text-gre">{{ $answer->created_at->diffForHumans() }}</span>
@@ -241,9 +241,7 @@
         <div class="mb-3 mt-3">
             <div class="d-flex align-item-center">
                 <div class="d-flex">
-                    <div class="fs-2 fw-bold me-2 mb-0">
-                        Answer a Question
-                    </div>
+                    <h4 class="pl-2">Answer a Question</h4>
                 </div>
             </div>
         </div>
@@ -260,7 +258,7 @@
                                 </div>
                                 <div>
                                     <button class="btn btn-secondary me-4" type="submit">Submit</button>
-                                    <a href="#">Cancel</a>
+                                    <a class="text-decoration-none" href="{{ route('discussions.index') }}">Cancel</a>
                                 </div>
                             </form>
                         </div>
@@ -326,73 +324,74 @@
         </script>
 
 <script>
-    function likeDiscussion(element, discussionSlug) {
-        event.preventDefault();
+        function likeDiscussion(element, discussionSlug) {
+                event.preventDefault();
 
-        axios.post(`/discussions/${discussionSlug}/like`)
-            .then(response => {
-                if (response.status === 200) {
-                    const likeCount = response.data.data.likeCount;
-                    element.innerHTML = '<i class="fa-solid fa-heart"></i> <span>' + likeCount + '</span>';
-                    element.setAttribute('onclick', `unlikeDiscussion(this, '${discussionSlug}')`);
-                    element.setAttribute('data-liked', 'true');
-                }
-            })
-            .catch(error => {
-                console.error('Error liking discussion:', error);
-            });
-    }
+            axios.post(`/discussions/${discussionSlug}/like`)
+                .then(response => {
+                    if (response.status === 200) {
+                        const likeCount = response.data.data.likeCount;
+                        element.innerHTML = '<i class="fa-solid fa-heart text-danger"></i> <span class="text-dark text-decoration-none">' + likeCount + '</span>';
+                        element.setAttribute('onclick', `unlikeDiscussion(this, '${discussionSlug}')`);
+                        element.setAttribute('data-liked', 'true');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error liking discussion:', error);
+                });
+        }
 
-    function unlikeDiscussion(element, discussionSlug) {
-        event.preventDefault();
+        function unlikeDiscussion(element, discussionSlug) {
+            event.preventDefault();
 
-        axios.post(`/discussions/${discussionSlug}/unlike`)
-            .then(response => {
-                if (response.status === 200) {
-                    const likeCount = response.data.data.likeCount;
-                    element.innerHTML = '<i class="fa-regular fa-heart"></i> <span>' + likeCount + '</span>';
-                    element.setAttribute('onclick', `likeDiscussion(this, '${discussionSlug}')`);
-                    element.setAttribute('data-liked', 'false');
-                }
-            })
-            .catch(error => {
-                console.error('Error unliking discussion:', error);
-            });
-    }
+            axios.post(`/discussions/${discussionSlug}/unlike`)
+                .then(response => {
+                    if (response.status === 200) {
+                        const likeCount = response.data.data.likeCount;
+                        element.innerHTML = '<i class="fa-regular fa-heart text-danger"></i> <span class="text-dark text-decoration-none">' + likeCount + '</span>';
+                        element.setAttribute('onclick', `likeDiscussion(this, '${discussionSlug}')`);
+                        element.setAttribute('data-liked', 'false');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error unliking discussion:', error);
+                });
+        }
 
-    function likeAnswer(element, answerId) {
-        event.preventDefault();
+        function likeAnswer(element, answerId) {
+            event.preventDefault();
 
-        axios.post(`/answers/${answerId}/like`)
-            .then(response => {
-                if (response.status === 200) {
-                    const likeCount = response.data.data.likeCount;
-                    element.innerHTML = '<i class="fa-solid fa-heart"></i> <span>' + likeCount + '</span>';
-                    element.setAttribute('onclick', `unlikeAnswer(this, '${answerId}')`);
-                    element.setAttribute('data-liked', 'true');
-                }
-            })
-            .catch(error => {
-                console.error('Error liking answer:', error);
-            });
-    }
+            axios.post(`/answers/${answerId}/like`)
+                .then(response => {
+                    if (response.status === 200) {
+                        const likeCount = response.data.data.likeCount;
+                        element.innerHTML = '<i class="fa-solid fa-heart text-danger"></i> <span class="text-dark text-decoration-none">' + likeCount + '</span>';
+                        element.setAttribute('onclick', `unlikeAnswer(this, '${answerId}')`);
+                        element.setAttribute('data-liked', 'true');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error liking answer:', error);
+                });
+        }
 
-    function unlikeAnswer(element, answerId) {
-        event.preventDefault();
+        function unlikeAnswer(element, answerId) {
+            event.preventDefault();
 
-        axios.post(`/answers/${answerId}/unlike`)
-            .then(response => {
-                if (response.status === 200) {
-                    const likeCount = response.data.data.likeCount;
-                    element.innerHTML = '<i class="fa-regular fa-heart"></i> <span>' + likeCount + '</span>';
-                    element.setAttribute('onclick', `likeAnswer(this, '${answerId}')`);
-                    element.setAttribute('data-liked', 'false');
-                }
-            })
-            .catch(error => {
-                console.error('Error unliking answer:', error);
-            });
-    }
+            axios.post(`/answers/${answerId}/unlike`)
+                .then(response => {
+                    if (response.status === 200) {
+                        const likeCount = response.data.data.likeCount;
+                        element.innerHTML = '<i class="fa-regular fa-heart text-danger"></i> <span class="text-dark text-decoration-none">' + likeCount + '</span>';
+                        element.setAttribute('onclick', `likeAnswer(this, '${answerId}')`);
+                        element.setAttribute('data-liked', 'false');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error unliking answer:', error);
+                });
+        }
+
 </script>
 
 

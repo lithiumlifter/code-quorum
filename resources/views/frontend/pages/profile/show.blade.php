@@ -1,74 +1,11 @@
 @extends('frontend.templates.app')
 
 @section('content')
-    <main id="main-forum" class="col-md-9 mt-3">
-        @if(session('success'))
-            <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong>{{ session('success') }}</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-        @if(session('error'))
-            <div class="alert alert-danger alert-dismissible" role="alert" style="position: relative; z-index: 9999;">
-                {{ session('error') }}
-                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-            </div>
-        @endif
-    
+    <main id="main-forum" class="col-md-9 mt-3">    
         <div id="top-section" class="container mb-2">
             <div class="row justify-content-between">
                 <div class="col-6 col-md-auto">
                     <h2>Profile</h2>
-                </div>
-                <div class="col-6 col-md-auto d-flex justify-content-end">
-                    <a href="#" class="btn btn-dark" data-bs-toggle="modal" data-bs-target="#ModalProfile">Edit Profile</a>
-                </div>
-            </div>
-        </div>
-
-        <!-- Modal for Editing Profile -->
-        <div class="modal fade" id="ModalProfile" tabindex="-1" aria-labelledby="ModalProfileLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="ModalProfileLabel">Edit Profile</h1>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="{{ route('profile.update', ['profile' => $user->id]) }}" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        @method('PUT')
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-12 col-lg-2 mb-1 mb-lg-0 d-flex flex-row flex-lg-column align-items-center">
-                                    <img id="previewImage" src="{{ $user->picture ? asset('storage/profiles/' . basename($user->picture)) : url("assets/img/user.png") }}" alt="avatar" class="rounded-circle img-fluid" style="width: 100px; height: 100px; border: 1px solid black; object-fit: cover;">
-                                    <label for="picture" class="btn p-0 edit-avatar-show">
-                                        <span class="rounded-circle p-1" style="background-color:gray;">
-                                            <i class="fa-solid fa-pen" style="color: white"></i>
-                                        </span>
-                                    </label>
-                                    <input type="file" class="form-control d-none" id="picture" name="picture" onchange="previewImage(this);">
-                                </div>
-                                <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
-                                    <div class="mb-3">
-                                        <label for="username" class="form-label">Username:</label>
-                                        <input type="text" class="form-control" id="username" name="username" value="{{ $user->username }}" autofocus>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="about" class="form-label">About me:</label>
-                                        <textarea class="form-control" id="about" name="about">{{ $user->about }}</textarea>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="lokasi" class="form-label">Lokasi:</label>
-                                        <input type="text" class="form-control" id="lokasi" name="location" value="{{ $user->location }}" autofocus>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </form>
                 </div>
             </div>
         </div>

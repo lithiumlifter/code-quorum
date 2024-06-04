@@ -26,7 +26,7 @@
                 @enderror
               </div>
               
-              <div class="form-group last mb-4">
+              <div class="form-group last mb-2">
                 <label for="password">Password</label>
                 <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password">
                 @error('password')
@@ -36,11 +36,11 @@
                 @enderror
               </div>
         
-              <div class="d-flex mb-5 align-items-center justify-content-between">
-                <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
+              <div class="d-flex mb-5 align-items-center justify-content-center">
+                {{-- <label class="control control--checkbox mb-0"><span class="caption">Remember me</span>
                     <input type="checkbox" checked="checked" class="form-check-input" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}/>
                     <div class="control__indicator"></div>
-                </label>
+                </label> --}}
                 @if (Route::has('password.request'))
                     <span class="ml-auto">
                       <a href="{{ route('password.request') }}" class="forgot-pass" id="forgotPass">Forgot Password</a>
