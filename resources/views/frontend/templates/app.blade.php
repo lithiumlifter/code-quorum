@@ -20,10 +20,10 @@
         rel="stylesheet">
     
      <!-- Favicon-->
-     <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}" />
+     {{-- <link rel="icon" type="image/x-icon" href="{{ asset('assets/favicon.ico') }}" /> --}}
      <!-- Font Awesome icons (free version)-->
      <script src="{{ asset('https://use.fontawesome.com/releases/v6.3.0/js/all.js') }}" crossorigin="anonymous"></script>
-     <link rel="stylesheet" href="{{ asset('fonts/icomoon/style.css') }}">
+     {{-- <link rel="stylesheet" href="{{ asset('fonts/icomoon/style.css') }}"> --}}
 
     <!-- Custom styles for this template-->
     <link href="{{ asset('assets/css/sb-admin-2.min.css') }}" rel="stylesheet">

@@ -7,11 +7,8 @@
         <title>Code Quorum</title>
 
         @vite(['resources/scss/app.scss', 'resources/js/app.js'])
-         <!-- Favicon-->
-         <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
          <!-- Font Awesome icons (free version)-->
          <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-         <link rel="stylesheet" href="fonts/icomoon/style.css">
     </head>
     <body class="antialiased">
       {{-- NAVBAR --}}
