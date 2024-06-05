@@ -112,12 +112,22 @@ pre {
     border-radius: 0 25px 25px 0 !important;
 }
 
-/* Warna default untuk ikon dan teks */
 #sidebar-forum .nav-link i, 
 #sidebar-forum .nav-link span {
-    color: rgb(192, 192, 192); /* warna default untuk ikon dan teks */
+    color: rgb(192, 192, 192);
 }
 
 #sidebar-forum .nav-item.active .nav-link span {
-    color: black; /* warna teks saat tautan aktif */
+    color: black;
+}
+
+.scrollable-dropdown {
+    max-height: 500px !important;
+    overflow-y: auto !important;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: $blue-main; /* Warna latar belakang yang diinginkan */
+    border-color: $blue-main; /* Warna border yang sesuai */
+    color: #fff; /* Warna teks yang kontras */
 }

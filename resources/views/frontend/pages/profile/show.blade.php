@@ -45,10 +45,10 @@
         <div class="card card-discussions p-3 mb-3">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active text-blue" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Discussion</button>
+                    <button class="nav-link active text-blue" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Discussions</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link text-blue" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Answer</button>
+                    <button class="nav-link text-blue" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Answers</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -96,21 +96,40 @@
                         </div>
                     </div>
                     @endforeach
+                    {{ $discussions->links() }}
                 </div>
                 <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                    @php
+                        $displayedDiscussions = [];
+                    @endphp
+
                     @foreach ($answers as $answer)
-                        <div class="card card-discussions p-3 mb-3 mt-3">
-                            <div class="row align-items-center">
-                                <div class="col-2 col-lg-1 text-center">34</div>
-                                <div class="col">
-                                    <span>Replied to</span>
-                                    <span class="fw-bold text-primary">
-                                        <a href="{{ route('discussions.show', $answer->discussion->slug) }}" class="text-decoration-none text-blue">{{ $answer->discussion->title }}</a>
-                                    </span>
+                        @php
+                            $discussion = $answer->discussion;
+                        @endphp
+
+                        {{-- Check if the discussion has been displayed --}}
+                        @if (!in_array($discussion->id, $displayedDiscussions))
+                            {{-- Display the discussion --}}
+                            <div class="card card-discussions p-3 mb-3 mt-3">
+                                <div class="row align-items-center">
+                                    <div class="col-2 col-lg-1 text-center">{{ $discussion->answers()->count() }}</div>
+                                    <div class="col">
+                                        <span>Replied to</span>
+                                        <span class="fw-bold text-primary">
+                                            <a href="{{ route('discussions.show', $discussion->slug) }}" class="text-decoration-none text-blue">{{ $discussion->title }}</a>
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+
+                            {{-- Add the discussion ID to the displayed discussions array --}}
+                            @php
+                                $displayedDiscussions[] = $discussion->id;
+                            @endphp
+                        @endif
                     @endforeach
+                    {{ $answers->links() }}
                 </div>
             </div>
         </div>

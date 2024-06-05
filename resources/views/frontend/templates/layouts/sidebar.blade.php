@@ -1,7 +1,7 @@
 <aside id="aside-forum" class="col-md-3 mb-3">
     <!-- Aside menu -->
     <div class="container-fluid">
-        <nav id="aside-nav" class="card mt-3">
+        <nav id="aside-nav" class="card mt-3" style="border: none">
             <ul id="sidebar-forum">
                 <li class="nav-item {{ request()->routeIs('discussions.index') ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('discussions.index') }}">

@@ -16,11 +16,11 @@ class UserController extends Controller
     {
         $user = Auth::user();
 
-        $discussions = Discussion::where('user_id', $user->id)->get();
+        $discussions = Discussion::where('user_id', $user->id)->paginate(10);
 
-        $answers = Answer::where('user_id', $user->id)->get();
+        $answers = Answer::where('user_id', $user->id)->paginate(10);
 
-        $savedDiscussions = Save::where('user_id', $user->id)->with('discussion')->get();
+        $savedDiscussions = Save::where('user_id', $user->id)->with('discussion')->paginate(10);
 
         return view('frontend.pages.profile.index', compact('user', 'discussions' , 'answers', 'savedDiscussions'));
     }
@@ -29,9 +29,9 @@ class UserController extends Controller
     {
         $user = User::where('uid', $uid)->firstOrFail();
 
-        $discussions = Discussion::where('user_id', $user->id)->get();
-        $answers = Answer::where('user_id', $user->id)->get();
-        $savedDiscussions = Save::where('user_id', $user->id)->with('discussion')->get();
+        $discussions = Discussion::where('user_id', $user->id)->paginate(10);
+        $answers = Answer::where('user_id', $user->id)->paginate(10);
+        $savedDiscussions = Save::where('user_id', $user->id)->with('discussion')->paginate(10);
 
         return view('frontend.pages.profile.show', compact('user', 'discussions', 'answers', 'savedDiscussions'));
     }

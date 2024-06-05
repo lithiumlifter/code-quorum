@@ -49,7 +49,7 @@
 
     <aside id="aside-right" class="col-md-3">
         <div class="container-fluid">
-            <div class="card mt-3">
+            <div class="card mt-3" style="border: none">
                 @auth
                     <div class="card-body text-center">
                         <img src="{{ Auth::user()->picture ? asset('storage/profiles/' . basename(Auth::user()->picture)) : url('assets/img/user.png') }}" alt="avatar"
@@ -76,7 +76,7 @@
                 @endguest
             </div>
 
-            <div class="card mt-3">
+            <div class="card mt-3" style="border: none">
                 <div class="card-body text-center">
                     <h4><strong>All Tags</strong></h4>
                     @foreach ($tags as $tag)

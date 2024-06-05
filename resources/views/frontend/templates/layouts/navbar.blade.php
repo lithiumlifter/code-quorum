@@ -12,18 +12,50 @@
 @endphp
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand bg-white topbar static-top shadow">
+<nav class="navbar navbar-expand bg-white topbar static-top">
     <div class="container d-flex justify-content-between">
         <!-- Sidebar Toggle (Topbar) -->
         <button class="btn btn-link d-lg-none rounded-circle mr-3 dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
             <i class="fa fa-bars"></i>
         </button>
         <ul class="dropdown-menu">
-            <li><button class="dropdown-item" type="button">Action</button></li>
-            <li><button class="dropdown-item" type="button">Another action</button></li>
-            <li><button class="dropdown-item" type="button">Something else here</button></li>
-        </ul>
-
+            <li class="nav-item {{ request()->routeIs('discussions.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('discussions.index') }}">
+                    <i class="fa-solid fa-comments {{ request()->routeIs('discussions.index') ? 'text-blue' : 'text-muted' }}"></i>
+                    <span style="margin-left: 10px;">All Discussions</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('discussions.myDiscussions') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('discussions.myDiscussions') }}">
+                    <i class="fa-solid fa-comment {{ request()->routeIs('discussions.myDiscussions') ? 'text-blue' : 'text-muted' }}"></i>
+                    <span style="margin-left: 10px;">My Discussions</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('discussions.myAnswers') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('discussions.myAnswers') }}">
+                    <i class="fa-solid fa-comment-dots {{ request()->routeIs('discussions.myAnswers') ? 'text-blue' : 'text-muted' }}"></i>
+                    <span style="margin-left: 10px;">My Answers</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('discussions.mySaves') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('discussions.mySaves') }}">
+                    <i class="fa-solid fa-bookmark {{ request()->routeIs('discussions.mySaves') ? 'text-blue' : 'text-muted' }}"></i>
+                    <span style="margin-left: 10px;">Bookmarks</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('discussions.tags') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('discussions.tags') }}">
+                    <i class="fa-solid fa-tags {{ request()->routeIs('discussions.tags') ? 'text-blue' : 'text-muted' }}"></i>
+                    <span style="margin-left: 10px;">Tags</span>
+                </a>
+            </li>
+            <li class="nav-item {{ request()->routeIs('profile.index') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('profile.index') }}">
+                    <i class="fa-solid fa-user {{ request()->routeIs('profile.index') ? 'text-blue' : 'text-muted' }}"></i>
+                    <span style="margin-left: 10px;">Profile</span>
+                </a>
+            </li>
+        </ul>        
         <!-- Sidebar - Brand - LG -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center d-lg-block" href="{{ route('home') }}">
             <div class="sidebar-brand-text mx-3">
@@ -92,32 +124,31 @@
                     <span class="badge badge-danger badge-counter">{{ $unreadCount }}</span>
                 </a>
                 <!-- Dropdown - Alerts -->
-                <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                    <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in scrollable-dropdown"
                     aria-labelledby="alertsDropdown">
-                    <h6 class="dropdown-header bg-blue-main">
-                        Notification
-                    </h6>
-                    @foreach($notifications as $notification)
-                        @if ($notification->discussion || $notification->answer)
-                            @php
-                                $discussion = $notification->discussion ?? $notification->answer->discussion;
-                            @endphp
-                            <a class="dropdown-item d-flex align-items-center {{ $notification->read ? 'read' : '' }}" href="{{ route('discussions.show', $discussion->slug) }}" onclick="markNotificationAsRead('{{ $notification->id }}')">
-                                <div class="dropdown-list-image mr-3">
-                                    <img class="rounded-circle notification-image" src="{{ $notification->likedByUser ? asset('storage/profiles/' . basename($notification->likedByUser->picture)) : url('assets/img/user.png') }}" alt="...">
-                                    <div class="status-indicator {{ $notification->read ? 'bg-gray' : 'bg-primary' }}"></div>
-                                </div>
-                                <div class="font-weight-bold notification-content">
-                                    <div class="text-truncate" style="font-size: 12px">{{ $notification->discussion ? $notification->discussion->title : $notification->answer->answer }}</div>
-                                    <div class="small text-gray-900">{{ $notification->likedByUser->username }} {{ $notification->message }}</div>
-                                    <div class="small text-gray-500" style="text-align: right">{{ $notification->created_at->diffForHumans() }}</div>
-                                </div>
-                            </a>
-                        @endif
-                    @endforeach
-
-                    <a class="dropdown-item text-center small text-gray-500" href="#">©CodeQuorum</a>
-                </div>
+                        <h6 class="dropdown-header bg-blue-main">
+                            Notification
+                        </h6>
+                        @foreach($notifications as $notification)
+                            @if ($notification->discussion || $notification->answer)
+                                @php
+                                    $discussion = $notification->discussion ?? $notification->answer->discussion;
+                                @endphp
+                                <a class="dropdown-item d-flex align-items-center {{ $notification->read ? 'read' : '' }}" href="{{ route('discussions.show', $discussion->slug) }}" onclick="markNotificationAsRead('{{ $notification->id }}')">
+                                    <div class="dropdown-list-image mr-3">
+                                        <img class="rounded-circle notification-image" src="{{ $notification->likedByUser ? asset('storage/profiles/' . basename($notification->likedByUser->picture)) : url('assets/img/user.png') }}" alt="...">
+                                        <div class="status-indicator {{ $notification->read ? 'bg-gray' : 'bg-primary' }}"></div>
+                                    </div>
+                                    <div class="font-weight-bold notification-content">
+                                        <div class="text-truncate" style="font-size: 12px">{{ $notification->discussion ? $notification->discussion->title : $notification->answer->answer }}</div>
+                                        <div class="small text-gray-900">{{ $notification->likedByUser->username }} {{ $notification->message }}</div>
+                                        <div class="small text-gray-500" style="text-align: right">{{ $notification->created_at->diffForHumans() }}</div>
+                                    </div>
+                                </a>
+                            @endif
+                        @endforeach
+                        <a class="dropdown-item text-center small text-gray-500" href="#">©CodeQuorum</a>
+                     </div>
             </li>
 
             <div class="d-none d-sm-block"></div>

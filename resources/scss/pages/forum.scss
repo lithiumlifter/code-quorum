@@ -43,7 +43,7 @@
     height: 100%;
     overflow-y: auto;
     position: sticky;
-    top: 0;
+    top: 70px;
 }
 
 // #main-forum {
@@ -60,10 +60,11 @@
 
 #top-section {
     position: sticky;
-    top: 0;
+    top: 70px;
     background-color: rgb(245, 245, 245); /* Anda mungkin ingin menambahkan latar belakang agar terlihat lebih jelas */
     z-index: 1; /* Pastikan bagian top muncul di atas konten lainnya */
     padding-bottom: 10px;
+    padding-top: 10px;
 }
 
 // ::-webkit-scrollbar {
@@ -113,6 +114,13 @@
 #aside-nav{
     padding: 50px;
     height: 100vh;
+}
+
+#aside-right {
+    position: sticky;
+    top: 70px; /* Sesuaikan dengan tinggi header */
+    height: calc(100vh - 70px); /* Sesuaikan tinggi agar tidak menutupi footer */
+    overflow-y: auto; /* Tambahkan overflow-y agar bisa digulir jika konten terlalu panjang */
 }
 
 @media (max-width: 1310px) {
