@@ -142,14 +142,14 @@
                                 <div class="row align-items-center">
                                     <div class="col-3 col-md-2">
                                         <div class="avatar-sm-wrapper d-inline-block">
-                                            <a href="#" class="me-1">
+                                            <a href="{{ route('profile.show', $discussion->user->uid) }}" class="me-1">
                                                 <img src="{{ $discussion->user->picture ? asset('storage/profiles/' . basename($discussion->user->picture)) : url("assets/img/user.png") }}" alt="Img_Profile" class="rounded-circle" style="object-fit: cover; width: 25px; height: 25px;">
                                             </a>
                                         </div>
                                     </div>
                                     <div class="col-9 col-md-10">
                                         <span class="fs-12px">
-                                            <a href="#" class="me-1 fw-bold d-block text-blue text-decoration-none">
+                                            <a href="{{ route('profile.show', $discussion->user->uid) }}" class="me-1 fw-bold d-block text-blue text-decoration-none">
                                                 {{ $discussion->user->username }}
                                             </a>
                                             <span class="text-grey d-block">{{ $discussion->created_at->diffForHumans() }}</span>
@@ -176,7 +176,7 @@
                         <h5 class="my-3">{{ auth()->user()->username }}</h5>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="{{ route('profile.index') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-blue-main-color">Edit</a>
-                            <a type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-blue-main-color ms-1">Share</a>
+                            <a type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-blue-main-color ms-1" onclick="copyCurrentPath()">Share</a>
                         </div>
                     </div>
                 @endauth

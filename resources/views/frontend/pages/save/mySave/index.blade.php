@@ -54,7 +54,7 @@
                                     </div>
                                     <div class="col-9 col-md-10">
                                         <span class="fs-12px">
-                                            <a href="#" class="me-1 fw-bold d-block text-decoration-none text-blue">{{ $save->discussion->user->username }}</a>
+                                            <a href="{{ route('profile.show', $save->discussion->user->uid) }}" class="me-1 fw-bold d-block text-decoration-none text-blue">{{ $save->discussion->user->username }}</a>
                                             <span class="text-grey d-block">{{ $save->discussion->created_at->diffForHumans() }}</span>
                                         </span>
                                     </div>
@@ -79,7 +79,7 @@
                         <h5 class="my-3">{{ auth()->user()->username }}</h5>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="{{ route('profile.index') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-blue-main-color">Edit</a>
-                            <a type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-blue-main-color ms-1">Share</a>
+                            <a type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-blue-main-color ms-1" onclick="copyCurrentPath()">Share</a>
                         </div>
                     </div>
                 @endauth
@@ -110,3 +110,37 @@
         </div>
     </aside>
 @endsection
+
+@push('scripts')
+<script>
+    function saveDiscussion(element, discussionId) {
+        event.preventDefault();
+
+        axios.post(`/save/discussion/${discussionId}`)
+            .then(response => {
+                if (response.status === 200) {
+                    element.innerHTML = '<i class="fa-solid fa-bookmark"></i>';
+                    element.setAttribute('onclick', `unsaveDiscussion(this, ${discussionId})`);
+                }
+            })
+            .catch(error => {
+                console.error('Error saving discussion:', error);
+            });
+    }
+
+    function unsaveDiscussion(element, discussionId) {
+        event.preventDefault();
+
+        axios.delete(`/unsave/discussion/${discussionId}`)
+            .then(response => {
+                if (response.status === 200) {
+                    // Remove the discussion card from the profile
+                    element.closest('.card-discussions').remove();
+                }
+            })
+            .catch(error => {
+                console.error('Error unsaving discussion:', error);
+            });
+    }
+</script>    
+@endpush

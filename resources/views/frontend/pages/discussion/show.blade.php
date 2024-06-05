@@ -32,24 +32,23 @@
                 <div class="col-12 col-lg-1 mb-1 mb-lg-0 d-flex flex-row flex-lg-column">
                     <div class="me-2 me-lg-0 mb-2">
                         @if (Auth::check())
-                                @if ($discussions->liked())
-                                    <a id="discussionUnlike" href="javascript:;" data-liked="true" data-slug="{{ $discussions->slug }}" onclick="unlikeDiscussion(this, '{{ $discussions->slug }}')" class="text-decoration-none">
-                                        <i class="fa-solid fa-heart text-danger"></i>
-                                        <span class="text-dark">{{ $discussions->likeCount }}</span>
-                                    </a>
-                                @else
-                                    <a id="discussionLike" href="javascript:;" data-liked="false" data-slug="{{ $discussions->slug }}" onclick="likeDiscussion(this, '{{ $discussions->slug }}')" class="text-decoration-none">
-                                        <i class="fa-regular fa-heart text-danger"></i>
-                                        <span class="text-dark">{{ $discussions->likeCount }}</span>
-                                    </a>
-                                @endif
+                            @if ($discussions->liked())
+                                <a id="discussionUnlike" href="javascript:;" data-liked="true" data-slug="{{ $discussions->slug }}" onclick="unlikeDiscussion(this, '{{ $discussions->slug }}')" class="text-decoration-none">
+                                    <i class="fa-solid fa-heart text-danger"></i>
+                                    <span class="text-dark">{{ $discussions->likeCount }}</span>
+                                </a>
+                            @else
+                                <a id="discussionLike" href="javascript:;" data-liked="false" data-slug="{{ $discussions->slug }}" onclick="likeDiscussion(this, '{{ $discussions->slug }}')" class="text-decoration-none">
+                                    <i class="fa-regular fa-heart text-muted"></i> <!-- Changed class to text-muted -->
+                                    <span class="text-dark">{{ $discussions->likeCount }}</span>
+                                </a>
+                            @endif
                         @else
                             <a href="{{ route('login') }}">
-                                <i class="fa-regular fa-heart"></i>
+                                <i class="fa-regular fa-heart text-muted"></i> <!-- Changed class to text-muted -->
                                 <span>{{ $discussions->likeCount }}</span>
                             </a>
-                        @endif
-                    
+                        @endif                    
                     </div>
                     
                     <div class="mb-1">
@@ -60,13 +59,13 @@
                                 </a>
                             @else
                                 <a href="javascript:;" class="text-decoration-none" onclick="saveDiscussion(this, {{ $discussions->id }})">
-                                    <i class="fa-regular fa-bookmark"></i>
+                                    <i class="fa-regular fa-bookmark text-muted"></i> <!-- Changed class to text-muted -->
                                 </a>
                             @endif
                         @endauth
                         @guest
                             <a href="{{ route('login') }}" class="text-decoration-none">
-                                <i class="fa-regular fa-bookmark"></i>
+                                <i class="fa-regular fa-bookmark text-muted"></i> <!-- Changed class to text-muted -->
                             </a>
                         @endguest
                     </div>
@@ -87,7 +86,7 @@
                     {{-- row 2 --}}
                     <div class="row g-0 align-items-center mt-3">
                         <div class="col me-1 me-lg-2 mb-0 d-flex">
-                            <a href="#" class="me-3 text-decoration-none">
+                            <a href="#" class="me-3 text-decoration-none" onclick="copyCurrentPath()">
                                 <span><i class="fa-solid fa-share text-muted"></i></span>
                             </a>
                             @auth
@@ -151,6 +150,7 @@
                     {{-- column 1 --}}
                     <div class="col-12 col-lg-1 mb-1 mb-lg-0 d-flex flex-row flex-lg-column">
                         <div class="me-2 me-lg-0 mb-2">
+                            {{-- Inside the loop for answers --}}
                             @if (Auth::check())
                                 @if ($answer->liked())
                                     <a id="answerUnlike" href="javascript:;" data-liked="true" data-id="{{ $answer->id }}" onclick="unlikeAnswer(this, '{{ $answer->id }}')" class="text-decoration-none">
@@ -159,15 +159,15 @@
                                     </a>
                                 @else
                                     <a id="answerLike" href="javascript:;" data-liked="false" data-id="{{ $answer->id }}" onclick="likeAnswer(this, '{{ $answer->id }}')" class="text-decoration-none">
-                                        <i class="fa-regular fa-heart text-danger"></i>
+                                        <i class="fa-regular fa-heart text-muted"></i> <!-- Changed class to text-muted -->
                                         <span class="text-dark">{{ $answer->likeCount }}</span>
                                     </a>
                                 @endif
                             @else
-                                <a id="answerLike" href="javascript:;" data-liked="false" data-id="{{ $answer->id }}" onclick="likeAnswer(this, '{{ $answer->id }}')">
-                                    <i class="fa-regular fa-heart text-danger"></i>
-                                    <span>{{ $answer->likeCount }}</span>
-                                </a>
+                            <a id="answerLike" href="javascript:;" data-liked="false" data-id="{{ $answer->id }}" onclick="likeAnswer(this, '{{ $answer->id }}')">
+                                <i class="fa-regular fa-heart text-muted"></i> <!-- Changed class to text-muted -->
+                                <span>{{ $answer->likeCount }}</span>
+                            </a>
                             @endif
                         </div>
                     </div>
@@ -359,39 +359,64 @@
         }
 
         function likeAnswer(element, answerId) {
-            event.preventDefault();
+        event.preventDefault();
 
-            axios.post(`/answers/${answerId}/like`)
-                .then(response => {
-                    if (response.status === 200) {
-                        const likeCount = response.data.data.likeCount;
-                        element.innerHTML = '<i class="fa-solid fa-heart text-danger"></i> <span class="text-dark text-decoration-none">' + likeCount + '</span>';
-                        element.setAttribute('onclick', `unlikeAnswer(this, '${answerId}')`);
-                        element.setAttribute('data-liked', 'true');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error liking answer:', error);
-                });
-        }
+        axios.post(`/answers/${answerId}/like`)
+            .then(response => {
+                if (response.status === 200) {
+                    const likeCount = response.data.data.likeCount;
+                    element.innerHTML = '<i class="fa-solid fa-heart text-danger"></i> <span class="text-dark text-decoration-none">' + likeCount + '</span>';
+                    element.setAttribute('onclick', `unlikeAnswer(this, '${answerId}')`);
+                    element.setAttribute('data-liked', 'true');
+                }
+            })
+            .catch(error => {
+                console.error('Error liking answer:', error);
+            });
+    }
 
-        function unlikeAnswer(element, answerId) {
-            event.preventDefault();
+    function unlikeAnswer(element, answerId) {
+        event.preventDefault();
 
-            axios.post(`/answers/${answerId}/unlike`)
-                .then(response => {
-                    if (response.status === 200) {
-                        const likeCount = response.data.data.likeCount;
-                        element.innerHTML = '<i class="fa-regular fa-heart text-danger"></i> <span class="text-dark text-decoration-none">' + likeCount + '</span>';
-                        element.setAttribute('onclick', `likeAnswer(this, '${answerId}')`);
-                        element.setAttribute('data-liked', 'false');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error unliking answer:', error);
-                });
-        }
+        axios.post(`/answers/${answerId}/unlike`)
+            .then(response => {
+                if (response.status === 200) {
+                    const likeCount = response.data.data.likeCount;
+                    element.innerHTML = '<i class="fa-regular fa-heart text-muted"></i> <span class="text-dark text-decoration-none">' + likeCount + '</span>'; <!-- Changed class to text-muted -->
+                    element.setAttribute('onclick', `likeAnswer(this, '${answerId}')`);
+                    element.setAttribute('data-liked', 'false');
+                }
+            })
+            .catch(error => {
+                console.error('Error unliking answer:', error);
+            });
+    }
 
+</script>
+
+<script>
+    function copyCurrentPath() {
+        // Mendapatkan path dari URL saat ini
+        var currentPath = window.location.href;
+        
+        // Membuat sebuah elemen textarea untuk menyimpan path
+        var tempInput = document.createElement("textarea");
+        tempInput.value = currentPath;
+        document.body.appendChild(tempInput);
+        
+        // Memilih teks di dalam elemen textarea
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); /* Untuk perangkat mobile */
+        
+        // Menyalin teks yang dipilih ke clipboard
+        document.execCommand("copy");
+        
+        // Menghapus elemen textarea yang telah dibuat
+        document.body.removeChild(tempInput);
+        
+        // Memberikan umpan balik atau aksi tambahan jika diperlukan
+        alert("URL copied to clipboard: " + currentPath);
+    }
 </script>
 
 

@@ -67,9 +67,8 @@
         <i class="fas fa-angle-up"></i>
     </a>
 
-    <!-- Logout Modal-->
-    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-        aria-hidden="true">
+    <!-- Logout Modal -->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -81,7 +80,10 @@
                 <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                 <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <a class="btn btn-primary" href="{{ route('home') }}">Logout</a>
+                    <a class="btn btn-blue-main-color" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout</a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
                 </div>
             </div>
         </div>
@@ -123,6 +125,31 @@
             });
         });
     </script>
+
+<script>
+    function copyCurrentPath() {
+        // Mendapatkan path dari URL saat ini
+        var currentPath = window.location.href;
+        
+        // Membuat sebuah elemen textarea untuk menyimpan path
+        var tempInput = document.createElement("textarea");
+        tempInput.value = currentPath;
+        document.body.appendChild(tempInput);
+        
+        // Memilih teks di dalam elemen textarea
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); /* Untuk perangkat mobile */
+        
+        // Menyalin teks yang dipilih ke clipboard
+        document.execCommand("copy");
+        
+        // Menghapus elemen textarea yang telah dibuat
+        document.body.removeChild(tempInput);
+        
+        // Memberikan umpan balik atau aksi tambahan jika diperlukan
+        alert("URL copied to clipboard: " + currentPath);
+    }
+</script>
 </body>
 
 </html>

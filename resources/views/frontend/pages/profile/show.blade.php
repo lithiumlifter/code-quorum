@@ -45,10 +45,10 @@
         <div class="card card-discussions p-3 mb-3">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Discussion</button>
+                    <button class="nav-link active text-blue" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Discussion</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Answer</button>
+                    <button class="nav-link text-blue" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Answer</button>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -62,14 +62,14 @@
                                 <div id="dilihat" class="mb-1">10 Dilihat</div>
                             </div>
                             <div class="col-12 col-lg-10 mb-1 mb-lg-0 d-flex flex-column">
-                                <a href="{{ route('discussions.show', $discussion->slug) }}" class="text-decoration-none">
+                                <a href="{{ route('discussions.show', $discussion->slug) }}" class="text-decoration-none text-blue">
                                     <h5>{{ $discussion->title }}</h5>
                                 </a>
                                 <p>{!! $discussion->content_preview !!}</p>
                                 <div class="row g-0 align-items-center">
                                     <div class="col me-1 me-lg-2 mb-0">
                                         @foreach ($discussion->tags as $tag)
-                                            <a href="#">
+                                            <a class="text-decoration-none" href="/discussions?tag={{ $tag->slug }}">
                                                 <span class="badge rounded-pill text-bg-light">{{ $tag->name }}</span>
                                             </a>
                                         @endforeach
@@ -78,14 +78,14 @@
                                         <div class="row align-items-center">
                                             <div class="col-3 col-md-2">
                                                 <div class="avatar-sm-wrapper d-inline-block">
-                                                    <a href="#" class="me-1">
+                                                    <a href="{{ route('profile.show', $discussion->user->uid) }}" class="me-1">
                                                         <img src="{{ $user->picture ? asset('storage/profiles/' . basename($user->picture)) : url("assets/img/user.png") }}" alt="Img_Profile" class="rounded-circle" style="object-fit: cover; width: 25px; height: 25px;">
                                                     </a>
                                                 </div>
                                             </div>
                                             <div class="col-9 col-md-10">
                                                 <span class="fs-12px">
-                                                    <a href="#" class="me-1 fw-bold d-block">{{ $discussion->user->username }}</a>
+                                                    <a href="{{ route('profile.show', $discussion->user->uid) }}" class="me-1 fw-bold d-block text-decoration-none text-blue">{{ $discussion->user->username }}</a>
                                                     <span class="text-grey d-block">{{ $discussion->created_at->diffForHumans() }}</span>
                                                 </span>
                                             </div>
@@ -105,7 +105,7 @@
                                 <div class="col">
                                     <span>Replied to</span>
                                     <span class="fw-bold text-primary">
-                                        <a href="#">{{ $answer->answer }}</a>
+                                        <a href="{{ route('discussions.show', $answer->discussion->slug) }}" class="text-decoration-none text-blue">{{ $answer->discussion->title }}</a>
                                     </span>
                                 </div>
                             </div>

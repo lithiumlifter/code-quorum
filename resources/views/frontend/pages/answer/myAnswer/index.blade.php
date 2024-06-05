@@ -13,19 +13,37 @@
                 </div>
             </div>
         </div>                
+        @php
+            $displayedDiscussions = [];
+        @endphp
+
         @foreach ($answers as $answer)
-        <div class="card card-discussions p-3 mb-3 mt-3">
-            <div class="row align-items-center">
-                <div class="col-2 col-lg-1 text-center">34</div>
-                <div class="col">
-                    <span>Replied to</span>
-                    <span class="fw-bold text-primary">
-                        <a href="#" class="text-decoration-none text-blue">{{ $answer->answer }}</a>
-                    </span>
+            @php
+                $discussion = $answer->discussion;
+            @endphp
+
+            {{-- Check if the discussion has been displayed --}}
+            @if (!in_array($discussion->id, $displayedDiscussions))
+                {{-- Display the discussion --}}
+                <div class="card card-discussions p-3 mb-3 mt-3">
+                    <div class="row align-items-center">
+                        <div class="col-2 col-lg-1 text-center">{{ $discussion->answers()->count() }}</div>
+                        <div class="col">
+                            <span>Replied to</span>
+                            <span class="fw-bold text-primary">
+                                <a href="{{ route('discussions.show', $discussion->slug) }}" class="text-decoration-none text-blue">{{ $discussion->title }}</a>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    @endforeach
+
+                {{-- Add the discussion ID to the displayed discussions array --}}
+                @php
+                    $displayedDiscussions[] = $discussion->id;
+                @endphp
+            @endif
+        @endforeach
+
     {{ $answers->links() }}
     </main>
 
@@ -40,7 +58,7 @@
                         <h5 class="my-3">{{ auth()->user()->username }}</h5>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="{{ route('profile.index') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-blue-main-color">Edit</a>
-                            <a type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-blue-main-color ms-1">Share</a>
+                            <a type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-blue-main-color ms-1" onclick="copyCurrentPath()">Share</a>
                         </div>
                     </div>
                 @endauth

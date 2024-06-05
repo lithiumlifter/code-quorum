@@ -95,7 +95,9 @@ public function update(Request $request, Answer $answer)
 
     // Load konten HTML baru dari Summernote
     $dom = new \DOMDocument();
+    libxml_use_internal_errors(true); // Disable errors for invalid HTML
     $dom->loadHTML($request->input('answer'), LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+    libxml_clear_errors();
 
     // Temukan semua elemen img dalam konten baru
     $images = $dom->getElementsByTagName('img');
@@ -104,15 +106,21 @@ public function update(Request $request, Answer $answer)
     $newImageNames = [];
 
     foreach ($images as $key => $img) {
-        // Dapatkan data gambar dari src
         $src = $img->getAttribute('src');
+
+        // Jika gambar masih menggunakan URL lama, jangan diproses
+        if (strpos($src, 'storage') !== false) {
+            continue;
+        }
+
+        // Proses gambar baru yang diunggah
         $image_data = substr($src, strpos($src, ',') + 1);
         $image_data = base64_decode($image_data);
 
         // Simpan gambar ke dalam penyimpanan Laravel
         $newImageName = "public/images/" . time() . $key . '.png';
         Storage::put($newImageName, $image_data);
-        $newImageNames[] = $newImageName; // Simpan nama gambar baru
+        $newImageNames[] = $newImageName;
 
         // Ganti src dengan URL penyimpanan gambar yang baru
         $img->removeAttribute('src');
@@ -122,15 +130,13 @@ public function update(Request $request, Answer $answer)
     // Simpan kembali konten yang telah dimodifikasi ke dalam variabel $answerContent
     $answerContent = $dom->saveHTML();
 
-    // Hapus gambar-gambar lama hanya jika ada
-    $this->deleteOldImages($answer->answer);
-
     // Update answer data
     $answer->answer = $answerContent;
     $answer->save();
 
     return redirect()->route('discussions.show', $answer->discussion->slug)->with('success', 'Answer updated successfully.');
 }
+
 
     private function deleteOldImages($answerContent)
 {
@@ -149,16 +155,34 @@ public function update(Request $request, Answer $answer)
     }
 }
 
+public function destroy(Answer $answer)
+{
+    $discussionSlug = $answer->discussion->slug;
+    $answer->delete();
 
+    // Hapus gambar yang terkait dengan jawaban dari penyimpanan
+    $this->deleteAnswerImages($answer->answer);
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Answer $answer)
-    {
-        $discussionSlug = $answer->discussion->slug;
-        $answer->delete();
+    return redirect()->route('discussions.show', $discussionSlug)->with('success', 'Answer deleted successfully.');
+}
 
-        return redirect()->route('discussions.show', $discussionSlug)->with('success', 'Answer deleted successfully.');
+/**
+ * Hapus gambar yang terkait dengan jawaban dari penyimpanan
+ */
+private function deleteAnswerImages($answerContent)
+{
+    // Dapatkan daftar semua gambar dari konten jawaban
+    preg_match_all('/<img[^>]+>/i', $answerContent, $images);
+    $imageSrcs = [];
+    foreach ($images[0] as $img) {
+        preg_match('/src="([^"]+)/i', $img, $src);
+        $imageSrcs[] = str_replace('src="', '', $src[0]);
     }
+
+    // Hapus gambar dari penyimpanan
+    foreach ($imageSrcs as $src) {
+        Storage::delete('public/images/' . basename(parse_url($src, PHP_URL_PATH)));
+    }
+}
+
 }

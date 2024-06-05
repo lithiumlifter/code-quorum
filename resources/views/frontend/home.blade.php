@@ -44,8 +44,8 @@
                         <ul class="dropdown-menu text-small dropdown-menu-end" aria-labelledby="dropdownUser1">
                             <li><a class="dropdown-item text-muted" href="{{ route('profile.index') }}">
                               <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400" style="color: gray"></i> Profile</a></li>
-                            <li><a class="dropdown-item text-muted" href="#">
-                              <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400" style="color: gray"></i> Settings</a></li>
+                            {{-- <li><a class="dropdown-item text-muted" href="#">
+                              <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400" style="color: gray"></i> Settings</a></li> --}}
                             <li><hr class="dropdown-divider"></li>
                             <li>
                                 <a class="dropdown-item text-muted" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">

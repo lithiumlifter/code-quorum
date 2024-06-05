@@ -158,98 +158,100 @@ class DiscussionController extends Controller
         return view('frontend.pages.discussion.edit', compact('discussions', 'tags'));
     }
 
-/**
- * Update the specified resource in storage.
- */
-public function update(DiscussionRequest $request, Discussion $discussion){
-    $data = $request->validated();
-    $tagSlugs = $data['tag_slug'];
-    unset($data['tag_slug']);
-
-    // Dapatkan konten lama dari diskusi sebelum diperbarui
-    $oldContent = $discussion->content;
-
-    // Load konten HTML baru dari Summernote
-    $dom = new \DOMDocument();
-    $dom->loadHTML($data['content'], LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
-
-    // Temukan semua elemen img dalam konten baru
-    $images = $dom->getElementsByTagName('img');
-
-    // Array untuk menyimpan nama gambar yang baru diunggah
-    $newImageNames = [];
-
-    foreach ($images as $key => $img) {
-        // Dapatkan data gambar dari src
-        $src = $img->getAttribute('src');
-        $image_data = substr($src, strpos($src, ',') + 1);
-        $image_data = base64_decode($image_data);
+    public function update(DiscussionRequest $request, Discussion $discussion)
+    {
+        $data = $request->validated();
+        $tagSlugs = $data['tag_slug'];
+        unset($data['tag_slug']);
     
-        // Simpan gambar ke dalam penyimpanan Laravel
-        $newImageName = "public/images/" . time() . $key . '.png';
-        Storage::put($newImageName, $image_data);
-        $newImageNames[] = $newImageName; // Simpan nama gambar baru
-        
-        // Ganti src dengan URL penyimpanan gambar yang baru
-        $img->removeAttribute('src');
-        $img->setAttribute('src', Storage::url($newImageName));
-    }
-
-    // Simpan kembali konten yang telah dimodifikasi ke dalam variabel $content
-    $data['content'] = $dom->saveHTML();
+        // Dapatkan konten lama dari diskusi sebelum diperbarui
+        $oldContent = $discussion->content;
     
-    // Mengambil konten tanpa tag HTML untuk konten preview
-    $stripContent = strip_tags($data['content']);
-    $isContentLong = strlen($stripContent) > 120;
-    $data['content_preview'] = $isContentLong ? (substr($stripContent, 0, 120) . '...') : $stripContent;
-
-    // Periksa apakah ada gambar yang dihapus
-    $deletedImages = $this->getDeletedImages($oldContent, $data['content']);
-
-    // Hapus gambar yang dihapus dari penyimpanan
-    foreach ($deletedImages as $deletedImage) {
-        Storage::delete('public/images/' . $deletedImage);
+        // Load konten HTML baru dari Summernote
+        $dom = new \DOMDocument();
+        libxml_use_internal_errors(true); // Disable errors for invalid HTML
+        $dom->loadHTML($data['content'], LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        libxml_clear_errors();
+    
+        // Temukan semua elemen img dalam konten baru
+        $images = $dom->getElementsByTagName('img');
+    
+        foreach ($images as $key => $img) {
+            $src = $img->getAttribute('src');
+    
+            // Jika gambar masih menggunakan URL lama, jangan diproses
+            if (strpos($src, 'storage') !== false) {
+                continue;
+            }
+    
+            // Proses gambar baru yang diunggah
+            $image_data = substr($src, strpos($src, ',') + 1);
+            $image_data = base64_decode($image_data);
+    
+            // Simpan gambar ke dalam penyimpanan Laravel
+            $newImageName = "public/images/" . time() . $key . '.png';
+            Storage::put($newImageName, $image_data);
+    
+            // Ganti src dengan URL penyimpanan gambar yang baru
+            $img->removeAttribute('src');
+            $img->setAttribute('src', Storage::url($newImageName));
+        }
+    
+        // Simpan kembali konten yang telah dimodifikasi ke dalam variabel $content
+        $data['content'] = $dom->saveHTML();
+    
+        // Mengambil konten tanpa tag HTML untuk konten preview
+        $stripContent = strip_tags($data['content']);
+        $isContentLong = strlen($stripContent) > 120;
+        $data['content_preview'] = $isContentLong ? (substr($stripContent, 0, 120) . '...') : $stripContent;
+    
+        // Periksa apakah ada gambar yang dihapus
+        $deletedImages = $this->getDeletedImages($oldContent, $data['content']);
+    
+        // Hapus gambar yang dihapus dari penyimpanan
+        foreach ($deletedImages as $deletedImage) {
+            Storage::delete('public/images/' . $deletedImage);
+        }
+    
+        // Update discussion data
+        $discussion->update($data);
+    
+        // Sync tags
+        $discussion->tags()->sync(Tag::whereIn('slug', $tagSlugs)->pluck('id')->toArray());
+    
+        return redirect()->route('discussions.myDiscussions')->with('success', 'Discussion updated successfully');
     }
-
-    // Update discussion data
-    $discussion->update($data);
-
-    // Sync tags
-    $discussion->tags()->sync(Tag::whereIn('slug', $tagSlugs)->pluck('id')->toArray());
-
-    return redirect()->route('discussions.myDiscussions')->with('success', 'Discussion updated successfully');
-}
-
-/**
- * Mendapatkan daftar gambar yang dihapus dari konten lama ke konten baru
- */
-private function getDeletedImages($oldContent, $newContent)
-{
-    // Dapatkan daftar semua gambar dari konten lama
-    preg_match_all('/<img[^>]+>/i', $oldContent, $oldImages);
-    $oldImageSrcs = [];
-    foreach ($oldImages[0] as $img) {
-        preg_match('/src="([^"]+)/i', $img, $src);
-        $oldImageSrcs[] = str_replace('src="', '', $src[0]);
+    
+    /**
+     * Get the list of images that have been deleted from the content
+     */
+    private function getDeletedImages($oldContent, $newContent)
+    {
+        // Extract old images
+        preg_match_all('/<img[^>]+>/i', $oldContent, $oldImages);
+        $oldImageSrcs = [];
+        foreach ($oldImages[0] as $img) {
+            preg_match('/src="([^"]+)/i', $img, $src);
+            $oldImageSrcs[] = str_replace('src="', '', $src[0]);
+        }
+    
+        // Extract new images
+        preg_match_all('/<img[^>]+>/i', $newContent, $newImages);
+        $newImageSrcs = [];
+        foreach ($newImages[0] as $img) {
+            preg_match('/src="([^"]+)/i', $img, $src);
+            $newImageSrcs[] = str_replace('src="', '', $src[0]);
+        }
+    
+        // Determine deleted images
+        $deletedImages = array_diff($oldImageSrcs, $newImageSrcs);
+        $deletedImageNames = [];
+        foreach ($deletedImages as $src) {
+            $deletedImageNames[] = basename(parse_url($src, PHP_URL_PATH));
+        }
+    
+        return $deletedImageNames;
     }
-
-    // Dapatkan daftar semua gambar dari konten baru
-    preg_match_all('/<img[^>]+>/i', $newContent, $newImages);
-    $newImageSrcs = [];
-    foreach ($newImages[0] as $img) {
-        preg_match('/src="([^"]+)/i', $img, $src);
-        $newImageSrcs[] = str_replace('src="', '', $src[0]);
-    }
-
-    // Temukan gambar yang dihapus dari konten lama ke konten baru
-    $deletedImages = array_diff($oldImageSrcs, $newImageSrcs);
-    $deletedImageNames = [];
-    foreach ($deletedImages as $src) {
-        $deletedImageNames[] = basename(parse_url($src, PHP_URL_PATH));
-    }
-
-    return $deletedImageNames;
-}
 
     /**
      * Remove the specified resource from storage.
