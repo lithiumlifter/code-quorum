@@ -164,7 +164,7 @@
                         <h5 class="my-3">{{ auth()->user()->username }}</h5>
                         <div class="d-flex justify-content-center mb-2">
                             <a href="{{ route('profile.index') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-blue-main-color">Edit</a>
-                            <a type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-blue-main-color ms-1" onclick="copyCurrentPath()">Share</a>
+                            <a type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-blue-main-color ms-1" onclick="copyProfilePath('{{ Auth::user()->uid }}')">Share</a>
                         </div>
                     </div>
                 @endauth

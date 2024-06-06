@@ -83,7 +83,7 @@
                     <p>{{ $user->about }}</p>
                     <div class="row g-0 align-items-center">
                         <div class="col me-1 me-lg-2 mb-0">
-                            <a href="#">
+                            <a class="text-decoration-none">
                                 <span class="badge rounded-pill text-bg-light"><i class="fa-solid fa-address-card"></i> Member since {{ $user->created_at->diffForHumans() }}</span>
                                 <span class="badge rounded-pill text-bg-light"><i class="fa-solid fa-location-dot"></i> {{ $user->location }}</span>
                             </a>

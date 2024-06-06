@@ -8,6 +8,7 @@ use App\Models\Answer;
 use App\Models\Discussion;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -69,5 +70,36 @@ class UserController extends Controller
         $user->save();
 
         return redirect()->back()->with('success', 'Profile updated successfully.');
+    }
+
+    public function setting(Request $request)
+    {
+        $user = Auth::user();
+    
+        if ($request->filled('new_password')) {
+            $request->validate([
+                'current_password' => 'required|string',
+                'new_password' => 'required|string|min:8|confirmed',
+            ]);
+    
+            if (!Hash::check($request->current_password, $user->password)) {
+                return redirect()->back()->with('error', 'Current password is incorrect.');
+            }
+    
+            $user->password = Hash::make($request->new_password);
+            $user->save();
+    
+            return redirect()->back()->with('success', 'Password updated successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Please fill out the new password fields.');
+        }
+    }
+    
+
+    public function settingShow()
+    {
+        $user = Auth::user();
+
+        return view('frontend.pages.profile.setting', compact('user'));
     }
 }

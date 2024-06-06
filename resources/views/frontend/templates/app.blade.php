@@ -150,6 +150,31 @@
         alert("URL copied to clipboard: " + currentPath);
     }
 </script>
+
+<script>
+    function copyProfilePath(uid) {
+        // Mendapatkan path menuju profil pengguna berdasarkan UID
+        var profilePath = "{{ url('/profile/') }}" + "/" + uid;
+        
+        // Membuat sebuah elemen textarea untuk menyimpan path
+        var tempInput = document.createElement("textarea");
+        tempInput.value = profilePath;
+        document.body.appendChild(tempInput);
+        
+        // Memilih teks di dalam elemen textarea
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); /* Untuk perangkat mobile */
+        
+        // Menyalin teks yang dipilih ke clipboard
+        document.execCommand("copy");
+        
+        // Menghapus elemen textarea yang telah dibuat
+        document.body.removeChild(tempInput);
+        
+        // Memberikan umpan balik atau aksi tambahan jika diperlukan
+        alert("Profile URL copied to clipboard: " + profilePath);
+    }
+</script>
 </body>
 
 </html>

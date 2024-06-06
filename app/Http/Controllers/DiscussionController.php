@@ -164,6 +164,11 @@ class DiscussionController extends Controller
         $tagSlugs = $data['tag_slug'];
         unset($data['tag_slug']);
     
+        // Update slug jika judul diperbarui
+        if ($discussion->title !== $data['title']) {
+            $data['slug'] = Str::slug($data['title']); // Gunakan helper Str untuk membuat slug
+        }
+    
         // Dapatkan konten lama dari diskusi sebelum diperbarui
         $oldContent = $discussion->content;
     
@@ -219,7 +224,7 @@ class DiscussionController extends Controller
         // Sync tags
         $discussion->tags()->sync(Tag::whereIn('slug', $tagSlugs)->pluck('id')->toArray());
     
-        return redirect()->route('discussions.myDiscussions')->with('success', 'Discussion updated successfully');
+        return redirect()->route('discussions.show', ['discussion' => $discussion->slug])->with('success', 'Discussion updated successfully');
     }
     
     /**

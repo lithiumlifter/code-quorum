@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<div class="back-button" style="margin-left: 50px">
+  <a class="text-decoration-none" href="{{ url()->previous() }}" style="color: #157EC1;"><i class="fa-solid fa-arrow-left"></i> Back</a>
+</div>
 <div class="content">
     <div class="container">
       <div class="row">

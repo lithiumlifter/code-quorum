@@ -55,6 +55,12 @@
                     <span style="margin-left: 10px;">Profile</span>
                 </a>
             </li>
+            <li class="nav-item {{ request()->routeIs('profile.settingShow') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('profile.settingShow') }}">
+                    <i class="fa-solid fa-gear {{ request()->routeIs('profile.settingShow') ? 'text-blue' : 'text-muted' }}"></i>
+                    <span style="margin-left: 10px;">Setting</span>
+                </a>
+            </li>
         </ul>        
         <!-- Sidebar - Brand - LG -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center d-lg-block" href="{{ route('home') }}">
@@ -136,7 +142,7 @@
                                 @endphp
                                 <a class="dropdown-item d-flex align-items-center {{ $notification->read ? 'read' : '' }}" href="{{ route('discussions.show', $discussion->slug) }}" onclick="markNotificationAsRead('{{ $notification->id }}')">
                                     <div class="dropdown-list-image mr-3">
-                                        <img class="rounded-circle notification-image" src="{{ $notification->likedByUser ? asset('storage/profiles/' . basename($notification->likedByUser->picture)) : url('assets/img/user.png') }}" alt="...">
+                                        <img class="rounded-circle notification-image" src="{{ $notification->likedByUser && $notification->likedByUser->picture ? asset('storage/profiles/' . basename($notification->likedByUser->picture)) : url('assets/img/user.png') }}" alt="...">
                                         <div class="status-indicator {{ $notification->read ? 'bg-gray' : 'bg-primary' }}"></div>
                                     </div>
                                     <div class="font-weight-bold notification-content">
