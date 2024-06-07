@@ -121,17 +121,20 @@
                 </div>
             </li>
 
-            <!-- Nav Item - Alerts -->
-            <li class="nav-item dropdown no-arrow mx-1">
-                <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <i class="fas fa-bell fa-fw"></i>
-                    <!-- Counter - Alerts -->
-                    <span class="badge badge-danger badge-counter">{{ $unreadCount }}</span>
-                </a>
-                <!-- Dropdown - Alerts -->
+            <!-- Cek apakah pengguna sudah login -->
+            @if (Auth::check())
+                <!-- Tampilkan informasi pengguna dan notifikasi -->
+                <!-- Nav Item - Alerts -->
+                <li class="nav-item dropdown no-arrow mx-1">
+                    <a class="nav-link dropdown-toggle" href="#" id="alertsDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-bell fa-fw"></i>
+                        <!-- Counter - Alerts -->
+                        <span class="badge badge-danger badge-counter">{{ $unreadCount }}</span>
+                    </a>
+                    <!-- Dropdown - Alerts -->
                     <div class="dropdown-list dropdown-menu dropdown-menu-right shadow animated--grow-in scrollable-dropdown"
-                    aria-labelledby="alertsDropdown">
+                        aria-labelledby="alertsDropdown">
                         <h6 class="dropdown-header bg-blue-main">
                             Notification
                         </h6>
@@ -154,37 +157,39 @@
                             @endif
                         @endforeach
                         <a class="dropdown-item text-center small text-gray-500" href="#">©CodeQuorum</a>
-                     </div>
-            </li>
+                    </div>
+                </li>
 
-            <div class="d-none d-sm-block"></div>
+                <div class="d-none d-sm-block"></div>
 
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-                <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{-- <span class="mr-2 d-none d-lg-inline text-gray-600 small">Douglas McGee</span> --}}
-                    <img class="img-profile rounded-circle"
-                        src="{{ Auth::check() && Auth::user()->picture ? asset('storage/profiles/' . basename(Auth::user()->picture)) : asset('assets/img/user.png') }}">
-                </a>
-                <!-- Dropdown - User Information -->
-                <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
-                    aria-labelledby="userDropdown">
-                    <a class="dropdown-item" href="{{ route('profile.index') }}">
-                        <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Profile
+                <!-- Nav Item - User Information -->
+                <li class="nav-item dropdown no-arrow">
+                    <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img class="img-profile rounded-circle"
+                            src="{{ Auth::user()->picture ? asset('storage/profiles/' . basename(Auth::user()->picture)) : asset('assets/img/user.png') }}">
                     </a>
-                    {{-- <a class="dropdown-item" href="#">
-                        <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Settings
-                    </a> --}}
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal">
-                        <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                        Logout
-                    </a>
-                </div>
-            </li>
+                    <!-- Dropdown - User Information -->
+                    <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                        aria-labelledby="userDropdown">
+                        <a class="dropdown-item" href="{{ route('profile.index') }}">
+                            <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Profile
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{ route('logout') }}" data-toggle="modal" data-target="#logoutModal">
+                            <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                            Logout
+                        </a>
+                    </div>
+                </li>
+            @else
+                <!-- Tampilkan tombol Login dan Register jika pengguna belum login -->
+                <li class="nav-item d-flex align-items-center">
+                    <a href="{{ route('login') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-blue-main-color">Login</a>
+                    <a href="{{ route('register') }}" type="button" data-mdb-button-init data-mdb-ripple-init class="btn btn-outline-blue-main-color ms-1">Register</a>
+                </li>
+            @endif
         </ul>
     </div>
 </nav>

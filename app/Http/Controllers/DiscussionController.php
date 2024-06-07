@@ -224,9 +224,8 @@ class DiscussionController extends Controller
         // Sync tags
         $discussion->tags()->sync(Tag::whereIn('slug', $tagSlugs)->pluck('id')->toArray());
     
-        return redirect()->route('discussions.show', ['discussion' => $discussion->slug])->with('success', 'Discussion updated successfully');
+        return redirect()->route('discussions.show', ['slug' => $discussion->slug])->with('success', 'Discussion updated successfully');
     }
-    
     /**
      * Get the list of images that have been deleted from the content
      */

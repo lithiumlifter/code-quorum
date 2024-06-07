@@ -21,14 +21,16 @@ use App\Http\Controllers\NotificationController;
 */
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::put('/mark-notification-as-read/{notificationId}', [NotificationController::class, 'markAsRead'])->name('markNotificationAsRead');
+
 Route::get('discussions', [DiscussionController::class, 'index'])->name('discussions.index');
-Route::get('discussions/{slug}', [DiscussionController::class, 'show'])->name('discussions.show');
 Route::get('my-discussions', [DiscussionController::class, 'myDiscussions'])->middleware('auth')->name('discussions.myDiscussions');
 Route::get('my-saves', [DiscussionController::class, 'mySaves'])->middleware('auth')->name('discussions.mySaves');
+
 Route::get('profile', [UserController::class, 'index'])->middleware('auth')->name('profile.index');
 Route::put('/profile/update-password', [UserController::class, 'setting'])->middleware('auth')->name('profile.updatePassword');
 Route::get('/profile/setting', [UserController::class, 'settingShow'])->middleware('auth')->name('profile.settingShow');
 Route::get('profile/{uid}', [UserController::class, 'show'])->name('profile.show');
+
 Route::get('tags', [DiscussionController::class, 'tag'])->name('discussions.tags');
 Route::get('tags/{slug}', [DiscussionController::class, 'showTag'])->name('discussions.showTags');
 Route::get('my-answers', [DiscussionController::class, 'myAnswer'])->middleware('auth')->name('discussions.myAnswers');
@@ -50,5 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/save/discussion/{discussionId}', [SaveController::class, 'saveDiscussion'])->name('discussion.save');
     Route::delete('/unsave/discussion/{discussionId}', [SaveController::class, 'unsaveDiscussion'])->name('discussion.unsave');
 });
+
+Route::get('discussions/{slug}', [DiscussionController::class, 'show'])->name('discussions.show');
 
 Auth::routes();
