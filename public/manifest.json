@@ -1,14 +1,14 @@
 {
-    "name": "Laravel Package Tutorial",
-    "short_name": "LPT",
+    "name": "Code Quorum",
+    "short_name": "CodeQuorum",
     "start_url": "/index.php",
-    "background_color": "#6777ef",
-    "description": "Tutorial of Laravel Package",
+    "background_color": "#157EC1",
+    "description": "Website Forum Diskusi",
     "display": "fullscreen",
-    "theme_color": "#6777ef",
+    "theme_color": "#157EC1",
     "icons": [
         {
-            "src": "logo.PNG",
+            "src": "logo_sm-512.png",
             "sizes": "512x512",
             "type": "image/png",
             "purpose": "any maskable"
